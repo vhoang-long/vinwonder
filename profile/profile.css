@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Open Sans", sans-serif;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
 }
 
 body {
@@ -19,7 +19,7 @@ body {
   background: #fff;
   padding: 30px;
   border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   width: 70%;
 }
 
@@ -195,7 +195,6 @@ input[type="date"] {
   justify-content: center;
   align-items: center;
   overflow: hidden; /* giúp ảnh không tràn ra ngoài */
-  border: 3px solid #3b82f6;
 }
 
 /* Ảnh bên trong avatar */
@@ -211,7 +210,6 @@ input[type="date"] {
 .avatar i.fa-user {
   position: absolute;
   font-size: 50px;
-  color: #3b82f6;
   z-index: 0;
 }
 
@@ -237,7 +235,6 @@ input[type="date"] {
 .camera-icon:hover {
   background: #2563eb; /* hiệu ứng hover */
 }
-
 
 @media (max-width: 768px) {
   .profile-container {
