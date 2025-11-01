@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
   <head>
     <meta charset="UTF-8" />
@@ -11,7 +11,8 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
       integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
       crossorigin="anonymous"
-      referrerpolicy="no-referrer" />
+      referrerpolicy="no-referrer"
+    />
   </head>
   <body>
     <div class="container">
@@ -20,24 +21,165 @@
           <button class="back-btn">&#10094;</button>
         </a>
         <h2>Đơn hàng của tôi</h2>
-        <button class="filter-btn">&#128269;</button>
       </header>
 
-      <div class="tab-container">
-        <button class="tab active">Thành công</button>
-        <button class="tab">Không thành công</button>
-      </div>
+      <div class="content-wrapper">
+        <div class="tab-container">
+          <button class="tab active">Thành công</button>
+          <button class="tab">Không thành công</button>
+        </div>
 
-      <div class="search-container">
-        <input type="text" placeholder="Nhập mã đơn hàng" />
-        <button class="search-btn">&#128269;</button>
-      </div>
+        <div class="search-container">
+          <i class="fas fa-search search-icon"></i>
+          <input type="text" placeholder="Nhập mã đơn hàng hoặc tên vé" />
+        </div>
 
-      <div class="empty-state">
-        <img
-          src="https://cdn-icons-png.flaticon.com/512/7471/7471332.png"
-          alt="empty" />
-        <p>Opps, không tìm thấy đơn hàng nào.</p>
+        <!-- Orders List -->
+        <div class="orders-list">
+          <!-- Order Card 1 -->
+          <div class="order-card">
+            <div class="order-header">
+              <div class="order-id">
+                <i class="fas fa-ticket-alt"></i>
+                <span>#VW123456</span>
+              </div>
+              <span class="status-badge success">
+                <i class="fas fa-check-circle"></i> Thành công
+              </span>
+            </div>
+
+            <div class="order-content">
+              <div class="ticket-info">
+                <h3>Vé VinWonders Phú Quốc</h3>
+                <p class="ticket-type">Vé người lớn × 2</p>
+              </div>
+
+              <div class="order-details">
+                <div class="detail-row">
+                  <span class="label">
+                    <i class="fas fa-calendar"></i> Ngày đặt
+                  </span>
+                  <span class="value">2/10/2025</span>
+                </div>
+                <div class="detail-row">
+                  <span class="label">
+                    <i class="fas fa-clock"></i> Ngày sử dụng
+                  </span>
+                  <span class="value">05/10/2025</span>
+                </div>
+                <div class="detail-row total">
+                  <span class="label">Tổng tiền</span>
+                  <span class="value price">1.200.000đ</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="order-actions">
+              <button class="btn-secondary">Xem chi tiết</button>
+              <button class="btn-primary">Sử dụng ngay</button>
+            </div>
+          </div>
+
+          <!-- Order Card 2 -->
+          <div class="order-card">
+            <div class="order-header">
+              <div class="order-id">
+                <i class="fas fa-ticket-alt"></i>
+                <span>#VW123455</span>
+              </div>
+              <span class="status-badge success">
+                <i class="fas fa-check-circle"></i> Thành công
+              </span>
+            </div>
+
+            <div class="order-content">
+              <div class="ticket-info">
+                <h3>Vé VinWonders Nha Trang</h3>
+                <p class="ticket-type">Vé trẻ em × 1, Vé người lớn × 2</p>
+              </div>
+
+              <div class="order-details">
+                <div class="detail-row">
+                  <span class="label">
+                    <i class="fas fa-calendar"></i> Ngày đặt
+                  </span>
+                  <span class="value">25/9/2020</span>
+                </div>
+                <div class="detail-row">
+                  <span class="label">
+                    <i class="fas fa-clock"></i> Ngày sử dụng
+                  </span>
+                  <span class="value">20/10/2020</span>
+                </div>
+                <div class="detail-row total">
+                  <span class="label">Tổng tiền</span>
+                  <span class="value price">1.650.000đ</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="order-actions">
+              <button class="btn-secondary">Xem chi tiết</button>
+              <button class="btn-primary">Sử dụng ngay</button>
+            </div>
+          </div>
+
+          <!-- Order Card 3 -->
+          <div class="order-card">
+            <div class="order-header">
+              <div class="order-id">
+                <i class="fas fa-ticket-alt"></i>
+                <span>#VW123450</span>
+              </div>
+              <span class="status-badge success">
+                <i class="fas fa-check-circle"></i> Thành công
+              </span>
+            </div>
+
+            <div class="order-content">
+              <div class="ticket-info">
+                <h3>Vé VinWonders Nam Hội An</h3>
+                <p class="ticket-type">Vé người lớn × 4</p>
+              </div>
+
+              <div class="order-details">
+                <div class="detail-row">
+                  <span class="label">
+                    <i class="fas fa-calendar"></i> Ngày đặt
+                  </span>
+                  <span class="value">20/10/2021</span>
+                </div>
+                <div class="detail-row">
+                  <span class="label">
+                    <i class="fas fa-clock"></i> Ngày sử dụng
+                  </span>
+                  <span class="value">22/10/2021</span>
+                </div>
+                <div class="detail-row total">
+                  <span class="label">Tổng tiền</span>
+                  <span class="value price">2.000.000đ</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="order-actions">
+              <button class="btn-secondary">Xem chi tiết</button>
+              <button class="btn-primary disabled">Đã sử dụng</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Empty State (hidden when there are orders) -->
+        <div class="empty-state" style="display: none">
+          <div class="empty-icon">
+            <i class="fas fa-shopping-bag"></i>
+          </div>
+          <h3>Chưa có đơn hàng</h3>
+          <p>Bạn chưa có đơn hàng nào.<br />Hãy khám phá và đặt vé ngay!</p>
+          <button class="btn-explore">
+            <i class="fas fa-compass"></i> Khám phá ngay
+          </button>
+        </div>
       </div>
     </div>
   </body>
