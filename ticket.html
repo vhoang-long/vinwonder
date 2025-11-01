@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VinWonders</title>
+     <link rel="icon" type="image/png" href="./assets/iconlogo.png" />
+    <link rel="stylesheet" href="./style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer" />
+  </head>
+
+  <body>
+    <div class="wrapperTicket">
+      <div class="ticketImage">
+        <img src="./assets/bg-ticket.jpg" alt="" />
+      </div>
+      <div class="ticketContainer">
+        <div class="dropdown">
+          <div class="dropdown-header">
+            <i class="fa-solid fa-location-dot"></i>
+            <span>Chọn điểm đến</span>
+          </div>
+
+          <div class="dropdown-list">
+            <ul>
+              <li class="region">
+                <div>
+                  <h3>Nha Trang</h3>
+                </div>
+                <div class="region-header">
+                  <i class="fa-solid fa-location-dot"></i>
+                  <p>VinWonders Nha Trang</p>
+                </div>
+
+                <div class="region-header">
+                  <i class="fa-solid fa-location-dot"></i>
+                  <p>VinWonders Harbour Nha Trang</p>
+                </div>
+
+                <div class="region-header">
+                  <i class="fa-solid fa-location-dot"></i>
+                  <p>Aquafield Nha Trang</p>
+                </div>
+
+                <div class="region-header">
+                  <i class="fa-solid fa-location-dot"></i>
+                  <p>Tắm bùn Hòn Tằm</p>
+                </div>
+              </li>
+
+              <li class="region">
+                <div>
+                  <h3>Phú Quốc</h3>
+                </div>
+                <div class="region-header">
+                  <i class="fa-solid fa-location-dot"></i>
+                  <p>VinWonders Phú Quốc</p>
+                </div>
+
+                <div class="region-header">
+                  <i class="fa-solid fa-location-dot"></i>
+                  <p>Vinpearl Safari Phú Quốc</p>
+                </div>
+              </li>
+              <li class="region">
+                <div>
+                  <h3>Hạ Long</h3>
+                </div>
+                <div class="region-header">
+                  <i class="fa-solid fa-location-dot"></i>
+                  <p>VinWonders Hạ Long</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="calendar-container">
+          <label for="calendar-input" class="calendar-label"> </label>
+          <i class="fa-solid fa-calendar-days calendarIcon"></i>
+          <input
+            type="text"
+            id="calendar-input"
+            placeholder="Chọn thứ, ngày, tháng, năm"
+            readonly />
+          <div id="calendar" class="calendar hidden"></div>
+        </div>
+        <div>
+          <button class="btn-container">Tiếp tục</button>
+        </div>
+      </div>
+      <div class="menu">
+        <div class="menuItem">
+          <a href="./index.html" class="menuItemLink">
+            <i class="fa-solid fa-house menuItemIcon"></i>
+            <p class="menuItemContent">Trang chủ</p>
+          </a>
+        </div>
+        <div class="menuItem">
+          <a href="" class="menuItemLink">
+            <i class="fa-solid fa-ticket menuItemIcon"></i>
+            <p class="menuItemContent">Mua vé</p>
+          </a>
+        </div>
+        <div class="menuMap">
+          <a href="./map-game.html" class="menuItemLink">
+            <i class="fa-solid fa-location-dot menuMapIcon"></i>
+          </a>
+        </div>
+        <div class="menuItem">
+          <a href="./shopping.html" class="menuItemLink">
+            <i class="fa-solid fa-bag-shopping menuItemIcon"></i>
+            <p class="menuItemContent">Mua sắm</p>
+          </a>
+        </div>
+        <div class="menuItem">
+          <a href="./user.html" class="menuItemLink">
+            <i class="fa-solid fa-circle-user menuItemIcon"></i>
+            <p class="menuItemContent">Tài khoản</p>
+          </a>
+        </div>
+        <script src="./main.js"></script>
+      </div>
+    </div>
+  </body>
+</html>

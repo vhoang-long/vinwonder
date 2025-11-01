@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+     <title>VinWonders</title>
+      <link rel="icon" type="image/png" href="./assets/iconlogo.png" />
+    <link rel="icon" type="image/png" href="./assets/logoweb.webp" />
+    <link rel="stylesheet" href="./calendar.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <a href="../index.html">
+          <i class="fa-solid fa-chevron-left"></i>
+        </a>
+        <h2>Danh sách sự kiện</h2>
+        <i class="fa-solid fa-filter"></i>
+      </header>
+
+      <div class="search-bar">
+        <input type="text" placeholder="Tìm kiếm trò chơi" class="searchIcon" />
+        <i class="fa-solid fa-magnifying-glass iconSearch"></i>
+      </div>
+
+      <div class="card" id="hammoCard">
+        <img src="../assets/lichbieudien.jpg" alt="Cuộc phiêu lưu hầm mỏ" />
+        <div class="card-content">
+          <div>
+            <h3>Tata show 5.0 ⭐</h3>
+            <p><i class="fa-solid fa-map-pin"></i> Fairy Land</p>
+            <p><i class="fa-solid fa-ruler-vertical"></i> Không giới hạn chiều cao</p>
+            <p><i class="fa-regular fa-clock"></i> 19:30 - 20:10</p>
+          </div>
+         <a href="../map-game.html">
+           <button class="direction-btn">Chỉ đường</button>
+         </a>
+        </div>
+      </div>
+      <div class="card" id="tataCard">
+        <img src="../assets/bg-ticket.jpg" alt="Cuộc phiêu lưu hầm mỏ" />
+        <div class="card-content">
+          <div>
+            <h3>Biểu diễn nhạc nước 5.0 ⭐</h3>
+            <p><i class="fa-solid fa-map-pin"></i> Sea world</p>
+            <p><i class="fa-solid fa-ruler-vertical"></i> Không giới hạn chiều cao</p>
+            <p><i class="fa-regular fa-clock"></i>19:00 - 19:30</p>
+          </div>
+         <a href="../map-game.html">
+           <button class="direction-btn">Chỉ đường</button>
+         </a>
+        </div>
+      </div>
+
+
+      <div class="modal" id="hammoModal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <img src="../assets/lichbieudien.jpg" alt="Cuộc phiêu lưu hầm mỏ" />
+            <span class="close-btn" id="closeModal">&times;</span>
+          </div>
+          <div class="modal-body">
+            <h2>Tata show 5.0 </h2>
+            <p class="location"><i class="fa-solid fa-map-pin"></i> Fairy Land</p>
+            <div class="info-grid">
+              <p><i class="fa-solid fa-user"></i> Trẻ em, Người lớn</p>
+              <p><i class="fa-solid fa-heart-pulse"></i> Mức độ: không thể bỏ lở</p>
+              <p><i class="fa-solid fa-ruler-vertical"></i> Không giới hạn chiều cao</p>
+              <p><i class="fa-solid fa-cloud-rain"></i> Dừng khi thời tiết xấu: Có</p>
+             
+            </div>
+
+            <div class="note">
+              <strong>Giới thiệu:</strong><br />
+Sự kết hợp giữa công nghệ 3D mapping hiện đại bậc nhất, trình diễn ánh sáng, khói lửa và đặc biệt phần biểu diễn của hơn 100 diễn viên trong nước và quốc tế đã tạo ra màn trình diễn hoành tráng và mãn nhãn người xem. Vở diễn là hành trình khám phá, phiêu lưu kỳ thú của công chúa Tata và những người bạn thân thiết trong thế giới cổ tích diệu kỳ. Tại đây, du khách sẽ được khám phá xứ sở Vạn Hoa rực rỡ, lặn xuống biển sâu muôn cảnh thần tiên của thế giới Đại Dương và chứng kiến tận cùng lãnh địa Bóng Tối qua màn trình diễn hoành tráng.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal" id="tataModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <img src="../assets/bg-ticket.jpg" alt="Tata ở xứ sở thần tiên" />
+        <span class="close-btn" id="closeTataModal">&times;</span>
+      </div>
+      <div class="modal-body">
+        <h2>Biểu diễn nhạc nước 5.0</h2>
+        <p class="location"><i class="fa-solid fa-map-pin"></i> Sea world</p>
+        <div class="info-grid">
+          <p><i class="fa-solid fa-user"></i> Mọi lứa tuổi</p>
+          <p><i class="fa-solid fa-heart-pulse"></i> Mức độ: Thư giãn</p>
+          <p><i class="fa-solid fa-ruler-vertical"></i> Không giới hạn chiều cao</p>
+          <p><i class="fa-solid fa-cloud-rain"></i> Dừng khi thời tiết xấu: Không</p>
+        </div>
+
+        <div class="note">
+          <strong>Giớ thiệu:</strong><br />
+          Màn trình diễn ẩn tượng bởi những sự kết hợp hoàn hảo của nước, ánh sáng laze công nghệ tối tân và âm nhạc sống động.
+        </div>
+      </div>
+      </div>
+
+    </div>
+     <script>
+        const cards = [
+        { card: "hammoCard", modal: "hammoModal", close: "closeModal" },
+        { card: "tataCard", modal: "tataModal", close: "closeTataModal" },
+      ];
+
+      cards.forEach(({ card, modal, close }) => {
+        const cardEl = document.getElementById(card);
+        const modalEl = document.getElementById(modal);
+        const closeEl = document.getElementById(close);
+
+        cardEl.addEventListener("click", () => {
+          modalEl.style.display = "flex";
+          document.body.style.overflow = "hidden";
+        });
+
+        closeEl.addEventListener("click", () => {
+          modalEl.style.display = "none";
+          document.body.style.overflow = "auto";
+        });
+
+        window.addEventListener("click", (e) => {
+          if (e.target === modalEl) {
+            modalEl.style.display = "none";
+            document.body.style.overflow = "auto";
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

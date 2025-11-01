@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VinWonders</title>
+    <link rel="icon" type="image/png" href="./assets/iconlogo.png" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <a href="../user.html">
+          <button class="back-btn">&#10094;</button>
+        </a>
+        <h2>Đơn hàng của tôi</h2>
+        <button class="filter-btn">&#128269;</button>
+      </header>
+
+      <div class="tab-container">
+        <button class="tab active">Thành công</button>
+        <button class="tab">Không thành công</button>
+      </div>
+
+      <div class="search-container">
+        <input type="text" placeholder="Nhập mã đơn hàng" />
+        <button class="search-btn">&#128269;</button>
+      </div>
+
+      <div class="empty-state">
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/7471/7471332.png"
+          alt="empty" />
+        <p>Opps, không tìm thấy đơn hàng nào.</p>
+      </div>
+    </div>
+  </body>
+</html>

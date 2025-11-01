@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VinWonders</title>
+   <link rel="icon" type="image/png" href="./assets/iconlogo.png" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Open Sans", sans-serif;
+    }
+    body {
+      font-family: "Poppins", sans-serif;
+      background: #f9fafc;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 24px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    header h2 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    header button {
+      background: none;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      color: #333;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+
+    .title {
+      font-size: 22px;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .game-card {
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s;
+    }
+
+    .game-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .game-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .game-content {
+      padding: 16px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      color: #fff;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+
+    .high {
+      background: #e74c3c;
+    }
+
+    .medium {
+      background: #f39c12;
+    }
+
+    .low {
+      background: #2ecc71;
+    }
+
+    .category {
+      background: #eef2f7;
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      color: #333;
+      margin-bottom: 8px;
+    }
+
+    .game-content h3 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .game-content p {
+      font-size: 14px;
+      color: #666;
+      margin: 8px 0;
+    }
+
+    .info {
+      font-size: 13px;
+      color: #555;
+      margin-top: 8px;
+    }
+
+    .queue {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+      font-size: 13px;
+      color: #888;
+    }
+
+    .queue i {
+      color: #ff6600;
+      margin-right: 4px;
+    }
+
+    .join-btn {
+      display: block;
+      width: 100%;
+      background: #e55b00;
+      color: #fff;
+      border: none;
+      border-radius: 0 0 16px 16px;
+      padding: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.2s;
+    }
+
+    .join-btn:hover {
+      background: #ce903f;
+    }
+
+    /* --- Modal chung --- */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.4);
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    .modal-content {
+      background: #fff;
+      border-radius: 16px;
+      padding: 20px;
+      width: 90%;
+      max-width: 400px;
+      position: relative;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 14px;
+      cursor: pointer;
+      font-size: 20px;
+      color: #333;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .modal h3 {
+      margin-top: 0;
+      font-size: 18px;
+      text-align: center;
+    }
+
+    .input-group {
+      margin-top: 10px;
+    }
+
+    .input-group label {
+      font-weight: 500;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+
+    .time-options button {
+      margin: 5px;
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      background: #f6f6f6;
+      cursor: pointer;
+    }
+
+    .time-options button.active {
+      background: #e48111;
+      color: #fff;
+    }
+
+    .counter {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    .counter button {
+      border: none;
+      background: #e67e22;
+      color: #fff;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .counter span {
+      margin: 0 10px;
+      font-weight: 600;
+    }
+
+    .save-btn {
+      background: #ff6600;
+      border: none;
+      color: #fff;
+      width: 100%;
+      padding: 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 15px;
+      font-weight: 500;
+    }
+
+    .save-btn:hover {
+      background: #e55b00;
+    }
+
+    @media (max-width: 600px) {
+      .card-grid {
+        grid-template-columns: 1fr; /* nhỏ hơn 600px thì 1 cột */
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <button onclick="window.history.back()">
+      <i class="fa-solid fa-arrow-left"></i>
+    </button>
+    <h2>Vé ưu tiên trò chơi</h2>
+    <div></div>
+  </header>
+
+  <div class="container">
+    <div class="card-grid" id="gameList"></div>
+  </div>
+
+  <!-- Modal đặt vé ưu tiên -->
+  <div class="modal" id="bookingModal">
+    <div class="modal-content">
+      <span class="close-btn" id="closeBooking">&times;</span>
+      <h3>Đặt vé ưu tiên</h3>
+
+      <div class="input-group">
+        <label>Chọn khung giờ</label>
+        <div class="time-options">
+          <button class="active">9:30</button>
+          <button>11:00</button>
+          <button>14:00</button>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>Số lượng người chơi</label>
+        <div class="counter">
+          <button id="minus">−</button>
+          <span id="count">1</span>
+          <button id="plus">+</button>
+        </div>
+      </div>
+
+      <p style="text-align:center;margin-top:10px;">
+        <strong>Tổng tiền: </strong>
+        <span id="total">100,000 đ</span>
+      </p>
+
+      <button class="save-btn" id="confirmBooking">Xác nhận đặt vé</button>
+    </div>
+  </div>
+
+  <!-- Modal hóa đơn -->
+  <div class="modal" id="billModal">
+    <div class="modal-content">
+      <span class="close-btn" id="closeBill">&times;</span>
+      <h3>Hóa đơn đặt vé</h3>
+      <div id="billContent"></div>
+    </div>
+  </div>
+
+  <script>
+    const games = [
+      {
+        title: "Tàu lượn siêu tốc",
+        thrill: "high",
+        image:
+          "./assets/tau-luon-sieu-toc.jpeg",
+        queue: 20,
+        wait: "9:00-18:30",
+      },
+      {
+        title: "Công viên nước Aquatopia ",
+        thrill: "medium",
+        image:
+          "./assets/slider1.jpg",
+        queue: 15,
+        wait: "9:00 - 19:30",
+      },
+      {
+        title: "Grand World Aquarium",
+        thrill: "low",
+        image:
+          "./assets/slider2.jpg",
+        queue: 10,
+        wait: "10:00 - 18:00",
+      },
+    ];
+
+    const gameList = document.getElementById("gameList");
+    const bookingModal = document.getElementById("bookingModal");
+    const billModal = document.getElementById("billModal");
+    const closeBooking = document.getElementById("closeBooking");
+    const closeBill = document.getElementById("closeBill");
+    const totalEl = document.getElementById("total");
+    const countEl = document.getElementById("count");
+
+    let selectedGame = null;
+    let count = 1;
+    const price = 100000;
+
+    // render danh sách trò chơi
+    games.forEach((g, i) => {
+      const card = document.createElement("div");
+      card.className = "game-card";
+      card.innerHTML = `
+        <img src="${g.image}" alt="${g.title}">
+        <div class="game-content">
+      
+          <h3>${g.title}</h3>
+          <p>Thứ tự hiện tại: <strong>${g.queue}</strong></p>
+          <p>Giá:  <strong>100.000đ</strong></p>
+          <div class="queue">
+            <span><i class="fa-regular fa-clock"></i> ${g.wait}</span>
+            <span><i class="fa-solid fa-ticket"></i> Vé ưu tiên</span>
+            </div>
+        </div>
+        <button class="join-btn" data-index="${i}">Đặt vé ưu tiên</button>
+      `;
+      gameList.appendChild(card);
+    });
+
+    // mở modal đặt vé
+    document.querySelectorAll(".join-btn").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        const index = e.target.dataset.index;
+        selectedGame = games[index];
+        count = 1;
+        countEl.textContent = count;
+        totalEl.textContent = (price * count).toLocaleString("vi-VN") + " đ";
+        bookingModal.style.display = "flex";
+      });
+    });
+
+    // chọn giờ
+    document.querySelectorAll(".time-options button").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document
+          .querySelectorAll(".time-options button")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+      });
+    });
+
+    // tăng giảm số lượng
+    document.getElementById("plus").addEventListener("click", () => {
+      count++;
+      countEl.textContent = count;
+      totalEl.textContent = (price * count).toLocaleString("vi-VN") + " đ";
+    });
+    document.getElementById("minus").addEventListener("click", () => {
+      if (count > 1) {
+        count--;
+        countEl.textContent = count;
+        totalEl.textContent = (price * count).toLocaleString("vi-VN") + " đ";
+      }
+    });
+
+    // xác nhận đặt vé
+    document
+      .getElementById("confirmBooking")
+      .addEventListener("click", () => {
+        const time = document.querySelector(".time-options .active").textContent;
+        const total = price * count;
+        const orderNo = Math.floor(Math.random() * 90000 + 10000);
+
+        const newOrder = {
+          title: selectedGame.title,
+          time,
+          count,
+          total,
+          orderNo,
+          queue: 5,
+        };
+
+        localStorage.setItem("priorityTicket", JSON.stringify(newOrder));
+
+        bookingModal.style.display = "none";
+
+        // hiển thị hóa đơn
+        const billHTML = `
+          <p><strong>Trò chơi:</strong> ${newOrder.title}</p>
+          <p><strong>Thứ tự ưu tiên:</strong> ${newOrder.queue}</p>
+          <p><strong>Khung giờ:</strong> ${newOrder.time}</p>
+          <p><strong>Số lượng:</strong> ${newOrder.count}</p>
+          <p><strong>Tổng tiền:</strong> ${newOrder.total.toLocaleString(
+            "vi-VN"
+          )} đ</p>
+          <hr>
+          <div style="text-align:center">
+            <p>Quét mã QR để xác nhận vé:</p>
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=Order_${newOrder.orderNo}" alt="QR">
+            <p style="margin-top:8px;">Mã đặt vé: <strong>${newOrder.orderNo}</strong></p>
+          </div>
+        `;
+        document.getElementById("billContent").innerHTML = billHTML;
+        billModal.style.display = "flex";
+      });
+
+    // đóng modal
+    closeBooking.onclick = () => (bookingModal.style.display = "none");
+  
+closeBill.onclick = () => {
+  bookingModal.style.display = "none";
+  window.location.href = "index.html"; // quay về trang chính
+};
+    //   //   <span class="badge ${g.thrill}">${g.thrill} thrill</span>
+  </script>
+</body>
+</html>

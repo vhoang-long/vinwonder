@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VinWonders</title>
+     <link rel="icon" type="image/png" href="./assets/iconlogo.png" />
+    <link rel="stylesheet" href="./profile.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer" />
+  </head>
+
+  <body>
+    <div class="profile-container">
+      <!-- Header -->
+      <header class="profile-header">
+        <a href="../user.html">
+          <div class="back-btn">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span>Quay lại</span>
+        </div>
+        </a>
+      </header>
+
+      <!-- Avatar -->
+      <div class="avatar-section">
+        <h2>Thông tin cá nhân</h2>
+        <div class="avatar">
+          <img src="../assets/avartar2.png" alt="avatar" />
+          <div class="camera-icon">
+            <i class="fa-solid fa-camera"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form thông tin -->
+      <form class="info-form">
+        <div class="form-group">
+          <label>Họ và tên</label>
+          <div class="input-wrapper">
+            <i class="fa-regular fa-user"></i>
+            <input
+              type="text"
+              disabled
+              value="Lê Trung Min"
+              placeholder="Lê Trung Min"
+              disabled />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Email</label>
+          <div class="input-wrapper">
+            <i class="fa-regular fa-envelope"></i>
+            <input
+              type="email"
+              disabled
+              value="min1940@gmail.com"
+              placeholder="min1940@gmail.com"
+              disabled />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Số điện thoại</label>
+          <div class="input-wrapper disabled">
+            <i class="fa-solid fa-phone"></i>
+            <input type="text" disabled value="+84 908764829" />
+          </div>
+        </div>
+
+        <div class="form-group gender">
+          <label>Giới tính</label>
+          <div class="gender-options">
+            <label class="radio">
+              <input type="radio" name="gender" checked />
+              <span>Nam</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Ngày sinh</label>
+          <div class="input-wrapper">
+            <i class="fa-regular fa-calendar"></i>
+            <input type="text" disabled value="01/01/1990" />
+          </div>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

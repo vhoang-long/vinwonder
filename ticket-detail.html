@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VinWonders</title>
+    <link rel="icon" type="image/png" href="./assets/iconlogo.png" />
+    <link rel="stylesheet" href="./style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer" />
+  </head>
+  <body>
+    <div class="wrapperDetaiTicket">
+      <div class="ticket-detail">
+        <div class="banner">
+          <img
+            src="./assets/vinwonders-nha-trang.jpg"
+            alt="VinWonders Nha Trang" />
+          <div class="back-btn">
+            <a href="./ticket.html"><i class="fa-solid fa-arrow-left"></i></a>
+          </div>
+          <div class="cart-btn"><i class="fa-regular fa-heart"></i></div>
+        </div>
+        <div class="info">
+          <h2>VinWonders Nha Trang</h2>
+          <p class="rating"><span>⭐ 4.2</span> (7529 lượt đánh giá)</p>
+
+          <div class="date-buttons">
+            <button>Hôm nay</button>
+            <button>Ngày mai</button>
+            <button class="active">
+              <i class="fa-regular fa-calendar"></i> 27/10/2025
+            </button>
+          </div>
+
+          <div class="filter-buttons">
+            <button class="active">Tất cả vé</button>
+            <button><i class="fa-solid fa-fire"></i> Bán chạy nhất</button>
+            <button>Gói VIP</button>
+          </div>
+        </div>
+
+        <div class="ticket-card-list">
+          <div class="ticket-card">
+            <h3>
+              [Nha Trang Passport] - [Nửa ngày] - Cáp treo + Xông hơi Aquafield
+              (2 tiếng) + Tata Show
+            </h3>
+            <ul>
+              <li>Bé hóa thân thành nhân viên sở thú nhí</li>
+              <li>Trải nghiệm chăm sóc, tương tác với động vật</li>
+              <li>Lớp học diễn ra trong 01 tiếng</li>
+            </ul>
+            <a href="#">Xem chi tiết »</a>
+
+            <div class="price-box">
+              <p>Chỉ từ <span class="price">300,000 đ</span></p>
+              <button class="btn-choose">Chọn</button>
+            </div>
+          </div>
+          <div class="ticket-card">
+            <h3>
+              [VinWonders Nha Trang ] - Vé vào cửa Tiêu chuẩn - Tặng voucher ẩm
+              thực
+            </h3>
+            <ul>
+              <li>Vé vào cửa khu vui chơi 1 lần trong ngày</li>
+              <li>Di chuyển bằng cap treo 02 chiều + 02 lượt VinBus miễn phí</li>
+              <li>Tặng voucher ẩm thực từ 15/08 - 30/11</li>
+            </ul>
+            <a href="#">Xem chi tiết »</a>
+
+            <div class="price-box">
+              <p>Chỉ từ <span class="price">950,000 đ</span></p>
+              <button class="btn-choose">Chọn</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- modal chi tiết vé -->
+      <div id="ticketModal" class="modal">
+        <div class="modal-content">
+          <span class="close-btn">&times;</span>
+          <h3 class="modal-title">Chi tiết vé</h3>
+          <p class="modal-description">
+            Đây là mô tả chi tiết của gói vé bạn chọn.
+          </p>
+        </div>
+      </div>
+      <!-- modal mua vé -->
+      <div id="buyModal" class="modalBuyTicket">
+        <div class="modal-content ticket-buy">
+          <span class="close-btn">&times;</span>
+          <h3 class="modal-title">Chọn loại vé</h3>
+          <p>[Vinpearl Harbour] - Vé xem Tata Show</p>
+
+          <!-- Chọn cơ sở -->
+          <div class="location-section">
+            <h4><i class="fa-solid fa-location-dot"></i> Chọn cơ sở</h4>
+            <div class="location-options">
+              <button class="active">ZooKeeper NT</button>
+            </div>
+          </div>
+
+          <!-- Chọn thời gian -->
+          <div class="time-section">
+            <h4><i class="fa-regular fa-clock"></i> Chọn thời gian</h4>
+            <div class="time-options">
+              <button class="time-btn active">9:30</button>
+              <button class="time-btn">14:00</button>
+            </div>
+          </div>
+
+          <div class="quantity-section">
+            <h4><i class="fa-solid fa-user-group"></i> Số lượng mua</h4>
+
+            <div class="ticket-type">
+              <div>
+                <p>Người lớn</p>
+                <small>Cao từ 140cm</small>
+              </div>
+              <div class="price">100,000 đ</div>
+              <div class="counter">
+                <button class="minus">−</button>
+                <span class="count">1</span>
+                <button class="plus">+</button>
+              </div>
+            </div>
+
+            <div class="ticket-type">
+              <div>
+                <p>Trẻ em</p>
+                <small
+                  >Cao từ <br />
+                  100cm–139cm</small
+                >
+              </div>
+              <div class="price">100,000 đ</div>
+              <div class="counter">
+                <button class="minus">−</button>
+                <span class="count">0</span>
+                <button class="plus">+</button>
+              </div>
+            </div>
+
+            <div class="ticket-type">
+              <div>
+                <p>Người cao tuổi</p>
+                <small>Từ 60 tuổi</small>
+              </div>
+              <div class="price">100,000 đ</div>
+              <div class="counter">
+                <button class="minus">−</button>
+                <span class="count">0</span>
+                <button class="plus">+</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="footer">
+            <span class="total">100,000 đ</span>
+            <button class="buy-btn">Mua ngay</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const selectedLocation = params.get("location");
+      const selectedDate = params.get("date");
+
+      // --- Cập nhật vào giao diện ---
+      // Gắn tên điểm đến vào thẻ h2
+      const titleElement = document.querySelector(".info h2");
+      if (selectedLocation) {
+        titleElement.textContent = selectedLocation;
+      } else {
+        titleElement.textContent = "Không có dữ liệu";
+      }
+
+      // Gắn ngày vào nút lịch
+      const dateButton = document.querySelector(".date-buttons button.active");
+      if (selectedDate) {
+        dateButton.innerHTML = `<i class="fa-regular fa-calendar"></i> ${selectedDate}`;
+      } else {
+        dateButton.innerHTML = `<i class="fa-regular fa-calendar"></i> Không có dữ liệu`;
+      }
+
+      const modal = document.getElementById("ticketModal");
+      const modalTitle = document.querySelector(".modal-title");
+      const modalDescription = document.querySelector(".modal-description");
+      const closeBtn = document.querySelector(".close-btn");
+
+      // Lắng nghe click vào các nút "Xem chi tiết"
+      document.querySelectorAll(".ticket-card a").forEach((link) => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+
+          // Tuỳ chỉnh nội dung modal theo thẻ vé được bấm
+          const card = e.target.closest(".ticket-card");
+          const title =
+            card.querySelector("h3")?.textContent.trim() || "Chi tiết vé";
+          // const details =
+          //   card.querySelector("ul")?.innerHTML ||
+          //   "<p>Không có thông tin chi tiết</p>";
+
+          const details = `
+      <h4>BAO GỒM</h4>
+      <ul>
+        <li>- Di chuyển bằng cáp treo 02 chiều</li>
+        <li>- Xông hơi 02 tiếng tại Aquafield</li>
+        <li>- Vé xem Tata Show (vào cửa VinWonders Nha Trang từ 18:30)</li>
+        <li>- Miễn phí 02 lượt sử dụng dịch vụ xe buýt VinBus trong ngày</li>
+      </ul>
+      <h4>Mô TẢ</h4>
+      <ul>
+        <li>- Trải nghiệm cáp treo vượt biển đầu tiên tại Việt Nam
+ngắm trọn vẻ đẹp của vịnh biển Nha Trang</li>
+        <li>- Thư giãn, thải độc cơ thể với liệu trình xông hơi 7 phòng
+trị liệu tại Aquafield – Tổ hợp spa & xông hơi cao cấp Top
+1 Hàn Quốc đầu tiên tại Việt Nam trong 02 tiếng.</li>
+      </ul>
+      <h4>ĐIỀU KHOẢN</h4>
+      <ul>
+        <li>- Trong trường hợp điều kiện thời tiết không thuận lợi, cáp
+treo buộc phải dừng hoạt động để đảm bảo an toàn,
+VinWonders sẽ sắp xếp phương tiện di chuyển thay thế</li>
+       
+      </ul>
+    `;
+
+          modalTitle.textContent = title;
+          modalDescription.innerHTML = details;
+
+          modal.style.display = "flex";
+        });
+      });
+
+      // Đóng modal khi bấm nút X
+      closeBtn.addEventListener("click", () => (modal.style.display = "none"));
+
+      // Đóng khi click ra ngoài
+      window.addEventListener("click", (e) => {
+        if (e.target === modal) modal.style.display = "none";
+      });
+
+      const buyModal = document.getElementById("buyModal");
+      const buyCloseBtn = buyModal.querySelector(".close-btn");
+      const totalElement = buyModal.querySelector(".total");
+      let selectedChooseBtn = null;
+
+      document.querySelectorAll(".btn-choose").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          selectedChooseBtn = e.target;
+          buyModal.style.display = "flex";
+        });
+      });
+
+      buyCloseBtn.addEventListener("click", () => {
+        buyModal.style.display = "none";
+      });
+
+      window.addEventListener("click", (e) => {
+        if (e.target === buyModal) buyModal.style.display = "none";
+      });
+
+      // --- Cập nhật số lượng và tổng tiền ---
+      buyModal.querySelectorAll(".ticket-type").forEach((type) => {
+        const plus = type.querySelector(".plus");
+        const minus = type.querySelector(".minus");
+        const countEl = type.querySelector(".count");
+        const price = 100000;
+
+        plus.addEventListener("click", () => {
+          countEl.textContent = parseInt(countEl.textContent) + 1;
+          updateTotal();
+        });
+
+        minus.addEventListener("click", () => {
+          const current = parseInt(countEl.textContent);
+          if (current > 0) countEl.textContent = current - 1;
+          updateTotal();
+        });
+      });
+
+      function updateTotal() {
+        let total = 0;
+        buyModal.querySelectorAll(".ticket-type").forEach((type) => {
+          const count = parseInt(type.querySelector(".count").textContent);
+          total += count * 100000;
+        });
+        totalElement.textContent = total.toLocaleString("vi-VN") + " đ";
+
+        // Vô hiệu hóa nút mua nếu tổng tiền = 0
+        const buyBtn = buyModal.querySelector(".buy-btn");
+        if (total === 0) {
+          buyBtn.disabled = true;
+          buyBtn.style.opacity = "0.6";
+          buyBtn.style.cursor = "not-allowed";
+        } else {
+          buyBtn.disabled = false;
+          buyBtn.style.opacity = "1";
+          buyBtn.style.cursor = "pointer";
+        }
+      }
+
+      const timeButtons = document.querySelectorAll(".time-btn");
+
+      timeButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          // Xóa class active ở tất cả nút
+          timeButtons.forEach((b) => b.classList.remove("active"));
+          // Thêm class active cho nút được chọn
+          btn.classList.add("active");
+        });
+      });
+
+      const buyBtn = buyModal.querySelector(".buy-btn");
+      buyBtn.addEventListener("click", () => {
+        const selectedTime =
+          buyModal.querySelector(".time-btn.active").textContent;
+        const selectedBranch = buyModal.querySelector(
+          ".location-options .active"
+        ).textContent;
+
+        const total = parseInt(totalElement.textContent.replace(/\D/g, ""));
+
+        // 🟢 Lấy số lượng từng loại vé
+        const ticketTypes = buyModal.querySelectorAll(".ticket-type");
+        const persons = [];
+        ticketTypes.forEach((type) => {
+          const name = type.querySelector("p").textContent.trim();
+          const count = parseInt(type.querySelector(".count").textContent);
+          if (count > 0) persons.push(`${count} ${name}`);
+        });
+
+        // 🟢 Lấy dữ liệu động từ trang hiện tại
+        const locationName =
+          document.querySelector(".info h2")?.textContent.trim() ||
+          "Không rõ địa điểm";
+        const title =
+          document.querySelector(".ticket-card h3")?.textContent.trim() ||
+          "Không rõ vé";
+        const imageSrc =
+          document.querySelector(".banner img")?.src || "./assets/default.jpg";
+
+        // 🟢 Lấy ngày hiển thị ở nút ngày
+        const selectedDate =
+          document.querySelector(".date-buttons .active")?.textContent.trim() ||
+          "Không rõ ngày";
+
+        const cartItem = {
+          location: locationName,
+          title: title,
+          branch: selectedBranch,
+          time: selectedTime,
+          date: selectedDate,
+          person: persons.join(", "),
+          price: total,
+          image: imageSrc,
+        };
+
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        cart.push(cartItem);
+        localStorage.setItem("cart", JSON.stringify(cart));
+
+        buyModal.style.display = "none";
+        window.location.href = "./cart.html";
+      });
+
+      function resetBuyModal() {
+        buyModal.querySelectorAll(".ticket-type").forEach((type) => {
+          const countEl = type.querySelector(".count");
+          countEl.textContent = "0"; // reset tất cả về 0
+        });
+        updateTotal();
+      }
+
+      // Đóng modal xác nhận
+      confirmCloseBtn.addEventListener("click", () => {
+        confirmModal.style.display = "none";
+      });
+
+      window.addEventListener("click", (e) => {
+        if (e.target === confirmModal) confirmModal.style.display = "none";
+      });
+    </script>
+  </body>
+</html>

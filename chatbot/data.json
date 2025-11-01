@@ -1,0 +1,190 @@
+{
+  "thong_tin_co_ban": {
+    "gio_mo_cua": "9:00 - 20:00 hàng ngày",
+    "dia_chi": "Hòn Tre, Vịnh Nha Trang, Khánh Hòa",
+    "quy_dinh": "Mang CMND cho người ≥60 tuổi; Đo chiều cao trẻ em tại cổng; Không mang đồ ăn ngoài; Vé điện tử qua app VinWonders."
+  },
+  "loai_ve": [
+    {
+      "ten": "Vé tiêu chuẩn + Cáp treo 2 chiều",
+      "gia_nguoi_lon": "950.000 VNĐ",
+      "gia_tre_em_nguoi_gia": "710.000 VNĐ",
+      "mo_ta": "Truy cập đầy đủ trò chơi, cáp treo khứ hồi. Dưới 100cm miễn phí."
+    },
+    {
+      "ten": "Vé sau 16h (Happy Hour)",
+      "gia_nguoi_lon": "660.000 VNĐ",
+      "gia_tre_em_nguoi_gia": "500.000 VNĐ",
+      "mo_ta": "Ưu đãi chiều muộn, bao gồm cáp treo và buffet tối."
+    },
+    {
+      "ten": "Combo vé + Buffet trưa/tối",
+      "gia_nguoi_lon": "1.190.000 VNĐ",
+      "gia_tre_em_nguoi_gia": "820.000 VNĐ",
+      "mo_ta": "Bao gồm bữa ăn buffet tại nhà hàng và vé trọn gói."
+    },
+    {
+      "ten": "Combo 2 ngày không giới hạn",
+      "gia_nguoi_lon": "1.500.000 VNĐ",
+      "gia_tre_em_nguoi_gia": "1.200.000 VNĐ",
+      "mo_ta": "Vào cửa 2 ngày liên tiếp, lý tưởng cho gia đình."
+    }
+  ],
+  "faq": [
+    {
+      "question": "VinWonders Nha Trang hoạt động vào khung giờ nào?",
+      "answer": "VinWonders Nha Trang mở cửa từ 9:00 sáng đến 20:00 tối hằng ngày.",
+      "keywords": ["giờ mở cửa", "thời gian hoạt động", "open"],
+      "category": "thông tin chung"
+    },
+    {
+      "question": "Giá vé của VinWonders Nha Trang là bao nhiêu?",
+      "answer": "Vé tiêu chuẩn: Người lớn 950.000 VNĐ, Trẻ em 710.000 VNĐ. Vé sau 16:00: Người lớn 660.000 VNĐ, Trẻ em 500.000 VNĐ. Combo vé + buffet: Người lớn 1.190.000 VNĐ, Trẻ em 820.000 VNĐ.",
+      "keywords": ["giá vé", "vé vào cửa", "giá tiền"],
+      "category": "vé"
+    },
+    {
+      "question": "Hiện tại khu Fairy Land có các nhà hàng nào?",
+      "answer": "Nhà hàng Coral – khu Fairy Land, Nhà hàng Wind & Sea – khu Fairy Land.",
+      "keywords": ["nhà hàng", "ẩm thực", "Fairy Land"],
+      "category": "ẩm thực"
+    },
+    {
+      "question": "Tôi có thể liên hệ với nhân viên bằng cách nào?",
+      "answer": "Bạn có thể liên hệ hotline 1900 6677 (phím #1) hoặc email we-care@vinwonders.com.",
+      "keywords": ["liên hệ", "hotline", "email"],
+      "category": "hỗ trợ"
+    },
+    {
+      "question": "Trò chơi Giải mã mê cung hiện tại có đông không?",
+      "answer": "Hiện tại trò chơi Giải mã mê cung đang khá đông, thời gian chờ là 30 phút. Bạn có thể đăng ký Hàng chờ ảo để tiết kiệm thời gian.",
+      "keywords": ["giải mã mê cung", "chờ lâu", "hàng chờ"],
+      "category": "trò chơi"
+    },
+    {
+      "question": "Hiện tại có trò chơi nào đang bảo trì không?",
+      "answer": "Hiện tại trò chơi Đường đua nghẹt thở đang được bảo trì để đảm bảo an toàn. Các trò khác vẫn hoạt động bình thường.",
+      "keywords": ["bảo trì", "ngưng hoạt động"],
+      "category": "thông tin chung"
+    },
+    {
+      "question": "Trò chơi Đu quay dây vàng cách trò chơi Giải mã mê cung bao xa?",
+      "answer": "Quãng đường từ Đu quay dây vàng đến Giải mã mê cung là 438m (~6 phút đi bộ).",
+      "keywords": ["đường đi", "chỉ đường", "bản đồ"],
+      "category": "trò chơi"
+    },
+    {
+      "question": "Thời gian chờ của trò chơi Rạp phim Bay là bao lâu?",
+      "answer": "Thời gian chờ của Rạp phim Bay hiện tại là khoảng 20 phút.",
+      "keywords": ["rạp phim bay", "thời gian chờ"],
+      "category": "trò chơi"
+    }
+  ],
+  "games": [
+    {
+      "name": "Cuộc phiêu lưu hầm mỏ",
+      "description": "Xe lượn trong hầm mỏ tối tăm với khúc cua gay cấn, phù hợp cho người thích cảm giác mạnh vừa phải.",
+      "waitTime": "15-25 phút",
+      "location": "Adventure Land",
+      "ageLimit": "Trên 8 tuổi",
+      "heightLimit": "1m20",
+      "intensity": "Trung bình"
+    },
+    {
+      "name": "Đường đua nghẹt thở",
+      "description": "Tàu lượn siêu tốc 90km/h, vòng xoay 360°, cao 40m. Cho người thích cảm giác mạnh.",
+      "waitTime": "30-45 phút",
+      "location": "Adventure Land",
+      "ageLimit": "Trên 12 tuổi",
+      "heightLimit": "1m40",
+      "intensity": "Cao"
+    },
+    {
+      "name": "Vòng quay thần tiên",
+      "description": "Vòng quay ngắm cảnh cao 65m, nhìn toàn cảnh biển Nha Trang.",
+      "waitTime": "10-15 phút",
+      "location": "European Park",
+      "ageLimit": "Mọi lứa tuổi",
+      "heightLimit": "Không yêu cầu",
+      "intensity": "Nhẹ"
+    },
+    {
+      "name": "Tata show",
+      "description": "Biểu diễn nhạc nước và pháo hoa ngoạn mục mỗi tối.",
+      "waitTime": "Không cần chờ",
+      "location": "Quảng trường trung tâm",
+      "schedule": "20:00 hàng ngày",
+      "duration": "25 phút",
+      "intensity": "Nhẹ"
+    }
+  ],
+  "dynamic_info": {
+    "tro_choi": {
+      "giai_ma_me_cung": "Thời gian chờ 30 phút.",
+      "rap_phim_bay": "Thời gian chờ 20 phút.",
+      "bao_tri": "Đường đua nghẹt thở đang bảo trì.",
+      "chi_duong": [
+        { "tu": "Đu quay dây vàng", "den": "Giải mã mê cung", "khoang_cach": "438m", "thoi_gian_di_bo": "6 phút" },
+        { "tu": "Cổng chính", "den": "Cuộc phiêu lưu hầm mỏ", "khoang_cach": "320m", "thoi_gian_di_bo": "5 phút" },
+        { "tu": "Fairy Land", "den": "Sea World", "khoang_cach": "600m", "thoi_gian_di_bo": "9 phút" },
+        { "tu": "Sea World", "den": "Adventure Land", "khoang_cach": "450m", "thoi_gian_di_bo": "7 phút" },
+        { "tu": "Adventure Land", "den": "The World Garden", "khoang_cach": "500m", "thoi_gian_di_bo": "8 phút" },
+        { "tu": "The World Garden", "den": "Fairy Land", "khoang_cach": "700m", "thoi_gian_di_bo": "10 phút" },
+        { "tu": "Cổng chính", "den": "Fairy Land", "khoang_cach": "850m", "thoi_gian_di_bo": "12 phút" },
+        { "tu": "Cổng chính", "den": "Sea World", "khoang_cach": "1.1km", "thoi_gian_di_bo": "15 phút" }
+      ]
+    },
+    "nha_hang_fairy_land": [
+      "Nhà hàng Coral – khu Fairy Land",
+      "Nhà hàng Wind & Sea – khu Fairy Land"
+    ]
+  },
+  "khu_vuc": {
+    "di_choi": {
+      "tro_choi": [
+        { "ten": "Cuộc phiêu lưu hầm mỏ", "khu_vuc": "Adventure Land", "yeu_cau_chieu_cao": "Trên 110cm", "gio_hoat_dong": "09:00 - 19:30" },
+        { "ten": "Tata ở xứ sở thần tiên", "khu_vuc": "Fairy Land", "yeu_cau_chieu_cao": "Không giới hạn", "gio_hoat_dong": "09:00 - 18:00" }
+      ]
+    },
+    "lich_bieu_dien": {
+      "su_kien": [
+        { "ten": "Tata show", "khu_vuc": "Fairy Land", "gio": "19:30 - 20:10" },
+        { "ten": "Biểu diễn nhạc nước", "khu_vuc": "Sea World", "gio": "19:00 - 19:30" }
+      ]
+    },
+    "am_thuc": {
+      "nha_hang": [
+        { "ten": "Wind & Sea", "khu_vuc": "Fairy Land", "gio_hoat_dong": "10:30 - 14:30 / 16:30 - 19:30" },
+        { "ten": "Lotteria", "khu_vuc": "King Garden", "gio_hoat_dong": "09:00 - 18:30" }
+      ]
+    },
+    "mua_sam": {
+      "cua_hang": [
+        { "ten": "Harry Bunny Shop", "khu_vuc": "Adventure Land", "gio_hoat_dong": "09:00 - 19:30" },
+        { "ten": "Wooden House", "khu_vuc": "The World Garden", "gio_hoat_dong": "09:00 - 19:30" }
+      ]
+    }
+  },
+  "thong_bao": {
+    "chao_mung": "Chào mừng đến VinWonders!",
+    "tro_choi_sap_bat_dau": "Cuộc phiêu lưu hầm mỏ sẽ bắt đầu trong 30 phút.",
+    "bao_tri": [
+      "Đường đua nghẹt thở đang bảo trì.",
+      "Đường lượn nhớ đời tạm ngừng do thời tiết xấu."
+    ],
+    "lich_bieu_dien": "Tata show sẽ bắt đầu trễ 30 phút vì lý do kỹ thuật."
+  },
+  "hang_cho_ao": "Tính năng xếp hàng chờ ảo giúp tiết kiệm thời gian và ưu tiên trò chơi hot.",
+  "policies": {
+    "cancellation": "Vé có thể hoàn lại trước 24h, phí 20%.",
+    "refund": "Xử lý hoàn tiền 7-10 ngày làm việc.",
+    "transfer": "Vé có thể chuyển nhượng nếu chưa sử dụng.",
+    "weather": "Trò chơi ngoài trời có thể tạm ngưng khi thời tiết xấu."
+  },
+  "lien_he": {
+    "hotline": "1900 6677 (nhấn phím #1)",
+    "email": "we-care@vinwonders.com",
+    "website": "https://vinwonders.com",
+    "app": "Ứng dụng VinWonders trên App Store và Google Play"
+  }
+}

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VinWonders</title>
+    <link rel="icon" type="image/png" href="./assets/iconlogo.png" />
+    <link rel="stylesheet" href="./playGame.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <a href="../index.html">
+          <i class="fa-solid fa-chevron-left"></i>
+        </a>
+        <h2>Điểm vui chơi</h2>
+        <i class="fa-solid fa-filter"></i>
+      </header>
+
+      <div class="search-bar">
+        <input type="text" placeholder="Tìm kiếm trò chơi" class="searchIcon" />
+        <i class="fa-solid fa-magnifying-glass iconSearch"></i>
+      </div>
+
+      <!-- Card 1 -->
+      <div class="card" id="hammoCard">
+        <img src="../assets/hammo.webp" alt="Cuộc phiêu lưu hầm mỏ" />
+        <div class="card-content">
+          <div>
+            <h3>Cuộc phiêu lưu hầm mỏ 5.0 ⭐</h3>
+            <p><i class="fa-solid fa-map-pin"></i> Adventure Land</p>
+            <p><i class="fa-solid fa-ruler-vertical"></i> Trên 110cm</p>
+            <p><i class="fa-regular fa-clock"></i> 09:00 - 19:30</p>
+          </div>
+            <a href="../map-game.html">
+              <button class="direction-btn">Chỉ đường</button>
+            </a>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="card" id="tataCard">
+  <img src="../assets/vinpearlland-nha-trang.jpg" alt="Tata ở xứ sở thần tiên" />
+  <div class="card-content">
+    <div>
+      <h3>Tata ở xứ sở thần tiên 5.0 ⭐</h3>
+      <p><i class="fa-solid fa-map-pin"></i> Fairy Land</p>
+      <p><i class="fa-solid fa-ruler-vertical"></i> Không giới hạn chiều cao</p>
+      <p><i class="fa-regular fa-clock"></i> 09:00 - 12:25 / 13:00 - 18:00</p>
+    </div>
+      <a href="../map-game.html">
+        <button class="direction-btn">Chỉ đường</button>
+      </a>
+  </div>
+</div>
+    </div>
+
+    <!-- Modal chi tiết trò chơi -->
+    <div class="modal" id="hammoModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <img src="../assets/hammo.webp" alt="Cuộc phiêu lưu hầm mỏ" />
+          <span class="close-btn" id="closeModal">&times;</span>
+        </div>
+        <div class="modal-body">
+          <h2>Cuộc phiêu lưu hầm mỏ</h2>
+          <p class="location"><i class="fa-solid fa-map-pin"></i> Adventure Land</p>
+          <div class="info-grid">
+            <p><i class="fa-solid fa-user"></i> Trẻ em, Người lớn</p>
+            <p><i class="fa-solid fa-heart-pulse"></i> Mức độ: Rớt tim</p>
+            <p><i class="fa-solid fa-ruler-vertical"></i> Trên 110cm</p>
+            <p><i class="fa-solid fa-cloud-rain"></i> Dừng khi thời tiết xấu: Có</p>
+            <p><i class="fa-solid fa-weight-scale"></i> Nhỏ hơn 100kg</p>
+          </div>
+
+          <div class="note">
+            <strong>Lưu ý:</strong><br />
+            - Từ 1.1m trở lên (1.1m – 1.3m cần người giám hộ).<br />
+            - Tải trọng tối đa 1950kg / 26 người (75kg/người).<br />
+            - Không dành cho phụ nữ mang thai hoặc người bị bệnh tim, chấn thương lưng, xương.<br />
+            - Không dùng điện thoại khi đang chơi.<br />
+            - Không dành cho người vừa uống rượu bia.
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  <div class="modal" id="tataModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <img src="../assets/vinpearlland-nha-trang.jpg" alt="Tata ở xứ sở thần tiên" />
+        <span class="close-btn" id="closeTataModal">&times;</span>
+      </div>
+      <div class="modal-body">
+        <h2>Tata ở xứ sở thần tiên</h2>
+        <p class="location"><i class="fa-solid fa-map-pin"></i> Fairy Land</p>
+        <div class="info-grid">
+          <p><i class="fa-solid fa-user"></i> Mọi lứa tuổi</p>
+          <p><i class="fa-solid fa-heart-pulse"></i> Mức độ: Thư giãn</p>
+          <p><i class="fa-solid fa-ruler-vertical"></i> Không giới hạn chiều cao</p>
+          <p><i class="fa-solid fa-cloud-rain"></i> Dừng khi thời tiết xấu: Không</p>
+        </div>
+
+        <div class="note">
+          <strong>Lưu ý:</strong><br />
+          - Phù hợp với mọi đối tượng.<br />
+          - Vui lòng đến đúng giờ show diễn.<br />
+          - Không quay phim hoặc chụp ảnh trong khi biểu diễn.
+        </div>
+      </div>
+  </div>
+
+    <script>
+        const cards = [
+        { card: "hammoCard", modal: "hammoModal", close: "closeModal" },
+        { card: "tataCard", modal: "tataModal", close: "closeTataModal" },
+      ];
+
+      cards.forEach(({ card, modal, close }) => {
+        const cardEl = document.getElementById(card);
+        const modalEl = document.getElementById(modal);
+        const closeEl = document.getElementById(close);
+
+        cardEl.addEventListener("click", () => {
+          modalEl.style.display = "flex";
+          document.body.style.overflow = "hidden";
+        });
+
+        closeEl.addEventListener("click", () => {
+          modalEl.style.display = "none";
+          document.body.style.overflow = "auto";
+        });
+
+        window.addEventListener("click", (e) => {
+          if (e.target === modalEl) {
+            modalEl.style.display = "none";
+            document.body.style.overflow = "auto";
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

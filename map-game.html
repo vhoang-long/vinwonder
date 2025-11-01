@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VinWonders</title>
+    <link rel="icon" type="image/png" href="./assets/iconlogo.png" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer" />
+  </head>
+  <body>
+    <div class="map-container">
+      <div class="map-head">
+        <a href="./index.html">
+          <i class="fa-solid fa-arrow-left"></i>
+        </a>
+        <p>Bản đồ chỉ đường</p>
+        <div></div>
+      </div>
+
+      <div class="map-wrapper">
+        <img
+          id="mapImage"
+          src="./assets/map.jpg"
+          alt="VinWonders Nha Trang"
+          class="map" />
+      </div>
+
+      <div class="btn btn-seaworld" title="Sea World">1</div>
+      <div class="btn btn-adventure" title="Adventure Land">2</div>
+      <div class="btn btn-garden" title="King’s Garden">3</div>
+      <div class="btn btn-warter" title="Warter sport">4</div>
+    </div>
+  </body>
+
+  <script>
+    const map = document.getElementById("mapImage");
+    const wrapper = document.querySelector(".map-wrapper");
+    let scale = 1;
+    let posX = 0,
+      posY = 0;
+    let isDragging = false;
+    let startX, startY;
+
+    // Giới hạn toạ độ kéo
+    function clamp(value, min, max) {
+      return Math.min(Math.max(value, min), max);
+    }
+
+    function updateTransform() {
+      map.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
+    }
+
+    wrapper.addEventListener("wheel", (e) => {
+      e.preventDefault();
+      const zoomSpeed = 0.1;
+      const oldScale = scale;
+      if (e.deltaY < 0) scale += zoomSpeed;
+      else scale = Math.max(1, scale - zoomSpeed);
+
+      const rect = wrapper.getBoundingClientRect();
+      const offsetX = e.clientX - rect.left - rect.width / 2;
+      const offsetY = e.clientY - rect.top - rect.height / 2;
+      posX -= offsetX * (scale - oldScale);
+      posY -= offsetY * (scale - oldScale);
+
+      // Giới hạn khi zoom
+      const limitX = (rect.width * (scale - 1)) / 2;
+      const limitY = (rect.height * (scale - 1)) / 2;
+      posX = clamp(posX, -limitX, limitX);
+      posY = clamp(posY, -limitY, limitY);
+
+      updateTransform();
+    });
+
+    wrapper.addEventListener("mousedown", (e) => {
+      isDragging = true;
+      startX = e.clientX - posX;
+      startY = e.clientY - posY;
+      wrapper.style.cursor = "grabbing";
+    });
+
+    wrapper.addEventListener("mouseup", () => {
+      isDragging = false;
+      wrapper.style.cursor = "grab";
+    });
+
+    wrapper.addEventListener("mouseleave", () => {
+      isDragging = false;
+      wrapper.style.cursor = "grab";
+    });
+
+    wrapper.addEventListener("mousemove", (e) => {
+      if (!isDragging) return;
+      const rect = wrapper.getBoundingClientRect();
+      const limitX = (rect.width * (scale - 1)) / 2;
+      const limitY = (rect.height * (scale - 1)) / 2;
+      posX = clamp(e.clientX - startX, -limitX, limitX);
+      posY = clamp(e.clientY - startY, -limitY, limitY);
+      updateTransform();
+    });
+  </script>
+</html>

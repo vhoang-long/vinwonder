@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Open Sans", sans-serif;
+}
+
+body {
+  background: #fff;
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  width: 100%;
+  max-width: 420px;
+  min-height: 100vh;
+  background: #fff;
+  padding: 20px;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 10px;
+}
+
+header h2 {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+header button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.tab-container {
+  display: flex;
+  background: #f3f4f6;
+  border-radius: 30px;
+  padding: 4px;
+  margin: 10px 0 20px;
+}
+
+.tab {
+  flex: 1;
+  padding: 8px 0;
+  border: none;
+  border-radius: 30px;
+  font-size: 15px;
+  cursor: pointer;
+  background: transparent;
+  color: #666;
+  font-weight: 500;
+}
+
+.tab.active {
+  background: #ffe5d1;
+  color: #ff6a00;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  background: #f3f4f6;
+  border-radius: 30px;
+  padding: 8px 12px;
+  margin-bottom: 40px;
+}
+
+.search-container input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 14px;
+}
+
+.search-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #ff6a00;
+  cursor: pointer;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #555;
+}
+
+.empty-state img {
+  width: 150px;
+  margin-bottom: 10px;
+}
+
+.empty-state p {
+  font-size: 15px;
+}

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VinWonders</title>
+    <link rel="icon" type="image/png" href="./assets/iconlogo.png" />
+    <link rel="stylesheet" href="./ship.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <a href="../index.html">
+          <i class="fa-solid fa-chevron-left"></i>
+        </a>
+        <h2>Giao hàng</h2>
+        <i class="fa-solid fa-filter"></i>
+      </header>
+
+      <div class="search-bar">
+        <input type="text" placeholder="Tìm kiếm trò chơi" class="searchIcon" />
+        <i class="fa-solid fa-magnifying-glass iconSearch"></i>
+      </div>
+
+      <!-- Thẻ trò chơi 1 -->
+      <div class="card" id="hammoCard">
+        <img src="../assets/ship.jpg" alt="Cuộc phiêu lưu hầm mỏ" />
+        <div class="card-content">
+          <div>
+            <h3>Harry bunny shop 5.0 ⭐</h3>
+            <p><i class="fa-solid fa-map-pin"></i> Adventure Land</p>
+            <p><i class="fa-solid fa-ruler-vertical"></i> Không giới hạn chiều cao</p>
+            <p><i class="fa-regular fa-clock"></i> 09:00 - 19:30</p>
+          </div>
+         <a href="../map-game.html">
+           <button class="direction-btn">Chỉ đường</button>
+         </a>
+        </div>
+      </div>
+      <div class="card"  id="tataCard">
+        <img src="../assets/ship2.jpg" alt="Cuộc phiêu lưu hầm mỏ" />
+        <div class="card-content">
+          <div>
+            <h3>Wooden House 5.0 ⭐</h3>
+            <p><i class="fa-solid fa-map-pin"></i> The World Garden</p>
+            <p><i class="fa-solid fa-ruler-vertical"></i> không giới hạn chiều cao</p>
+            <p><i class="fa-regular fa-clock"></i> 09:00 - 19:30</p>
+          </div>
+         <a href="../map-game.html">
+           <button class="direction-btn">Chỉ đường</button>
+         </a>
+        </div>
+      </div>
+
+      <!-- Modal chi tiết trò chơi -->
+    <div class="modal" id="hammoModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <img src="../assets/ship.jpg" alt="Cuộc phiêu lưu hầm mỏ" />
+          <span class="close-btn" id="closeModal">&times;</span>
+        </div>
+        <div class="modal-body">
+          <h2>Harry bunny shop 5.0 ⭐</h2>
+          <p class="location"><i class="fa-solid fa-map-pin"></i> Adventure Land</p>
+          <div class="info-grid">
+            <p><i class="fa-solid fa-user"></i> Trẻ em, Người lớn</p>
+            <p><i class="fa-solid fa-heart-pulse"></i> Mức độ: thích hợp cho cả gia đình</p>
+            <p><i class="fa-solid fa-ruler-vertical"></i> Không giới hạn chiều cao</p>
+            <p><i class="fa-solid fa-cloud-rain"></i> Dừng khi thời tiết xấu: Có</p>
+          
+          </div>
+
+          <div class="note">
+            <strong>Giới thiệu:</strong><br />
+           Cửa hàng là địa điểm lý tưởng để bạn món quà lưu niệm đặc trưng và ý nghĩa tặng cho người thân, bạn bè như quần áo thời trang, phụ kiện; các loại đồ chơi, quà lưu niệm.
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  <div class="modal" id="tataModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <img src="../assets/ship.jpg" alt="Tata ở xứ sở thần tiên" />
+        <span class="close-btn" id="closeTataModal">&times;</span>
+      </div>
+      <div class="modal-body">
+        <h2>Tata ở xứ sở thần tiên</h2>
+        <p class="location"><i class="fa-solid fa-map-pin"></i> Fairy Land</p>
+        <div class="info-grid">
+          <p><i class="fa-solid fa-user"></i> Mọi lứa tuổi</p>
+          <p><i class="fa-solid fa-heart-pulse"></i> Mức độ: Thích hợp cho cả gia đình</p>
+          <p><i class="fa-solid fa-ruler-vertical"></i> Không giới hạn chiều cao</p>
+          <p><i class="fa-solid fa-cloud-rain"></i> Dừng khi thời tiết xấu: Không</p>
+        </div>
+
+        <div class="note">
+          <strong>Giới thiệu:</strong><br />
+        Cửa hàng là địa điểm lý tưởng để bạn món quà lưu niệm đặc trưng và ý nghĩa tặng cho người thân, bạn bè như quần áo thời trang, phụ kiện; các loại đồ chơi, quà lưu niệm.
+
+        </div>
+      </div>
+    </div>
+     <script>
+        const cards = [
+        { card: "hammoCard", modal: "hammoModal", close: "closeModal" },
+        { card: "tataCard", modal: "tataModal", close: "closeTataModal" },
+      ];
+
+      cards.forEach(({ card, modal, close }) => {
+        const cardEl = document.getElementById(card);
+        const modalEl = document.getElementById(modal);
+        const closeEl = document.getElementById(close);
+
+        cardEl.addEventListener("click", () => {
+          modalEl.style.display = "flex";
+          document.body.style.overflow = "hidden";
+        });
+
+        closeEl.addEventListener("click", () => {
+          modalEl.style.display = "none";
+          document.body.style.overflow = "auto";
+        });
+
+        window.addEventListener("click", (e) => {
+          if (e.target === modalEl) {
+            modalEl.style.display = "none";
+            document.body.style.overflow = "auto";
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VinWonders</title>
+     <link rel="icon" type="image/png" href="./assets/iconlogo.png" />
+    <link rel="icon" type="image/png" href="./assets/logoweb.webp" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer" />
+    <style>
+     @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+      *{
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-family: "Open Sans", sans-serif;
+      }
+
+      body {
+        width: 100%;
+        height: 100vh;
+        background: #fff;
+        padding: 16px;
+        display: flex;
+        justify-content: center; /* căn giữa ngang */
+        align-items: flex-start; /* căn giữa dọc */
+      }
+
+      .wrapperCart {
+        display: flex;
+        flex-direction: column;
+        width: 800px;
+      }
+
+      .wrapperIcon {
+        padding: 6px;
+        color: tomato;
+        font-size: 20px;
+        cursor: pointer;
+      }
+      h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #ff6600;
+      }
+
+      .cart-item {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .cart-item-content {
+        display: flex;
+        align-items: flex-start;
+        padding: 16px;
+      }
+
+      .cart-item img {
+        width: 80px;
+        height: 80px;
+        border-radius: 8px;
+        object-fit: cover;
+        margin-right: 12px;
+      }
+
+      .cart-info h4 {
+        font-size: 15px;
+        color: #222;
+      }
+
+      .cart-info p {
+        color: #666;
+        font-size: 13px;
+      }
+
+      .cart-tags {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 6px;
+      }
+
+      .tag {
+        background: #ffe8da;
+        color: #ff6600;
+        font-size: 12px;
+        padding: 4px 8px;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .cart-footer {
+        display: flex;
+        justify-content: space-between;
+        padding: 12px 16px;
+        border-top: 1px solid #f0f0f0;
+        font-size: 13px;
+      }
+
+      .cart-footer a {
+        color: #007aff;
+        text-decoration: none;
+      }
+
+      .cart-footer a:hover {
+        text-decoration: underline;
+      }
+
+      .discount-section {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 16px;
+        background: #fff;
+        border-radius: 10px;
+        margin-top: 20px;
+        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+      }
+
+      .discount-section input {
+        border: none;
+        outline: none;
+        font-size: 14px;
+        width: 60%;
+      }
+
+      .total-section {
+        background: #fff;
+        padding: 16px;
+        border-radius: 10px;
+        margin-top: 10px;
+        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+      }
+
+      .total-section p {
+        font-size: 14px;
+        color: #777;
+      }
+
+      .total-section h3 {
+        color: #ff6600;
+        margin-top: 4px;
+      }
+
+      .continue-btn {
+        width: 100%;
+        background: linear-gradient(90deg, #ff7e29, #ff5000);
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        padding: 14px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 10px;
+      }
+
+      .continue-btn:hover {
+        opacity: 0.9;
+      }
+      .modalBuyTicket {
+        display: none;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        z-index: 999;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+      }
+
+      .modal-content {
+        background: #fff;
+        border-radius: 10px;
+        padding: 20px;
+        width: 90%;
+        max-width: 420px;
+      }
+
+      .edit-btn {
+        background: none;
+        border: none;
+        color: #007aff;
+        cursor: pointer;
+      }
+
+      .edit-btn:hover {
+        text-decoration: underline;
+      }
+      /* --- Modal overlay --- */
+      .modalBuyTicket {
+        display: none;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        z-index: 999;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.55);
+        backdrop-filter: blur(2px);
+      }
+
+      /* --- Modal box --- */
+      .modal-content {
+        background: #fff;
+        border-radius: 16px;
+        padding: 24px;
+        width: 90%;
+        max-width: 420px;
+        position: relative;
+        animation: fadeIn 0.3s ease;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      }
+
+      .delete-btn {
+        display: flex;
+        align-items: center;
+        gap: 6px; /* khoảng cách giữa icon và chữ */
+        background-color: #ffe5e5; /* nền đỏ nhạt */
+        color: #d62828; /* đỏ chính */
+        border: none;
+        border-radius: 8px;
+        padding: 8px 14px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .delete-btn i {
+        font-size: 16px;
+      }
+
+      .delete-btn:hover {
+        background-color: #d62828; /* đậm hơn khi hover */
+        color: #fff; /* chữ và icon trắng */
+      }
+
+      .delete-btn:active {
+        transform: scale(0.97);
+        opacity: 0.9;
+      }
+
+      @keyframes fadeIn {
+        from {
+          transform: translateY(-20px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      /* --- Close button --- */
+      .close-btn {
+        position: absolute;
+        right: 16px;
+        top: 12px;
+        font-size: 20px;
+        color: #555;
+        cursor: pointer;
+      }
+
+      .close-btn:hover {
+        color: #ff6600;
+      }
+
+      /* --- Title --- */
+      .modal-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #222;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      /* --- Section styles --- */
+      .location-section,
+      .time-section,
+      .quantity-section {
+        margin-bottom: 18px;
+      }
+
+      .location-section h4,
+      .time-section h4,
+      .quantity-section h4 {
+        font-size: 15px;
+        color: #444;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      /* --- Option buttons --- */
+      .location-options button,
+      .time-options button {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 8px 14px;
+        font-size: 14px;
+        cursor: pointer;
+        background: #f8f8f8;
+        margin-right: 6px;
+        transition: 0.2s;
+      }
+
+      .location-options button:hover,
+      .time-options button:hover {
+        background: #f0f0f0;
+      }
+
+      .location-options button.active,
+      .time-options button.active {
+        background: linear-gradient(90deg, #ff7e29, #ff5000);
+        color: #fff;
+        border: none;
+      }
+
+      /* --- Quantity counter --- */
+      .ticket-type {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 12px;
+        background: #fafafa;
+        border-radius: 8px;
+        border: 1px solid #eee;
+      }
+
+      .counter {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .counter button {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        border: none;
+        background: #ff6600;
+        color: #fff;
+        font-size: 18px;
+        line-height: 1;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+
+      .counter button:hover {
+        opacity: 0.85;
+      }
+
+      .count {
+        font-weight: 500;
+        font-size: 15px;
+      }
+
+      /* --- Footer --- */
+      .footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 18px;
+        border-top: 1px solid #eee;
+        padding-top: 12px;
+      }
+
+      .footer .total {
+        font-size: 16px;
+        font-weight: 600;
+        color: #ff6600;
+      }
+
+      .save-btn {
+        background: linear-gradient(90deg, #ff7e29, #ff5000);
+        border: none;
+        border-radius: 8px;
+        color: #fff;
+        padding: 10px 16px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+
+      .save-btn:hover {
+        opacity: 0.9;
+      }
+      .input-group {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 14px;
+      }
+
+      .input-group label {
+        font-size: 14px;
+        margin-bottom: 6px;
+        color: #444;
+      }
+
+      .input-group input {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 10px;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wrapperCart">
+      <a href="./ticket-detail.html">
+        <i class="fa-solid fa-arrow-left wrapperIcon"></i>
+      </a>
+      <h2>Giỏ hàng</h2>
+      <div id="cartContainer"></div>
+
+      <div class="discount-section">
+        <div><i class="fa-solid fa-percent"></i> Mã ưu đãi</div>
+        <input type="text" placeholder="Chọn nhập mã ưu đãi" />
+      </div>
+
+      <div class="total-section">
+        <p>Tổng cộng: (Đã bao gồm VAT)</p>
+        <h3 id="totalPrice">0 đ</h3>
+        <button class="continue-btn">Tiếp tục</button>
+
+        <!-- Modal sửa vé -->
+        <div id="editModal" class="modalBuyTicket">
+          <div class="modal-content ticket-buy">
+            <span class="close-btn">&times;</span>
+            <h3 class="modal-title">Sửa thông tin vé</h3>
+
+            <div class="location-section">
+              <h4><i class="fa-solid fa-location-dot"></i> Cơ sở</h4>
+              <div class="location-options">
+                <button class="active">ZooKeeper NT</button>
+                <button>Harbour</button>
+              </div>
+            </div>
+
+            <div class="time-section">
+              <h4><i class="fa-regular fa-clock"></i> Thời gian</h4>
+              <div class="time-options">
+                <button class="time-btn active">9:30</button>
+                <button class="time-btn">14:00</button>
+              </div>
+            </div>
+
+            <div class="quantity-section">
+              <h4><i class="fa-solid fa-user-group"></i> Số lượng</h4>
+              <div class="ticket-type">
+                <p>Người lớn</p>
+                <div class="counter">
+                  <button class="minus">−</button>
+                  <span class="count">1</span>
+                  <button class="plus">+</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="footer">
+              <span class="total">100,000 đ</span>
+              <button class="save-btn">Lưu thay đổi</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal nhập thông tin người dùng -->
+        <div id="userModal" class="modalBuyTicket">
+          <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h3 class="modal-title">Thông tin thanh toán</h3>
+
+            <div class="input-group">
+              <label>Họ và tên</label>
+              <input
+                type="text"
+                id="fullName"
+                placeholder="Nhập họ tên của bạn"
+                required />
+            </div>
+
+            <div class="input-group">
+              <label>Số điện thoại</label>
+              <input
+                type="tel"
+                id="phoneNumber"
+                placeholder="Nhập số điện thoại"
+                required />
+            </div>
+
+            <button
+              id="confirmPaymentBtn"
+              class="save-btn"
+              style="width: 100%; margin-top: 10px">
+              Xác nhận thanh toán
+            </button>
+          </div>
+        </div>
+
+        <!-- Modal bill -->
+        <div id="billModal" class="modalBuyTicket">
+          <div class="modal-content" style="max-width: 500px">
+            <span class="close-btn">&times;</span>
+            <h3 class="modal-title">Hoá đơn thanh toán</h3>
+            <div id="billContent"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const cartContainer = document.getElementById("cartContainer");
+      const totalPriceEl = document.getElementById("totalPrice");
+
+      // Lấy dữ liệu từ localStorage
+      const cartData = JSON.parse(localStorage.getItem("cart")) || [];
+
+      function renderCart() {
+        cartContainer.innerHTML = "";
+        let total = 0;
+
+        if (cartData.length === 0) {
+          cartContainer.innerHTML =
+            "<p style='text-align:center;color:#888;'>Chưa có vé nào trong giỏ hàng</p>";
+          totalPriceEl.textContent = "0 đ";
+
+          // Ẩn phần mã giảm giá và tổng tiền
+          document.querySelector(".discount-section").style.display = "none";
+          document.querySelector(".total-section").style.display = "none";
+
+          return;
+        } else {
+          // Hiện lại nếu có sản phẩm
+          document.querySelector(".discount-section").style.display = "flex";
+          document.querySelector(".total-section").style.display = "block";
+        }
+
+        cartData.forEach((item, index) => {
+          total += item.price;
+
+          const card = document.createElement("div");
+          card.className = "cart-item";
+          card.innerHTML = `
+          <div class="cart-item-content">
+            <img src="${item.image}" alt="${item.title}" />
+            <div class="cart-info">
+              <p style="font-weight:500;color:#555;">${item.location}</p>
+              <h4>${item.title}</h4>
+              <div class="cart-tags">
+                <div class="tag"><i class="fa-solid fa-map-pin"></i> ${item.branch}</div>
+                <div class="tag"><i class="fa-regular fa-clock"></i> ${item.time}</div>
+              </div>
+              <p style="margin-top:8px;"><i class="fa-regular fa-calendar"></i> ${item.date}</p>
+              <p><i class="fa-solid fa-user"></i> ${item.person}</p>
+            </div>
+          </div>
+          <div class="cart-footer">
+            <button class="delete-btn" data-index="${index}">
+              <i class="fa-regular fa-trash-can"></i> Xóa vé
+            </button>
+            <button class="edit-btn" data-index="${index}">
+    <i class="fa-regular fa-pen-to-square"></i> Sửa vé
+ 
+        `;
+          cartContainer.appendChild(card);
+        });
+
+        totalPriceEl.textContent = total.toLocaleString("vi-VN") + " đ";
+      }
+
+      renderCart();
+
+      // Xóa vé
+      document.addEventListener("click", (e) => {
+        if (e.target.closest(".delete-btn")) {
+          const index = e.target.closest(".delete-btn").dataset.index;
+          cartData.splice(index, 1);
+          localStorage.setItem("cart", JSON.stringify(cartData));
+          renderCart();
+        }
+      });
+
+      const editModal = document.getElementById("editModal");
+      const editCloseBtn = editModal.querySelector(".close-btn");
+      const saveBtn = editModal.querySelector(".save-btn");
+      const totalElement = editModal.querySelector(".total");
+
+      let currentEditIndex = null;
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+      // --- Mở modal khi bấm nút Sửa ---
+      document.querySelectorAll(".edit-btn").forEach((btn, index) => {
+        btn.addEventListener("click", () => {
+          currentEditIndex = index;
+          const item = cart[index];
+
+          // Cập nhật cơ sở
+          editModal
+            .querySelectorAll(".location-options button")
+            .forEach((b) => {
+              b.classList.toggle(
+                "active",
+                b.textContent.trim() === item.branch
+              );
+            });
+
+          // ✅ FIX lỗi trùng giờ: reset và gán lại nút giờ đúng
+          const timeOptions = editModal.querySelector(".time-options");
+          const availableTimes = ["9:30", "14:00"];
+          timeOptions.innerHTML = ""; // xoá hết các nút cũ
+
+          availableTimes.forEach((time) => {
+            const btnTime = document.createElement("button");
+            btnTime.classList.add("time-btn");
+            btnTime.textContent = time;
+            if (time === item.time) btnTime.classList.add("active");
+            timeOptions.appendChild(btnTime);
+          });
+
+          // Gán lại sự kiện click cho các nút giờ mới
+          timeOptions.querySelectorAll("button").forEach((b) => {
+            b.addEventListener("click", () => {
+              timeOptions
+                .querySelectorAll("button")
+                .forEach((t) => t.classList.remove("active"));
+              b.classList.add("active");
+            });
+          });
+
+          // Số lượng người
+          editModal.querySelector(".count").textContent =
+            item.person.match(/\d+/)[0];
+
+          updateEditTotal();
+          editModal.style.display = "flex";
+        });
+      });
+
+      // --- Đóng modal ---
+      editCloseBtn.addEventListener(
+        "click",
+        () => (editModal.style.display = "none")
+      );
+
+      // --- Cập nhật tổng tiền ---
+      function updateEditTotal() {
+        const count = parseInt(editModal.querySelector(".count").textContent);
+        const price = 100000;
+        totalElement.textContent =
+          (count * price).toLocaleString("vi-VN") + " đ";
+      }
+
+      // --- Thay đổi số lượng ---
+      editModal.querySelector(".plus").addEventListener("click", () => {
+        const countEl = editModal.querySelector(".count");
+        countEl.textContent = parseInt(countEl.textContent) + 1;
+        updateEditTotal();
+      });
+
+      editModal.querySelector(".minus").addEventListener("click", () => {
+        const countEl = editModal.querySelector(".count");
+        if (parseInt(countEl.textContent) > 0)
+          countEl.textContent = parseInt(countEl.textContent) - 1;
+        updateEditTotal();
+      });
+
+      // --- Chọn cơ sở ---
+      editModal.querySelectorAll(".location-options button").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          editModal
+            .querySelectorAll(".location-options button")
+            .forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+        });
+      });
+
+      // --- Chọn thời gian ---
+      editModal.querySelectorAll(".time-options button").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          editModal
+            .querySelectorAll(".time-options button")
+            .forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+        });
+      });
+
+      // --- Lưu thay đổi ---
+      saveBtn.addEventListener("click", () => {
+        if (currentEditIndex !== null) {
+          const branch = editModal.querySelector(
+            ".location-options .active"
+          ).textContent;
+          const time = editModal.querySelector(".time-btn.active").textContent;
+          const personCount = editModal.querySelector(".count").textContent;
+          const total = parseInt(totalElement.textContent.replace(/\D/g, ""));
+
+          cart[currentEditIndex] = {
+            ...cart[currentEditIndex],
+            branch,
+            time,
+            person: `${personCount} người`,
+            price: total,
+          };
+
+          localStorage.setItem("cart", JSON.stringify(cart));
+          editModal.style.display = "none";
+          window.location.reload(); // reload lại giao diện để thấy thay đổi
+        }
+      });
+
+      // --- Modal nhập thông tin ---
+      const continueBtn = document.querySelector(".continue-btn");
+      const userModal = document.getElementById("userModal");
+      const billModal = document.getElementById("billModal");
+      const confirmPaymentBtn = document.getElementById("confirmPaymentBtn");
+      const fullNameInput = document.getElementById("fullName");
+      const phoneInput = document.getElementById("phoneNumber");
+
+      // mở modal nhập thông tin
+      continueBtn.addEventListener("click", () => {
+        userModal.style.display = "flex";
+      });
+
+      // đóng modal
+      userModal.querySelector(".close-btn").addEventListener("click", () => {
+        userModal.style.display = "none";
+      });
+      billModal.querySelector(".close-btn").addEventListener("click", () => {
+        billModal.style.display = "none";
+
+        // Hiển thị thông báo thanh toán thành công
+        alert("🎉 Thanh toán thành công! Cảm ơn bạn đã mua vé vào cổng.");
+
+        // Chuyển hướng sang trang trò chơi
+        window.location.href = "index.html"; // đổi tên file nếu trang bạn khác
+      });
+
+      // xác nhận thanh toán
+      confirmPaymentBtn.addEventListener("click", () => {
+        const name = fullNameInput.value.trim();
+        const phone = phoneInput.value.trim();
+
+        if (!name || !phone) {
+          alert("Vui lòng nhập đầy đủ họ tên và số điện thoại!");
+          return;
+        }
+
+        userModal.style.display = "none";
+
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        let total = 0;
+
+        const itemsHTML = cart
+          .map((item) => {
+            total += item.price;
+            return `
+        <div style="display:flex;align-items:center;margin-bottom:10px;border-bottom:1px solid #eee;padding-bottom:8px;">
+          <img src="${item.image}" alt="${
+              item.title
+            }" style="width:60px;height:60px;border-radius:8px;margin-right:10px;">
+          <div>
+            <h4 style="font-size:14px;margin-bottom:4px;">${item.title}</h4>
+            <p style="font-size:13px;color:#666;">${item.branch} - ${
+              item.time
+            }</p>
+            <p style="font-size:13px;color:#666;">${item.date} | ${
+              item.person
+            }</p>
+            <p style="font-size:13px;color:#ff6600;">${item.price.toLocaleString(
+              "vi-VN"
+            )} đ</p>
+          </div>
+        </div>
+      `;
+          })
+          .join("");
+
+        const billHTML = `
+    <p><strong>Họ tên:</strong> ${name}</p>
+    <p><strong>SĐT:</strong> ${phone}</p>
+    <hr style="margin:10px 0;">
+    ${itemsHTML}
+    <h3 style="text-align:right;color:#ff6600;margin-top:10px;">Tổng: ${total.toLocaleString(
+      "vi-VN"
+    )} đ</h3>
+    <div style="text-align:center;margin-top:20px;">
+      <p>Quét mã QR để thanh toán</p>
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=ThanhToan_${encodeURIComponent(
+        name
+      )}_${encodeURIComponent(
+          phone
+        )}_${Date.now()}" alt="QR" style="margin-top:8px;">
+    </div>
+  `;
+
+        document.getElementById("billContent").innerHTML = billHTML;
+        billModal.style.display = "flex";
+      });
+    </script>
+  </body>
+</html>
