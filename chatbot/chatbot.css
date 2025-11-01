@@ -9,8 +9,8 @@
 }
 #vinwonders-chatbot {
   position: fixed;
-  top: 20px;
-  right:  120px;
+  bottom: 120px;
+  right:  0px;
   z-index: 9998;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
@@ -23,8 +23,8 @@
   background: linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%);
   border: none;
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  width: 65px;
+  height: 65px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -52,8 +52,8 @@
 }
 
 .chatbot-avatar {
-  width: 45px;
-  height: 45px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   object-fit: cover;
   border: 3px solid white;
@@ -80,7 +80,7 @@
 /* ===== CỬA SỔ CHAT - RESPONSIVE ===== */
 .chatbot-window {
   position: fixed;
-  top: 90px;
+  bottom: 100px;
   right: 20px;
   width: min(450px, calc(100vw - 40px));
   height: min(650px, calc(100vh - 120px));

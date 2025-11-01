@@ -243,7 +243,7 @@
 }
 
 .journey-section {
-    background: white;
+    background: #fbe2c0;
     border-radius: 15px;
     padding: 2rem;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
@@ -294,59 +294,12 @@
   object-fit: cover;
 }
 
-.virtual-queue {
-  border-radius: 10px;
-  margin-bottom: 40px;
-  width: 90%;
-  padding: 0 6px;
-  box-shadow: rgba(110, 108, 108, 0.25) 0px 5px 18px;
-}
-
-.virtual-queue-first{
-  border-radius: 10px;
-  margin-bottom: 150px;
-  width: 90%;
-  padding: 0 6px;
-  box-shadow: rgba(110, 108, 108, 0.25) 0px 5px 18px;
-}
-
-.virtual-queue-head{
-  padding: 4px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.virtual-queue-head .icon{
-  font-size: 22px;
-  color: tomato;
-  
-  cursor: pointer;
-}
-
-.virtual-queue-head .title {
-  font-size: 24px;
-  font-weight: 600;
-  margin-bottom: 16px;
-}
 
 .queue-card {
   display: flex;
   align-items: center;
   justify-content: space-between;
   background-color: #f77119;
-  border-radius: 20px;
-  padding: 24px 30px;
-  color: white;
-  overflow: hidden;
-  position: relative;
-}
-
-.queue-card-first{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: #f3a629;
   border-radius: 20px;
   padding: 24px 30px;
   color: white;
@@ -389,6 +342,56 @@
   border-radius: 16px;
   object-fit: cover;
 }
+
+
+.queue-card-first{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fbe2c0;
+  border-radius: 20px;
+  padding: 24px 30px;
+  color: white;
+  overflow: hidden;
+  position: relative;
+}
+
+.queue-content-first {
+  width:  100%;
+}
+
+.queue-text-first {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.4;
+  margin-bottom: 20px;
+  color: #8b5e3c;
+}
+
+.queue-btn-first {
+  background: none;
+  border: 1px solid #8b5e3c;
+  border-radius: 50px;
+  padding: 10px 22px;
+  color: #8b5e3c;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.queue-btn-first:hover {
+  background-color: #8b5e3c;
+  color: #fff;
+}
+
+.queue-img-first {
+  width: 320px;
+  height: auto;
+  border-radius: 16px;
+  object-fit: cover;
+}
+
 
 .menu{
     width: 100%;
