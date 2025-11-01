@@ -83,29 +83,37 @@
           <a href="./playgame/play-game.html">
             <div class="card">
               <i class="fa-solid fa-volleyball cardIcon"></i>
-              <p class="cardContent">Điểm vui chơi</p>
-              <p class="cardDescription">Đi chơi thôi</p>
+              <div class="card-details">
+                <p class="cardContent">Điểm vui chơi</p>
+                <p class="cardDescription">Đi chơi thôi!</p>
+              </div>
             </div>
           </a>
           <a href="./calender/calendar.html">
             <div class="card">
               <i class="fa-solid fa-calendar-days cardIcon"></i>
-              <p class="cardContent">Lịch biểu diễn</p>
-              <p class="cardDescription">Khám phá thôi</p>
+              <div class="card-details">
+                <p class="cardContent">Lịch biểu diễn</p>
+                <p class="cardDescription">Khám phá thôi!</p>
+              </div>
             </div>
           </a>
           <a href="./food/food.html">
             <div class="card">
               <i class="fa-solid fa-bowl-food cardIcon"></i>
-              <p class="cardContent">Ẩm thực</p>
-              <p class="cardDescription">Đi chơi thôi</p>
+              <div class="card-details">
+                <p class="cardContent">Ẩm thực</p>
+                <p class="cardDescription">Đi chơi thôi!</p>
+              </div>
             </div>
           </a>
           <a href="./ship/ship.html">
             <div class="card">
               <i class="fa-solid fa-bag-shopping cardIcon"></i>
-              <p class="cardContent">Giao hàng</p>
-              <p class="cardDescription">Đi chơi thôi</p>
+              <div class="card-details">
+                <p class="cardContent">Gian hàng</p>
+                <p class="cardDescription">Đi chơi thôi!</p>
+              </div>
             </div>
           </a>
         </div>
@@ -200,7 +208,7 @@
         <div class="journey-section">
           <div class="journey-content">
             <p>
-              Xây dựng hành trình <br />Trải nghiệm cho riêng bạn cùng
+              Xây dựng hành trình trải nghiệm cho riêng bạn cùng
               VinWonders
             </p>
             <a href="./ticket.html">
@@ -213,63 +221,33 @@
           </div>
         </div>
 
-        <div class="virtual-queue">
-          <div class="virtual-queue-head">
-            <h2 class="title">Hàng chờ ảo</h2>
-            <i class="fa-solid fa-circle-exclamation icon"></i>
+
+        <div class="queue-card">
+          <div class="queue-content">
+            <p class="queue-text">
+              Tiết kiệm thời gian xếp hàng chờ các trò chơi hấp dẫn
+            </p>
+            <button class="queue-btn" id="joinQueueBtn">Tham gia ngay</button>
           </div>
-          <div class="queue-card">
-            <div class="queue-content">
-              <p class="queue-text">
-                Tiết kiệm thời gian xếp hàng chờ các trò chơi hấp dẫn
-              </p>
-              <button class="queue-btn" id="joinQueueBtn">Tham gia ngay</button>
-            </div>
-            <img
-              src="./assets/banbe.jpg"
-              alt="Nhóm khách tham quan"
-              class="queue-img" />
-          </div>
-          <div class="modal" id="infoModal">
-            <div class="modal-content">
-              <span class="close-btn">&times;</span>
-              <h3>Giới thiệu hàng chờ ảo</h3>
-              <p>
-                Xếp hàng chờ ảo - Tiết kiệm thời gian thực: đặc quyền ưu tiên
-                tham gia các trò chơi hot, đem đến trải nghiệm tuyệt vời hơn.
-              </p>
-            </div>
-          </div>
+          <img
+            src="./assets/banbe.jpg"
+            alt="Nhóm khách tham quan"
+            class="queue-img" />
         </div>
-        <div class="virtual-queue-first">
-          <div class="virtual-queue-head">
-            <h2 class="title">Hàng chờ ưu tiên</h2>
-            <!-- <i class="fa-solid fa-circle-exclamation icon"></i> -->
+          
+        <div class="queue-card-first">
+          <div class="queue-content">
+            <p class="queue-text">
+              Tiết kiệm thời gian xếp hàng chờ các trò chơi hấp dẫn
+            </p>
+            <button class="queue-btn" id="joinQueueBtnFirst">
+              Tham gia ngay
+            </button>
           </div>
-          <div class="queue-card-first">
-            <div class="queue-content">
-              <p class="queue-text">
-                Tiết kiệm thời gian xếp hàng chờ các trò chơi hấp dẫn
-              </p>
-              <button class="queue-btn" id="joinQueueBtnFirst">
-                Tham gia ngay
-              </button>
-            </div>
-            <img
-              src="./assets/game1.webp"
-              alt="Nhóm khách tham quan"
-              class="queue-img" />
-          </div>
-          <div class="modal" id="infoModal">
-            <div class="modal-content">
-              <span class="close-btn">&times;</span>
-              <h3>Giới thiệu hàng chờ ảo</h3>
-              <p>
-                Xếp hàng chờ ảo - Tiết kiệm thời gian thực: đặc quyền ưu tiên
-                tham gia các trò chơi hot, đem đến trải nghiệm tuyệt vời hơn.
-              </p>
-            </div>
-          </div>
+          <img
+            src="./assets/game1.webp"
+            alt="Nhóm khách tham quan"
+            class="queue-img" />
         </div>
       </div>
       <div class="menu">
@@ -316,27 +294,6 @@
       document.addEventListener("click", (e) => {
         if (!bell.contains(e.target) && !box.contains(e.target)) {
           box.classList.remove("active");
-        }
-      });
-
-      const infoIcon = document.querySelector(".icon");
-      const modal = document.getElementById("infoModal");
-      const closeBtn = document.querySelector(".close-btn");
-
-      // Mở modal
-      infoIcon.addEventListener("click", () => {
-        modal.style.display = "flex";
-      });
-
-      // Đóng modal khi bấm nút X
-      closeBtn.addEventListener("click", () => {
-        modal.style.display = "none";
-      });
-
-      // Đóng modal khi click ra ngoài
-      window.addEventListener("click", (e) => {
-        if (e.target === modal) {
-          modal.style.display = "none";
         }
       });
 
