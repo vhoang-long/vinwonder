@@ -14,30 +14,33 @@ let index = 0;
 //   });
 // }, 1000);
 
-const itemsMenuIcons = document.querySelectorAll(".menuItem");
-
-// Khi click
-itemsMenuIcons.forEach((item) => {
-  item.addEventListener("click", () => {
-    // Xóa active cũ
-    itemsMenuIcons.forEach((i) => i.classList.remove("active"));
-
-    // Thêm active mới
-    item.classList.add("active");
-
-    // Lưu lại index vào localStorage
-    localStorage.setItem("activeMenuIndex", [...itemsMenuIcons].indexOf(item));
+// Highlight active menu item based on current page URL
+function setActiveMenuItem() {
+  const path = window.location.pathname.split("/").pop();
+  const currentFile = path || 'index.html';
+  // Map menu text to expected filename
+  const menuMap = {
+    'Trang chủ': 'index.html',
+    'Mua vé': 'ticket.html',
+    'Mua sắm': 'shopping.html',
+    'Tài khoản': 'user.html'
+  };
+  document.querySelectorAll(".menuItemLink").forEach(link => {
+    const parent = link.closest('.menuItem');
+    if (!parent) return;
+    const contentElem = parent.querySelector('.menuItemContent');
+    if (!contentElem) return;
+    const menuText = contentElem.textContent.trim();
+    const expectedFile = menuMap[menuText];
+    if (expectedFile && currentFile === expectedFile) {
+      parent.classList.add('active');
+    } else {
+      parent.classList.remove('active');
+    }
   });
-});
+}
 
-// Khi load lại trang
-window.addEventListener("DOMContentLoaded", () => {
-  const activeIndex = localStorage.getItem("activeMenuIndex");
-  if (activeIndex !== null) {
-    itemsMenuIcons.forEach((i) => i.classList.remove("active"));
-    itemsMenuIcons[activeIndex].classList.add("active");
-  }
-});
+document.addEventListener("DOMContentLoaded", setActiveMenuItem);
 
 // ======== ELEMENT SELECTOR ========
 const dropdownHeader = document.querySelector(".dropdown-header");
