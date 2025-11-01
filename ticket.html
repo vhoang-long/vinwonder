@@ -135,15 +135,14 @@
     
     <div id="chatbot-root"></div>
     <script>
-      fetch("/chatbot/chatbot.html")
+      fetch("./chatbot/chatbot.html")
         .then((res) => res.text())
         .then((html) => {
           document.getElementById("chatbot-root").innerHTML = html;
           const script = document.createElement("script");
-          script.src = "/chatbot/chatbot.js";
+          script.src = "./chatbot/chatbot.js";
           document.body.appendChild(script);
-        })
-        .catch((err) => console.error('Chatbot fetch error:', err));
+        });
     </script>
     <!-- ========== END CHATBOT ========== -->
   </body>
