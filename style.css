@@ -194,8 +194,7 @@
     width: 90%;
     display: flex;
     gap: 20px;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
+    padding-bottom: 30px;
     overflow-x: auto;
     scroll-behavior: smooth;
      scrollbar-width: none; /* Firefox */
@@ -244,21 +243,21 @@
 
 .journey-section {
     background: #fbe2c0;
-    border-radius: 15px;
-    padding: 2rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    margin-bottom: 2rem;
+    border-radius: 20px;
+    padding: 19.5px 30px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 90%
 }
 
 .journey-content {
-  width:  100%;
+  width:  65%;
 }
 
 .journey-content p {
-  font-size: 18px;
+  font-size: 25px;
   font-weight: 400;
   line-height: 1.4;
   color: #8b5e3c;
@@ -269,7 +268,7 @@
   background-color: transparent;
   border: 1px solid #8b5e3c;
   color: #8b5e3c;
-  font-size: 16px;
+  font-size: 20px;
   border-radius: 50px;
   padding: 10px 22px;
   font-weight: 600;
@@ -282,14 +281,10 @@
   color: white;
 }
 
-.journey-btn span {
-  margin-left: 8px;
-  font-weight: bold;
-}
 
 .journey-image img {
   width: 320px;
-  height: auto;
+  height: 240px;
   border-radius: 16px;
   object-fit: cover;
 }
@@ -302,17 +297,16 @@
   background-color: #f77119;
   border-radius: 20px;
   padding: 24px 30px;
-  color: white;
-  overflow: hidden;
-  position: relative;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  width: 90%
 }
 
 .queue-content {
-  width:  100%;
+  width:  65%;
 }
 
 .queue-text {
-  font-size: 18px;
+  font-size: 25px;
   font-weight: 400;
   line-height: 1.4;
   margin-bottom: 20px;
@@ -325,7 +319,7 @@
   border-radius: 50px;
   padding: 10px 22px;
   color: #fff;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -338,7 +332,7 @@
 
 .queue-img {
   width: 320px;
-  height: auto;
+  height: 240px;
   border-radius: 16px;
   object-fit: cover;
 }
@@ -351,17 +345,16 @@
   background-color: #fbe2c0;
   border-radius: 20px;
   padding: 24px 30px;
-  color: white;
-  overflow: hidden;
-  position: relative;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  width: 90%
 }
 
 .queue-content-first {
-  width:  100%;
+  width:  65%;
 }
 
 .queue-text-first {
-  font-size: 18px;
+  font-size: 25px;
   font-weight: 400;
   line-height: 1.4;
   margin-bottom: 20px;
@@ -374,7 +367,7 @@
   border-radius: 50px;
   padding: 10px 22px;
   color: #8b5e3c;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -387,7 +380,7 @@
 
 .queue-img-first {
   width: 320px;
-  height: auto;
+  height: 240px;
   border-radius: 16px;
   object-fit: cover;
 }
@@ -1184,91 +1177,51 @@
 
 
 .map-container {
-  position: relative;
-  max-width: 400px;
-  height: 100vh;
-  margin: 20px auto;
+  width: 100%;
+  height: 100%;
   border-radius: 10px;
-  background-color: #f5cc9e;
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  background-color: #f6e1ca;
+  display: flex;
+  flex-direction: column;
   overflow: hidden; /* ⚠ Giới hạn không cho tràn */
 }
 
 .map-wrapper {
   width: 100%;
-  height: calc(100% - 40px);
-  overflow: hidden;
-  cursor: grab;
+  display: flex;
+  justify-content: center;
+  
 }
 
 .map {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transform-origin: center center;
-  transition: transform 0.1s ease;
+  width: 47%;
 }
 
 .map-head{
   width: 100%;
-  height: 40px;
+  height: 60px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
+  padding: 0 80px 0 20px;
+  background-color: #f77119;
+}
+
+.map-head p {
+  font-size: 25px;
+  cursor: pointer;
+  color: #ffffff;
+  font-weight: 650;
 }
 
 .map-head i {
   font-size: 22px;
   padding: 2px;
   cursor: pointer;
-  color: #e1571c;
+  color: #ffffff;
 }
 
-.map:active {
-  cursor: grabbing;
-}
 
-/* Nút hiển thị trên bản đồ */
-.btn {
-  position: absolute;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: rgba(255, 165, 0, 0.8);
-  cursor: pointer;
-  transition: 0.3s;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-}
-
-.btn:hover {
-  transform: scale(1);
-  background-color: rgba(255, 69, 0, 0.9);
-}
-
-/* Vị trí các khu vực */
-.btn-seaworld {
-  top: 70%;
-  left: 35%;
-}
-
-.btn-adventure {
-  top: 85%;
-  left: 50%;
-}
-
-.btn-garden {
-  top: 30%;
-  left: 75%;
-}
-
-.btn-warter{
-  top: 30%;
-  left: 50%;
-}
 /* -------------------- */
 .container-shopping {
   max-width: 500px;
@@ -1371,13 +1324,6 @@
   .bodyContainer{
       width: 95%;
   }
-  .journey-section{
-      flex-direction: row;
-      text-align: center;
-  }
-  .journey-content h2{
-      font-size: 20px;
-  }
 }
 
 @media (min-width:740px) and (max-width:1023px){
@@ -1390,9 +1336,6 @@
   .card{
       width: 160px;
       height: 160px;
-  }
-  .journey-section .journey-image img{
-      width: 300px;
   }
 
 }

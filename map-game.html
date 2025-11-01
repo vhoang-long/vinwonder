@@ -13,32 +13,29 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer" />
   </head>
+  
   <body>
     <div class="map-container">
       <div class="map-head">
         <a href="./index.html">
           <i class="fa-solid fa-arrow-left"></i>
         </a>
-        <p>Bản đồ chỉ đường</p>
+        <p>VinWonders Nha Trang</p>
         <div></div>
       </div>
 
       <div class="map-wrapper">
         <img
           id="mapImage"
-          src="./assets/map.jpg"
+          src="./assets/map.png"
           alt="VinWonders Nha Trang"
           class="map" />
       </div>
 
-      <div class="btn btn-seaworld" title="Sea World">1</div>
-      <div class="btn btn-adventure" title="Adventure Land">2</div>
-      <div class="btn btn-garden" title="King’s Garden">3</div>
-      <div class="btn btn-warter" title="Warter sport">4</div>
     </div>
   </body>
 
-  <script>
+  <!-- <script>
     const map = document.getElementById("mapImage");
     const wrapper = document.querySelector(".map-wrapper");
     let scale = 1;
@@ -104,5 +101,5 @@
       posY = clamp(e.clientY - startY, -limitY, limitY);
       updateTransform();
     });
-  </script>
+  </script> -->
 </html>
