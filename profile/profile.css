@@ -116,17 +116,6 @@ body {
   color: #3b82f6;
 }
 
-.camera-icon {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  background: #3b82f6;
-  color: #fff;
-  border-radius: 50%;
-  padding: 5px;
-  font-size: 14px;
-}
-
 .form-group {
   margin-bottom: 18px;
 }
@@ -212,30 +201,6 @@ input[type="date"] {
   font-size: 50px;
   z-index: 0;
 }
-
-/* Icon camera */
-.camera-icon {
-  position: absolute;
-  bottom: 4px;
-  right: 4px;
-  background: #3b82f6;
-  color: #fff;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 14px;
-  border: 2px solid #fff; /* tạo viền trắng tách biệt với ảnh */
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-.camera-icon:hover {
-  background: #2563eb; /* hiệu ứng hover */
-}
-
 @media (max-width: 768px) {
   .profile-container {
     width: 90%;
