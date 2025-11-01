@@ -47,7 +47,7 @@
       }
 
       .gameao-head i {
-        color: #ff6600;
+        color: #000;
         font-size: 20px;
         padding: 6px;
       }
@@ -97,6 +97,21 @@
         margin: 2px 0 6px;
         font-size: 16px;
         color: #222;
+      }
+
+      /* time line with icon */
+      .game-info .time {
+        margin: 6px 0 0;
+        color: #666;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 15px;
+      }
+
+      .game-info .time-icon {
+        color: #ff6600;
+        font-size: 16px;
       }
 
       .join-btn {
@@ -218,6 +233,15 @@
 
       .invoice {
         text-align: left;
+        display:flex;
+        flex-direction: column;
+        gap: 3px;
+      }
+
+      /* center invoice title while keeping invoice body left-aligned */
+      .invoice h2 {
+        text-align: center;
+        margin: 0 0 12px;
       }
 
       .barcode {
@@ -434,7 +458,7 @@
         <p><b>Tên trò chơi:</b> <span id="invoiceName"></span></p>
         <p><b>Khung giờ:</b> <span id="invoiceTime"></span></p>
         <p><b>Số lượng người chơi:</b> <span id="invoiceCount"></span></p>
-          <p><b>Thời gian dự kiến:</b> <span>30 phút</span></p>
+          <p><b>Thời gian chờ dự kiến:</b> <span>30 phút</span></p>
         <!-- <p><b>Tổng tiền:</b> <span id="invoiceTotal"></span> đ</p> -->
         <p><b>Số thứ tự:</b> <span id="invoiceOrder"></span></p>
         <div id="playerList"></div>
@@ -497,8 +521,8 @@
         <img src="${g.img}" alt="${g.name}" />
         <div class="game-info">
           <h3>${g.name}</h3>
-          <p>${g.desc}</p>
-          <p>${g.time}</p>
+            <p>${g.desc}</p>
+            <p class="time"><i class="fa-regular fa-clock time-icon"></i>${g.time}</p>
           <button class="join-btn" data-id="${g.id}">Tham gia hàng ảo</button>
         </div>
       </div>

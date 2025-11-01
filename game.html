@@ -52,7 +52,7 @@
     }
 
     .container {
-      max-width: 600px;
+      max-width: 900px;
       margin: 30px auto;
       padding: 0 20px;
     }
@@ -65,8 +65,11 @@
 
     .card-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 20px;
+      width: 100%;
+      max-width: 900px;
+      box-sizing: border-box;
     }
 
     .game-card {
@@ -215,7 +218,7 @@
 
     .modal h3 {
       margin-top: 0;
-      font-size: 18px;
+      font-size: 24px;
       text-align: center;
     }
 
@@ -492,8 +495,7 @@
     closeBooking.onclick = () => (bookingModal.style.display = "none");
   
 closeBill.onclick = () => {
-  bookingModal.style.display = "none";
-  window.location.href = "index.html"; // quay về trang chính
+  billModal.style.display = "none";
 };
     //   //   <span class="badge ${g.thrill}">${g.thrill} thrill</span>
   </script>
