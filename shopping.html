@@ -1,49 +1,58 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mua sắm</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VinWonders</title>
       <link rel="icon" type="image/png" href="/assets/iconlogo.png" />
-  <link rel="stylesheet" href="style.css" />
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
-  />
-</head>
-<body>
-  <div class="container-shopping">
-    <h2 class="title-shopping">Mua sắm</h2>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="container-shopping">
+      <h2 class="title-shopping">Mua sắm</h2>
 
-    <div class="welcome-card-shopping">
-      <div class="text-shopping">
-        <p>Xin chào,</p>
-        <h3>Lê Trung Min</h3>
+      <div class="welcome-card-shopping">
+        <div class="text-shopping">
+          <p>Xin chào,</p>
+          <h3>Lê Trung Min</h3>
+        </div>
+        <div class="ferris-shopping"></div>
       </div>
-      <div class="ferris-shopping">
-        🎡
+
+      <div class="menu-shopping">
+        <div class="menu-item-shopping" id="exchangeVoucher">
+          <i class="fa-solid fa-right-left"></i>
+          <span>Đổi ưu đãi voucher</span>
+          <i class="fa-solid fa-chevron-right arrow"></i>
+        </div>
+
+        <div class="menu-item-shopping">
+          <i class="fa-regular fa-clock"></i>
+          <span>Lịch sử sử dụng voucher</span>
+          <i class="fa-solid fa-chevron-right arrow"></i>
+        </div>
       </div>
+
+      <button class="scan-btn" id="scanBtn">Quét mã QR - Sử dụng ưu đãi</button>
+
+      <script>
+        document
+          .getElementById("exchangeVoucher")
+          .addEventListener("click", () => {
+            window.location.href = "./voucher/voucher.html";
+          });
+      </script>
+      <script>
+        document.getElementById("scanBtn").addEventListener("click", () => {
+          window.location.href = "scanner.html";
+        });
+      </script>
     </div>
-
-    <div class="menu-shopping">
-      <div class="menu-item-shopping">
-        <i class="fa-solid fa-right-left"></i>
-        <span>Đổi ưu đãi voucher</span>
-        <i class="fa-solid fa-chevron-right arrow"></i>
-      </div>
-
-      <div class="menu-item-shopping">
-        <i class="fa-regular fa-clock"></i>
-        <span>Lịch sử sử dụng voucher</span>
-        <i class="fa-solid fa-chevron-right arrow"></i>
-      </div>
-    </div>
-
-    <button class="scan-btn">
-      Quét mã QR - Sử dụng ưu đãi
-    </button>
-  </div>
-   <div class="menu">
+    <div class="menu">
       <div class="menuItem">
         <a href="./index.html" class="menuItemLink">
           <i class="fa-solid fa-house menuItemIcon"></i>
@@ -75,5 +84,5 @@
       </div>
       <script src="./main.js"></script>
     </div>
-</body>
+  </body>
 </html>
