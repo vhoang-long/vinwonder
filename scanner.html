@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quét mã QR - Sử dụng ưu đãi</title>
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <style>
+      body {
+        font-family: "Segoe UI", sans-serif;
+        text-align: center;
+        background: #f8f8f8;
+        padding: 20px;
+      }
+
+      h2 {
+        color: #333;
+        margin-bottom: 10px;
+      }
+
+      #reader {
+        width: 320px;
+        max-width: 90vw;
+        margin: 20px auto;
+        border: 2px solid #ddd;
+        border-radius: 10px;
+        overflow: hidden;
+        background: #000;
+      }
+
+      #result {
+        margin-top: 10px;
+        font-size: 16px;
+        color: green;
+      }
+
+      .btn {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 20px;
+        background: #e74c3c;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+
+      .btn:hover {
+        background: #c0392b;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>📷 Quét mã QR - Sử dụng ưu đãi</h2>
+    <div id="reader"></div>
+    <p id="result"></p>
+    <button id="exitBtn" class="btn">Thoát</button>
+
+    <script>
+      const qrReader = new Html5Qrcode("reader");
+      let isScanning = false;
+
+      Html5Qrcode.getCameras()
+        .then((devices) => {
+          if (devices && devices.length) {
+            const camId = devices.length > 1 ? devices[1].id : devices[0].id;
+            qrReader
+              .start(
+                camId,
+                { fps: 10, qrbox: 250 },
+                (qrCodeMessage) => {
+                  document.getElementById("result").innerText =
+                    "Mã quét được: " + qrCodeMessage;
+
+                  if (qrCodeMessage.startsWith("http")) {
+                    setTimeout(
+                      () => (window.location.href = qrCodeMessage),
+                      1000,
+                    );
+                  }
+                },
+                (errorMessage) => {},
+              )
+              .then(() => (isScanning = true))
+              .catch((err) => console.error("Lỗi khi khởi tạo camera:", err));
+          } else {
+            alert("Không tìm thấy camera nào!");
+          }
+        })
+        .catch((err) => console.error("Lỗi khi truy cập camera:", err));
+
+      document.getElementById("exitBtn").addEventListener("click", async () => {
+        if (isScanning) {
+          await qrReader.stop();
+          isScanning = false;
+        }
+        window.history.back();
+      });
+    </script>
+  </body>
+</html>

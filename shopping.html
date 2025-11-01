@@ -23,7 +23,7 @@
       </div>
 
       <div class="menu-shopping">
-        <div class="menu-item-shopping">
+        <div class="menu-item-shopping" id="exchangeVoucher">
           <i class="fa-solid fa-right-left"></i>
           <span>Đổi ưu đãi voucher</span>
           <i class="fa-solid fa-chevron-right arrow"></i>
@@ -39,9 +39,15 @@
       <button class="scan-btn" id="scanBtn">Quét mã QR - Sử dụng ưu đãi</button>
 
       <script>
+        document
+          .getElementById("exchangeVoucher")
+          .addEventListener("click", () => {
+            window.location.href = "./voucher/voucher.html";
+          });
+      </script>
+      <script>
         document.getElementById("scanBtn").addEventListener("click", () => {
-          // Chuyển đến trang voucher.html trong thư mục voucher cùng cấp với file hiện tại
-          window.location.href = "./voucher/voucher.html";
+          window.location.href = "scanner.html";
         });
       </script>
     </div>
