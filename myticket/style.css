@@ -14,7 +14,7 @@ body {
   align-items: center;
   min-height: 100vh;
   gap: 10px;
-  padding: 20px;
+  padding: 0px;
 }
 
 .wrapperTicket {
@@ -24,11 +24,11 @@ body {
   flex-direction: column;
   gap: 10px;
   width: 100%;
-  max-width: 800px;
+  max-width: 1000px;
 }
 
 .myTicket {
-  width: 100%;
+  width: 120%;
   display: flex;
   justify-content: space-between;
   align-items: center;
