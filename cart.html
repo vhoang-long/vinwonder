@@ -583,6 +583,54 @@
         });
 
         totalPriceEl.textContent = total.toLocaleString("vi-VN") + " đ";
+
+        // Attach edit event listeners after rendering
+        document.querySelectorAll(".edit-btn").forEach((btn, index) => {
+          btn.addEventListener("click", () => {
+            currentEditIndex = btn.dataset.index;
+            const item = cart[currentEditIndex];
+
+            // Cập nhật cơ sở
+            editModal
+              .querySelectorAll(".location-options button")
+              .forEach((b) => {
+                b.classList.toggle(
+                  "active",
+                  b.textContent.trim() === item.branch
+                );
+              });
+
+            // ✅ FIX lỗi trùng giờ: reset và gán lại nút giờ đúng
+            const timeOptions = editModal.querySelector(".time-options");
+            const availableTimes = ["9:30", "14:00"];
+            timeOptions.innerHTML = ""; // xoá hết các nút cũ
+
+            availableTimes.forEach((time) => {
+              const btnTime = document.createElement("button");
+              btnTime.classList.add("time-btn");
+              btnTime.textContent = time;
+              if (time === item.time) btnTime.classList.add("active");
+              timeOptions.appendChild(btnTime);
+            });
+
+            // Gán lại sự kiện click cho các nút giờ mới
+            timeOptions.querySelectorAll("button").forEach((b) => {
+              b.addEventListener("click", () => {
+                timeOptions
+                  .querySelectorAll("button")
+                  .forEach((t) => t.classList.remove("active"));
+                b.classList.add("active");
+              });
+            });
+
+            // Số lượng người
+            editModal.querySelector(".count").textContent =
+              item.person.match(/\d+/)[0];
+
+            updateEditTotal();
+            editModal.style.display = "flex";
+          });
+        });
       }
 
       renderCart();

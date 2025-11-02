@@ -188,6 +188,80 @@
       </div>
     </div>
     <script>
+
+      // Ticket detail constants
+      const TICKET_DETAILS = {
+        combo: {
+          title: '[VinWonders Nha Trang] - Combo Vé Vào Cửa VinWonders + Dịch vụ Buffet',
+          tickets: [
+            {
+              type: 'Người lớn',
+              description: 'Cao từ 140cm',
+              price_original: 1190000,
+              price_discount: 1100000,
+            },
+            {
+              type: 'Trẻ em',
+              description: 'Cao từ 100-139cm',
+              price_original: 820000,
+              price_discount: 760000,
+            },
+            {
+              type: 'Người cao tuổi',
+              description: 'Từ 60 tuổi',
+              price_original: 960000,
+              price_discount: 910000,
+            },
+          ],
+        },
+        standard: {
+          title: '[VinWonders Nha Trang] - Vé Vào Cửa Tiêu Chuẩn | Tặng Voucher ẩm thực',
+          tickets: [
+            {
+              type: 'Người lớn',
+              description: 'Cao từ 140cm',
+              price_original: null,
+              price_discount: 950000,
+            },
+            {
+              type: 'Trẻ em',
+              description: 'Cao từ 100-139cm',
+              price_original: null,
+              price_discount: 710000,
+            },
+            {
+              type: 'Người cao tuổi',
+              description: 'Từ 60 tuổi',
+              price_original: null,
+              price_discount: 710000,
+            },
+          ],
+        },
+        after16h: {
+          title: '[VinWonders Nha Trang] - Vé vào cửa VinWonders sau 16h00',
+          tickets: [
+            {
+              type: 'Người lớn',
+              description: 'Cao từ 140cm',
+              price_original: null,
+              price_discount: 660000,
+            },
+            {
+              type: 'Trẻ em',
+              description: 'Cao từ 100-139cm',
+              price_original: null,
+              price_discount: 500000,
+            },
+            {
+              type: 'Người cao tuổi',
+              description: 'Từ 60 tuổi',
+              price_original: null,
+              price_discount: 500000,
+            },
+          ],
+        },
+      };
+
       const params = new URLSearchParams(window.location.search);
       const selectedLocation = params.get("location");
       const selectedDate = params.get("date");
@@ -424,84 +498,18 @@
       let selectedChooseBtn = null;
       let selectedTicketData = null;
       // Hardcoded ticket data for each ticket type
+
+      // Ticket data getter functions using constants
       function getComboTicketData() {
-        return {
-          title:
-            "[VinWonders Nha Trang] - Combo Vé Vào Cửa VinWonders + Dịch vụ Buffet",
-          tickets: [
-            {
-              type: "Người lớn",
-              description: "Cao từ 140cm",
-              price_original: 1190000,
-              price_discount: 1100000,
-            },
-            {
-              type: "Trẻ em",
-              description: "Cao từ 100-139cm",
-              price_original: 820000,
-              price_discount: 760000,
-            },
-            {
-              type: "Người cao tuổi",
-              description: "Từ 60 tuổi",
-              price_original: 960000,
-              price_discount: 910000,
-            },
-          ],
-        };
+        return TICKET_DETAILS.combo;
       }
 
       function getStandardTicketData() {
-        return {
-          title:
-            "[VinWonders Nha Trang] - Vé Vào Cửa Tiêu Chuẩn | Tặng Voucher ẩm thực",
-          tickets: [
-            {
-              type: "Người lớn",
-              description: "Cao từ 140cm",
-              price_original: null,
-              price_discount: 950000,
-            },
-            {
-              type: "Trẻ em",
-              description: "Cao từ 100-139cm",
-              price_original: null,
-              price_discount: 710000,
-            },
-            {
-              type: "Người cao tuổi",
-              description: "Từ 60 tuổi",
-              price_original: null,
-              price_discount: 710000,
-            },
-          ],
-        };
+        return TICKET_DETAILS.standard;
       }
 
       function getAfter16hTicketData() {
-        return {
-          title: "[VinWonders Nha Trang] - Vé vào cửa VinWonders sau 16h00",
-          tickets: [
-            {
-              type: "Người lớn",
-              description: "Cao từ 140cm",
-              price_original: null,
-              price_discount: 660000,
-            },
-            {
-              type: "Trẻ em",
-              description: "Cao từ 100-139cm",
-              price_original: null,
-              price_discount: 500000,
-            },
-            {
-              type: "Người cao tuổi",
-              description: "Từ 60 tuổi",
-              price_original: null,
-              price_discount: 500000,
-            },
-          ],
-        };
+        return TICKET_DETAILS.after16h;
       }
 
       function updateBuyModalWithTicketData(ticketData) {
@@ -609,54 +617,35 @@
 
       const buyBtn = buyModal.querySelector(".buy-btn");
       buyBtn.addEventListener("click", () => {
-        const selectedTime =
-          buyModal.querySelector(".time-btn.active").textContent;
-        const selectedBranch = buyModal.querySelector(
-          ".location-options .active",
-        ).textContent;
+        const selectedTime = buyModal.querySelector(".time-btn.active").textContent;
+        const selectedBranch = buyModal.querySelector(".location-options .active").textContent;
+        const locationName = document.querySelector(".info h2")?.textContent.trim() || "Không rõ địa điểm";
+        const selectedDate = document.querySelector(".date-buttons .active")?.textContent.trim() || "Không rõ ngày";
+        const imageSrc = document.querySelector(".banner img")?.src || "./assets/default.jpg";
+        const title = selectedTicketData ? selectedTicketData.title : "Không rõ vé";
 
-        const total = parseInt(totalElement.textContent.replace(/\D/g, ""));
-
-        // 🟢 Lấy số lượng từng loại vé
+        // Get all ticket types and quantities
         const ticketTypes = buyModal.querySelectorAll(".ticket-type");
-        const persons = [];
-        ticketTypes.forEach((type) => {
-          const name = type.querySelector("p").textContent.trim();
-          const count = parseInt(type.querySelector(".count").textContent);
-          if (count > 0) persons.push(`${count} ${name}`);
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+        ticketTypes.forEach((typeEl, idx) => {
+          const count = parseInt(typeEl.querySelector(".count").textContent);
+          if (count > 0 && selectedTicketData && selectedTicketData.tickets[idx]) {
+            const ticketInfo = selectedTicketData.tickets[idx];
+            cart.push({
+              location: locationName,
+              title: title,
+              branch: selectedBranch,
+              time: selectedTime,
+              date: selectedDate,
+              person: `${count} ${ticketInfo.type}`,
+              price: count * ticketInfo.price_discount,
+              image: imageSrc,
+            });
+          }
         });
 
-        // 🟢 Lấy dữ liệu từ ticket được chọn
-        const locationName =
-          document.querySelector(".info h2")?.textContent.trim() ||
-          "Không rõ địa điểm";
-
-        const selectedTicket = ticketInfo[selectedTicketIndex];
-        const title = selectedTicket ? selectedTicket.title : "Không rõ vé";
-
-        const imageSrc =
-          document.querySelector(".banner img")?.src || "./assets/default.jpg";
-
-        // 🟢 Lấy ngày hiển thị ở nút ngày
-        const selectedDate =
-          document.querySelector(".date-buttons .active")?.textContent.trim() ||
-          "Không rõ ngày";
-
-        const cartItem = {
-          location: locationName,
-          title: title,
-          branch: selectedBranch,
-          time: selectedTime,
-          date: selectedDate,
-          person: persons.join(", "),
-          price: total,
-          image: imageSrc,
-        };
-
-        const cart = JSON.parse(localStorage.getItem("cart")) || [];
-        cart.push(cartItem);
         localStorage.setItem("cart", JSON.stringify(cart));
-
         buyModal.style.display = "none";
         window.location.href = "./cart.html";
       });
