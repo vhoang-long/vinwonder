@@ -19,54 +19,37 @@ body {
 
 .wrapperTicket {
   display: flex;
-  justify-content: center;
   align-items: center;
   flex-direction: column;
   gap: 10px;
   width: 100%;
-  max-width: 1000px;
+  min-height: 100vh;
 }
 
-.myTicket {
-  width: 120%;
+
+header {
+  width: 100%;
+  height: 60px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 25px 30px;
-  background: linear-gradient(135deg, #ff6a00 0%, #ff8534 100%);
-  margin-bottom: 30px;
-  border-radius: 16px;
-  color: #fff;
-  box-shadow: 0 4px 15px rgba(255, 106, 0, 0.3);
-  transition: all 0.3s ease;
+  padding: 0 22.5px 0 20px;
+  background-color: #f77119;
 }
 
-.myTicket:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 106, 0, 0.4);
-}
-
-.myTicket h4 {
-  font-size: 24px;
-  font-weight: 700;
-}
-
-.myTicket a {
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  transition: transform 0.2s;
-}
-
-.myTicket a:hover {
-  transform: scale(1.1);
-}
-
-.myTicket i {
-  font-size: 24px;
-  padding: 8px;
+header h2 {
+  font-size: 25px;
   cursor: pointer;
-  color: #fff;
+  color: #ffffff;
+  font-weight: 650;
+}
+
+
+header i {
+  font-size: 22px;
+  padding: 2px;
+  cursor: pointer;
+  color: #ffffff;
 }
 
 .ticket {
@@ -75,6 +58,7 @@ body {
   background: #fff;
   border-radius: 16px;
   width: 100%;
+  max-width: 1000px;
   padding: 30px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
   position: relative;
