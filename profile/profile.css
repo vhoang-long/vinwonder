@@ -30,10 +30,22 @@ body {
   background: linear-gradient(135deg, #ff6a00 0%, #ff8534 100%);
   color: white;
   box-shadow: 0 2px 10px rgba(255, 106, 0, 0.2);
+  position: relative;
 }
+
 
 .profile-header a {
   text-decoration: none;
+}
+
+.profile-header h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: white;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
 }
 
 .back-btn {
@@ -280,12 +292,12 @@ input[type="date"] {
     padding: 20px;
   }
 
-  .avatar-section {
-    padding: 30px 20px 20px;
+  .profile-header h2 {
+    font-size: 22px;
   }
 
-  .avatar-section h2 {
-    font-size: 24px;
+  .avatar-section {
+    padding: 30px 20px 20px;
   }
 
   .avatar {
