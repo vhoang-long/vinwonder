@@ -93,36 +93,36 @@
   }
   
   .notificationItem {
-    background-color: #ffecec;
+    background-color: #f9eadb;
     border-radius: 8px;
     padding: 12px;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
   }
   
   .notificationHeader {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: 6px;
+    align-items: flex-start;
+    margin-bottom: 3px;
   }
   
   .notificationHeader h4 {
     text-transform: none;
-    font-size: 17px;
+    font-size: 16px;
     font-weight: 700;
-    color: #ed5121;
+    color: #f77119;
   }
   
   .notificationHeader span {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 14px;
+    font-size: 13px;
     color: #fff;
     width: 24px;
     height: 24px;
     border-radius:50% ;
-    background-color: #ed5121;
+    background-color: #f77119;
   }
   .notificationItem p {
     font-size: 14px;
@@ -237,7 +237,7 @@
 
 .sliderLocation{
     font-size: 14px;
-    color: rgb(230, 124, 25);
+    color: #f77119;
     padding: 0 10px;
 }
 

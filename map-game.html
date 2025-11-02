@@ -4,16 +4,87 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>VinWonders</title>
-      <link rel="icon" type="image/png" href="/assets/iconlogo.png" />
+    <link rel="icon" type="image/png" href="/assets/iconlogo.png" />
     <link rel="stylesheet" href="style.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
       integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
       crossorigin="anonymous"
-      referrerpolicy="no-referrer" />
+      referrerpolicy="no-referrer"
+    />
+    <style>
+      /* You can move these to style.css */
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+      }
+
+      .map-container {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+      }
+
+      .map-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: #f77119;
+        color: white;
+        padding: 10px 16px;
+        font-size: 18px;
+      }
+
+      .map-head a {
+        color: white;
+        text-decoration: none;
+        font-size: 20px;
+      }
+
+      .map-wrapper {
+        position: relative;
+        flex: 1;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #ffe2c5;
+      }
+
+      .map {
+        transition: transform 0.3s ease;
+        max-height: 100%;
+        width: auto;
+      }
+
+      /* Zoom buttons */
+      .zoom-controls {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .zoom-btn {
+        background-color: #f77119;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        padding: 10px 14px;
+        font-size: 18px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+
+      .zoom-btn:hover {
+        background-color: #ec6003;
+      }
+    </style>
   </head>
-  
+
   <body>
     <div class="map-container">
       <div class="map-head">
@@ -29,77 +100,38 @@
           id="mapImage"
           src="./assets/map.png"
           alt="VinWonders Nha Trang"
-          class="map" />
+          class="map"
+        />
+
+        <div class="zoom-controls">
+          <button class="zoom-btn" id="zoomIn"><i class="fa-solid fa-plus"></i></button>
+          <button class="zoom-btn" id="zoomOut"><i class="fa-solid fa-minus"></i></button>
+        </div>
       </div>
-
     </div>
+
+    <script>
+      const mapImage = document.getElementById("mapImage");
+      const zoomInBtn = document.getElementById("zoomIn");
+      const zoomOutBtn = document.getElementById("zoomOut");
+
+      let zoomLevel = 1; // initial scale (100%)
+
+      zoomInBtn.addEventListener("click", () => {
+        zoomLevel += 0.2; // increase by 10%
+        updateZoom();
+      });
+
+      zoomOutBtn.addEventListener("click", () => {
+        if (zoomLevel > 1) { // prevent zooming too small
+          zoomLevel -= 0.2;
+          updateZoom();
+        }
+      });
+
+      function updateZoom() {
+        mapImage.style.transform = `scale(${zoomLevel})`;
+      }
+    </script>
   </body>
-
-  <!-- <script>
-    const map = document.getElementById("mapImage");
-    const wrapper = document.querySelector(".map-wrapper");
-    let scale = 1;
-    let posX = 0,
-      posY = 0;
-    let isDragging = false;
-    let startX, startY;
-
-    // Giới hạn toạ độ kéo
-    function clamp(value, min, max) {
-      return Math.min(Math.max(value, min), max);
-    }
-
-    function updateTransform() {
-      map.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
-    }
-
-    wrapper.addEventListener("wheel", (e) => {
-      e.preventDefault();
-      const zoomSpeed = 0.1;
-      const oldScale = scale;
-      if (e.deltaY < 0) scale += zoomSpeed;
-      else scale = Math.max(1, scale - zoomSpeed);
-
-      const rect = wrapper.getBoundingClientRect();
-      const offsetX = e.clientX - rect.left - rect.width / 2;
-      const offsetY = e.clientY - rect.top - rect.height / 2;
-      posX -= offsetX * (scale - oldScale);
-      posY -= offsetY * (scale - oldScale);
-
-      // Giới hạn khi zoom
-      const limitX = (rect.width * (scale - 1)) / 2;
-      const limitY = (rect.height * (scale - 1)) / 2;
-      posX = clamp(posX, -limitX, limitX);
-      posY = clamp(posY, -limitY, limitY);
-
-      updateTransform();
-    });
-
-    wrapper.addEventListener("mousedown", (e) => {
-      isDragging = true;
-      startX = e.clientX - posX;
-      startY = e.clientY - posY;
-      wrapper.style.cursor = "grabbing";
-    });
-
-    wrapper.addEventListener("mouseup", () => {
-      isDragging = false;
-      wrapper.style.cursor = "grab";
-    });
-
-    wrapper.addEventListener("mouseleave", () => {
-      isDragging = false;
-      wrapper.style.cursor = "grab";
-    });
-
-    wrapper.addEventListener("mousemove", (e) => {
-      if (!isDragging) return;
-      const rect = wrapper.getBoundingClientRect();
-      const limitX = (rect.width * (scale - 1)) / 2;
-      const limitY = (rect.height * (scale - 1)) / 2;
-      posX = clamp(e.clientX - startX, -limitX, limitX);
-      posY = clamp(e.clientY - startY, -limitY, limitY);
-      updateTransform();
-    });
-  </script> -->
 </html>
