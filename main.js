@@ -17,25 +17,24 @@ let index = 0;
 // Highlight active menu item based on current page URL
 function setActiveMenuItem() {
   const path = window.location.pathname.split("/").pop();
-  const currentFile = path || 'index.html';
-  // Map menu text to expected filename
+  const currentFile = path || "index.html";
   const menuMap = {
-    'Trang chủ': 'index.html',
-    'Mua vé': 'ticket.html',
-    'Mua sắm': 'shopping.html',
-    'Tài khoản': 'user.html'
+    "Trang chủ": "index.html",
+    "Mua vé": "ticket",
+    "Mua sắm": "shopping",
+    "Tài khoản": "user",
   };
-  document.querySelectorAll(".menuItemLink").forEach(link => {
-    const parent = link.closest('.menuItem');
+  document.querySelectorAll(".menuItemLink").forEach((link) => {
+    const parent = link.closest(".menuItem");
     if (!parent) return;
-    const contentElem = parent.querySelector('.menuItemContent');
+    const contentElem = parent.querySelector(".menuItemContent");
     if (!contentElem) return;
     const menuText = contentElem.textContent.trim();
     const expectedFile = menuMap[menuText];
     if (expectedFile && currentFile === expectedFile) {
-      parent.classList.add('active');
+      parent.classList.add("active");
     } else {
-      parent.classList.remove('active');
+      parent.classList.remove("active");
     }
   });
 }
@@ -109,7 +108,7 @@ function renderCalendar(date) {
 
   // Ô trống đầu tháng
   [...Array(firstDay.getDay())].forEach(() =>
-    grid.appendChild(document.createElement("div"))
+    grid.appendChild(document.createElement("div")),
   );
 
   const today = new Date(); // ngày hiện tại (so sánh)
@@ -159,10 +158,10 @@ function renderCalendar(date) {
     btn.addEventListener("click", (e) => {
       e.stopPropagation();
       currentDate.setMonth(
-        currentDate.getMonth() + (btn.dataset.action === "next" ? 1 : -1)
+        currentDate.getMonth() + (btn.dataset.action === "next" ? 1 : -1),
       );
       renderCalendar(currentDate);
-    })
+    }),
   );
 }
 
@@ -224,4 +223,3 @@ continueBtn.addEventListener("click", () => {
   const targetUrl = `ticket-detail.html?location=${location}&date=${date}`;
   window.location.href = targetUrl;
 });
-
