@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Open Sans", sans-serif;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
 }
 
 body {
@@ -17,7 +17,7 @@ body {
   padding: 20px;
 }
 
-.wrapperTicket{
+.wrapperTicket {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -27,7 +27,7 @@ body {
   max-width: 800px;
 }
 
-.myTicket{
+.myTicket {
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -101,13 +101,6 @@ body {
 .logo {
   width: 140px;
   height: auto;
-}
-
-.qr-box {
-  background: linear-gradient(135deg, #ffe5d1 0%, #ffd4b8 100%);
-  padding: 15px;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(255, 106, 0, 0.15);
 }
 
 .qr-box img {
