@@ -1,47 +1,70 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Open Sans", sans-serif;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
 }
 
 body {
-  font-family: "Segoe UI", sans-serif;
-  background: #f6f6f6;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   gap: 10px;
+  padding: 20px;
 }
 
-.wrapperTicket{
+.wrapperTicket {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   gap: 10px;
+  width: 100%;
+  max-width: 800px;
 }
 
-.myTicket{
+.myTicket {
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 40px;
-  background-color: rgb(231, 127, 41);
-  margin-bottom: 20px;
-  border-radius: 6px;
+  padding: 25px 30px;
+  background: linear-gradient(135deg, #ff6a00 0%, #ff8534 100%);
+  margin-bottom: 30px;
+  border-radius: 16px;
   color: #fff;
-  padding: 0 20px;
+  box-shadow: 0 4px 15px rgba(255, 106, 0, 0.3);
+  transition: all 0.3s ease;
+}
 
+.myTicket:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 106, 0, 0.4);
+}
+
+.myTicket h4 {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.myTicket a {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  transition: transform 0.2s;
+}
+
+.myTicket a:hover {
+  transform: scale(1.1);
 }
 
 .myTicket i {
-  font-size: 20px;
-  padding: 4px;
+  font-size: 24px;
+  padding: 8px;
   cursor: pointer;
   color: #fff;
 }
@@ -50,64 +73,48 @@ body {
   display: flex;
   align-items: center;
   background: #fff;
-  border: 3px dashed #f9a825;
   border-radius: 16px;
-  width: 750px;
-  padding: 20px 30px;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  padding: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
   position: relative;
   overflow: hidden;
+  border: 1px solid #f0f0f0;
+  transition: all 0.3s ease;
+  margin-bottom: 20px;
 }
 
-.ticket::before,
-.ticket::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 20px;
-  height: 20px;
-  background: #f6f6f6;
-  border-radius: 50%;
-  z-index: 2;
-}
-
-.ticket::before {
-  left: -10px;
-}
-
-.ticket::after {
-  right: -10px;
+.ticket:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
 }
 
 .ticket-left {
   text-align: center;
-  margin-right: 20px;
+  margin-right: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
 }
 
 .logo {
-  width: 120px;
-  margin-bottom: 15px;
+  width: 140px;
+  height: auto;
 }
 
 .qr-box img {
-  width: 120px;
-  height: 120px;
-  border: 2px solid #ccc;
+  width: 130px;
+  height: 130px;
   border-radius: 8px;
+  display: block;
 }
 
 .divider {
-  width: 2px;
-  height: 160px;
-  background: repeating-linear-gradient(
-    to bottom,
-    #999,
-    #999 5px,
-    transparent 5px,
-    transparent 10px
-  );
-  margin-right: 25px;
+  width: 1px;
+  height: 200px;
+  background: linear-gradient(to bottom, transparent, #e0e0e0, transparent);
+  margin: 0 30px;
 }
 
 .ticket-right {
@@ -115,25 +122,31 @@ body {
 }
 
 .ticket-right h2 {
-  font-size: 22px;
-  font-weight: bold;
-  margin-bottom: 10px;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: #1a1a1a;
+  line-height: 1.4;
 }
 
 .ticket-right h2 span {
-  font-weight: normal;
-  font-size: 18px;
+  font-weight: 500;
+  font-size: 16px;
+  color: #666;
 }
 
 .ticket-right h3 {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 5px;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #ff6a00;
 }
 
 .ticket-right p {
-  margin: 2px 0;
-  color: #444;
+  margin: 4px 0;
+  color: #555;
+  font-size: 15px;
+  line-height: 1.6;
 }
 
 .ticket-right .en {
@@ -143,19 +156,30 @@ body {
 }
 
 .expire-box {
-  border: 2px solid #555;
-  border-radius: 20px;
-  padding: 6px 15px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 15px 20px;
   display: inline-flex;
   align-items: center;
-  margin-top: 15px;
-  font-size: 15px;
-  font-weight: 500;
+  margin-top: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  border: 2px solid #e9ecef;
+  transition: all 0.3s ease;
+}
+
+.expire-box:hover {
+  background: white;
+  border-color: #ffe5d1;
+  box-shadow: 0 2px 8px rgba(255, 106, 0, 0.1);
 }
 
 .expire-date {
   margin-left: 10px;
-  text-decoration: underline;
+  color: #ff6a00;
+  font-weight: 700;
+  font-size: 15px;
 }
 
 /* --- Responsive --- */
@@ -164,29 +188,29 @@ body {
 @media (max-width: 992px) {
   .ticket {
     width: 90%;
-    padding: 16px 20px;
+    padding: 25px;
   }
 
   .logo {
-    width: 100px;
+    width: 120px;
   }
 
   .qr-box img {
-    width: 100px;
-    height: 100px;
+    width: 110px;
+    height: 110px;
   }
 
   .ticket-right h2 {
-    font-size: 20px;
+    font-size: 22px;
   }
 
   .ticket-right h3 {
-    font-size: 16px;
+    font-size: 18px;
   }
 
   .expire-box {
     font-size: 14px;
-    padding: 5px 12px;
+    padding: 12px 18px;
   }
 }
 
@@ -196,7 +220,7 @@ body {
     flex-direction: column;
     align-items: stretch;
     height: auto;
-    padding: 20px 0;
+    padding: 15px;
   }
 
   .ticket {
@@ -207,17 +231,15 @@ body {
     align-items: center;
   }
 
-  .ticket::before,
-  .ticket::after {
-    display: none; /* ẩn lỗ tròn hai bên để tránh tràn */
-  }
-
   .ticket-left {
     margin: 0 0 15px 0;
   }
 
   .divider {
-    display: none;
+    width: 80%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #e0e0e0, transparent);
+    margin: 20px 0;
   }
 
   .ticket-right {
@@ -225,15 +247,15 @@ body {
   }
 
   .ticket-right h2 {
-    font-size: 18px;
+    font-size: 20px;
   }
 
   .ticket-right h2 span {
-    font-size: 15px;
+    font-size: 14px;
   }
 
   .ticket-right h3 {
-    font-size: 15px;
+    font-size: 18px;
   }
 
   .ticket-right p {
@@ -242,7 +264,8 @@ body {
 
   .expire-box {
     font-size: 13px;
-    margin-top: 12px;
+    margin-top: 15px;
+    padding: 12px 16px;
   }
 
   .expire-date {
@@ -253,7 +276,7 @@ body {
 /* Rất nhỏ (≤ 480px) */
 @media (max-width: 480px) {
   .logo {
-    width: 80px;
+    width: 100px;
   }
 
   .qr-box img {
@@ -261,19 +284,31 @@ body {
     height: 90px;
   }
 
+  .qr-box {
+    padding: 12px;
+  }
+
   .ticket {
     padding: 15px;
   }
 
   .ticket-right h2 {
-    font-size: 16px;
+    font-size: 18px;
   }
 
   .ticket-right h3 {
-    font-size: 14px;
+    font-size: 16px;
   }
 
   .ticket-right p {
     font-size: 13px;
+  }
+
+  .myTicket {
+    padding: 20px;
+  }
+
+  .myTicket h4 {
+    font-size: 20px;
   }
 }
