@@ -48,12 +48,12 @@
       }
 
       .map {
-        transition: transform 0.3s ease;
         max-height: 100%;
         width: auto;
         cursor: grab; /* show grab cursor when pannable */
         touch-action: none; /* allow pointer events for touch panning */
         will-change: transform;
+        user-select: none; /* prevent text selection during drag */
       }
 
       .map.grabbing {
@@ -128,22 +128,26 @@
       let startY = 0;
       let startTx = 0;
       let startTy = 0;
+      let dragMaxOffsetX = 0;
+      let dragMaxOffsetY = 0;
 
       zoomInBtn.addEventListener("click", () => {
-        zoomLevel += 100; // increase by 10%
-        updateZoom();
+        zoomLevel = +(zoomLevel + 0.5).toFixed(2);
+        // Enable transition for smooth zoom
+        mapImage.style.transition = 'transform 0.3s ease';
+        clampAndApply();
       });
 
       zoomOutBtn.addEventListener("click", () => {
-        if (zoomLevel > 1) { // prevent zooming too small
-          zoomLevel -= 100;
-          updateZoom();
+        zoomLevel = Math.max(1, +(zoomLevel - 0.5).toFixed(2));
+        if (zoomLevel === 1) {
+          translateX = 0;
+          translateY = 0;
         }
+        // Enable transition for smooth zoom
+        mapImage.style.transition = 'transform 0.3s ease';
+        clampAndApply();
       });
-
-      function updateZoom() {
-        mapImage.style.transform = `scale(${zoomLevel})`;
-      }
 
 
       function applyTransform() {
@@ -188,6 +192,9 @@
         // Ignore pointerdown events that originate from UI controls (zoom buttons)
         if (e.target.closest('.zoom-controls') || e.target.closest('button')) return;
         if (zoomLevel <= 1) return; // only pan when zoomed
+        if (e.button && e.button !== 0) return; // left button only
+        
+        e.preventDefault(); // prevent default behavior
         isDragging = true;
         try { wrapper.setPointerCapture(e.pointerId); } catch (err) {}
         startX = e.clientX;
@@ -195,32 +202,36 @@
         startTx = translateX;
         startTy = translateY;
         mapImage.classList.add('grabbing');
-        // disable CSS transition while dragging for snappier movement
+        
+        // Disable transition during drag for immediate feedback
         mapImage.style.transition = 'none';
-      });
 
-      wrapper.addEventListener('pointermove', (e) => {
-        if (!isDragging) return;
-        const dx = e.clientX - startX;
-        const dy = e.clientY - startY;
-        translateX = startTx + dx;
-        translateY = startTy + dy;
-        // clamp during move
+        // compute drag bounds once and cache for pointermove
         const wrapperRect = wrapper.getBoundingClientRect();
-        // compute base size at scale=1 like in clampAndApply
+        const prevTransform = mapImage.style.transform;
         mapImage.style.transform = 'translate(0px, 0px) scale(1)';
         const baseRect = mapImage.getBoundingClientRect();
+        mapImage.style.transform = prevTransform;
         const baseWidth = baseRect.width;
         const baseHeight = baseRect.height;
         const scaledWidth = baseWidth * zoomLevel;
         const scaledHeight = baseHeight * zoomLevel;
-        const maxOffsetX = Math.max(0, (scaledWidth - wrapperRect.width) / 2);
-        const maxOffsetY = Math.max(0, (scaledHeight - wrapperRect.height) / 2);
-        // restore current transform for smooth move
+        dragMaxOffsetX = Math.max(0, (scaledWidth - wrapperRect.width) / 2);
+        dragMaxOffsetY = Math.max(0, (scaledHeight - wrapperRect.height) / 2);
+      });
+
+      wrapper.addEventListener('pointermove', (e) => {
+        if (!isDragging) return;
+        e.preventDefault(); // prevent default behavior
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+        translateX = startTx + dx;
+        translateY = startTy + dy;
+        // clamp during move using cached dragMaxOffsetX/Y
+        translateX = Math.min(dragMaxOffsetX, Math.max(-dragMaxOffsetX, translateX));
+        translateY = Math.min(dragMaxOffsetY, Math.max(-dragMaxOffsetY, translateY));
+        // apply without transition for immediate feedback
         mapImage.style.transform = `translate(${translateX}px, ${translateY}px) scale(${zoomLevel})`;
-        translateX = Math.min(maxOffsetX, Math.max(-maxOffsetX, translateX));
-        translateY = Math.min(maxOffsetY, Math.max(-maxOffsetY, translateY));
-        applyTransform();
       });
 
       wrapper.addEventListener('pointerup', (e) => {
@@ -228,8 +239,6 @@
         isDragging = false;
         try { wrapper.releasePointerCapture(e.pointerId); } catch (er) {}
         mapImage.classList.remove('grabbing');
-        // re-enable transition
-        mapImage.style.transition = 'transform 0.3s ease';
         clampAndApply();
       });
 
@@ -238,13 +247,7 @@
         isDragging = false;
         try { wrapper.releasePointerCapture(e.pointerId); } catch (er) {}
         mapImage.classList.remove('grabbing');
-        mapImage.style.transition = 'transform 0.3s ease';
         clampAndApply();
-      });
-
-      // Allow dragging with mouse left button only (prevent right-click drag)
-      wrapper.addEventListener('pointerdown', (e) => {
-        if (e.button && e.button !== 0) { isDragging = false; }
       });
 
       // initialize
