@@ -444,7 +444,7 @@
   }
 
   .chatbot-window {
-    top: 70px;
+    top: 0px;
     right: 10px;
     width: calc(100vw - 20px);
     height: calc(70vh - 70px);
