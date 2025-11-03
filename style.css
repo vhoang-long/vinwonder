@@ -1361,7 +1361,7 @@
 }
 
 .welcome-card-shopping {
-  background: linear-gradient(135deg, #ff6600, #ff9a3c);
+  background: #f77119;
   color: white;
   border-radius: 16px;
   padding: 20px;
@@ -1369,6 +1369,7 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
+  margin-top: 15px;
 }
 
 .welcome-card .text-shopping p {
@@ -1418,7 +1419,7 @@
   margin-top: 30px;
   width: 100%;
   padding: 14px;
-  background: linear-gradient(90deg, #ff6600, #ff9a3c);
+  background: #f77119;
   border: none;
   border-radius: 30px;
   color: white;
