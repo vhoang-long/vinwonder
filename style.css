@@ -299,7 +299,7 @@
 
 .sliderLocation {
   font-size: 14px;
-  color: rgb(230, 124, 25);
+  color: #f77119;
   padding: 0 10px;
 }
 
@@ -558,7 +558,7 @@
 }
 
 .dropdown-header i.fa-location-dot {
-  color: #ff6600;
+  color: #f77119;
   margin-right: 8px;
   font-size: 20px;
 }
@@ -619,7 +619,7 @@
 .region-header {
   display: flex;
   align-items: center;
-  color: #ff6600;
+  color: #f77119;
   font-weight: 600;
   margin: 10px 0;
 }
@@ -668,7 +668,7 @@
   top: 19px;
   left: 10px;
   font-size: 20px;
-  color: #ff6b00;
+  color: #f77119;
   cursor: pointer;
   z-index: 10001;
 }
@@ -689,7 +689,7 @@
   border: none;
   cursor: pointer;
   font-size: 18px;
-  color: #ff6b00;
+  color: #f77119;
 }
 
 .calendar-grid {
@@ -711,16 +711,16 @@
 
 .day-name {
   font-weight: bold;
-  color: #ff6b00;
+  color: #f77119;
 }
 
 .today {
-  background-color: #ff6b00;
+  background-color: #d4d3d3;
   color: #fff;
 }
 
 .selected {
-  background-color: #ff944d;
+  background-color: #f77119;
   color: white;
 }
 
@@ -817,7 +817,7 @@
 
 .date-buttons button.active,
 .filter-buttons button.active {
-  background: #ff6a00;
+  background: #f77119;
   color: white;
 }
 
@@ -865,13 +865,13 @@
 }
 
 .price-box .price {
-  color: #ff6a00;
+  color: #f77119;
   font-weight: bold;
   font-size: 18px;
 }
 
 .btn-choose {
-  background: linear-gradient(90deg, #ff7a00, #ff4500);
+  background: #f77119;
   color: white;
   border: none;
   border-radius: 20px;
@@ -892,7 +892,7 @@
 }
 
 .hot {
-  background: #ff6a00;
+  background: #f77119;
   color: white;
 }
 
@@ -957,7 +957,7 @@
 }
 
 .close-btn:hover {
-  color: #ff6600;
+  color: #f77119;
 }
 
 .modal-title {
@@ -1055,11 +1055,11 @@
 
 .location-options button,
 .time-options button {
-  border: 1px solid #e56a2d;
+  border: 1px solid #f77119;
   border-radius: 25px;
   padding: 6px 18px;
   background: none;
-  color: #e56a2d;
+  color: #f77119;
   font-size: 15px;
   cursor: pointer;
   transition: 0.2s;
@@ -1067,7 +1067,7 @@
 
 .location-options button.active,
 .time-options button.active {
-  background-color: #e56a2d;
+  background-color: #f77119;
   color: white;
 }
 
@@ -1078,18 +1078,18 @@
 }
 
 .time-options button {
-  border: 1px solid #e56a2d;
+  border: 1px solid #f77119;
   border-radius: 25px;
   padding: 6px 18px;
   background: none;
-  color: #e56a2d;
+  color: #f77119;
   font-size: 15px;
   cursor: pointer;
   transition: 0.2s;
 }
 
 .time-options button.active {
-  background-color: #e56a2d;
+  background-color: #f77119;
   color: white;
 }
 
@@ -1136,7 +1136,7 @@
 }
 
 .footer .buy-btn {
-  background: linear-gradient(to right, #ff7b00, #ff4b2b);
+  background: #f77119;
   color: white;
   border: none;
   padding: 10px 18px;
@@ -1243,7 +1243,7 @@
 
 .icon {
   font-size: 28px;
-  color: #f37b21;
+  color: #f77119;
 }
 
 .profile-card p {
@@ -1406,7 +1406,7 @@
 }
 
 .menu-item-shopping i {
-  color: #ff6600;
+  color: #f77119;
   font-size: 1.1rem;
 }
 

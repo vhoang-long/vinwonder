@@ -80,7 +80,7 @@ header i {
 
 .tab.active {
   background: white;
-  color: #ff6a00;
+  color: #f77119;
   box-shadow: 0 2px 8px rgba(255, 106, 0, 0.15);
 }
 
@@ -104,7 +104,7 @@ header i {
 }
 
 .search-icon {
-  color: #ff6a00;
+  color: #f77119;
   font-size: 18px;
   margin-right: 12px;
 }
@@ -162,7 +162,7 @@ header i {
 }
 
 .order-id i {
-  color: #ff6a00;
+  color: #f77119;
   font-size: 20px;
 }
 
@@ -254,7 +254,7 @@ header i {
 .detail-row.total .value.price {
   font-size: 20px;
   font-weight: 800;
-  color: #ff6a00;
+  color: #f77119;
 }
 
 .order-actions {
@@ -286,7 +286,7 @@ header i {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #ff6a00 0%, #ff8534 100%);
+  background: #f77119;
   color: white;
   box-shadow: 0 4px 12px rgba(255, 106, 0, 0.3);
 }

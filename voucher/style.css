@@ -103,7 +103,7 @@ header button:hover {
 
 .points-icon i {
   font-size: 32px;
-  color: #ff6a00;
+  color: #f77119;
 }
 
 .points-info {
@@ -121,7 +121,7 @@ header button:hover {
 .points-value {
   font-size: 36px;
   font-weight: bold;
-  color: #ff6a00;
+  color: #f77119;
   margin: 0;
 }
 
@@ -245,7 +245,7 @@ header button:hover {
 
 .reward-icon i {
   font-size: 28px;
-  color: #ff6a00;
+  color: #f77119;
 }
 
 .reward-content h4 {
@@ -293,7 +293,7 @@ header button:hover {
 
 .points-cost {
   font-weight: 800;
-  color: #ff6a00;
+  color: #f77119;
   font-size: 16px;
 }
 
@@ -310,7 +310,7 @@ header button:hover {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background: linear-gradient(135deg, #ff6a00 0%, #ff8534 100%);
+  background: #f77119;
   color: white;
   box-shadow: 0 4px 12px rgba(255, 106, 0, 0.3);
 }

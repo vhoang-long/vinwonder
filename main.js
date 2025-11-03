@@ -205,7 +205,7 @@ document.addEventListener("click", (e) => {
 // ======== BUTTON STATE ========
 function checkFormComplete() {
   const isComplete = selectedDestination && selectedDate;
-  continueBtn.style.backgroundColor = isComplete ? "#ff6600" : "#ccc";
+  continueBtn.style.backgroundColor = isComplete ? "#f77119" : "#ccc";
   continueBtn.style.cursor = isComplete ? "pointer" : "not-allowed";
   continueBtn.disabled = !isComplete;
   continueBtn.style.opacity = isComplete ? "1" : "0.6";
