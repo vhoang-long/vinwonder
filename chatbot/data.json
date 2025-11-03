@@ -19,15 +19,9 @@
     },
     {
       "ten": "Combo vé + Buffet trưa/tối",
-      "gia_nguoi_lon": "1.190.000 VNĐ",
-      "gia_tre_em_nguoi_gia": "820.000 VNĐ",
+      "gia_nguoi_lon": "1.100.000 VNĐ",
+      "gia_tre_em_nguoi_gia": "760.000 VNĐ",
       "mo_ta": "Bao gồm bữa ăn buffet tại nhà hàng và vé trọn gói."
-    },
-    {
-      "ten": "Combo 2 ngày không giới hạn",
-      "gia_nguoi_lon": "1.500.000 VNĐ",
-      "gia_tre_em_nguoi_gia": "1.200.000 VNĐ",
-      "mo_ta": "Vào cửa 2 ngày liên tiếp, lý tưởng cho gia đình."
     }
   ],
   "faq": [
@@ -39,13 +33,13 @@
     },
     {
       "question": "Giá vé của VinWonders Nha Trang là bao nhiêu?",
-      "answer": "Vé tiêu chuẩn: Người lớn 950.000 VNĐ, Trẻ em 710.000 VNĐ. Vé sau 16:00: Người lớn 660.000 VNĐ, Trẻ em 500.000 VNĐ. Combo vé + buffet: Người lớn 1.190.000 VNĐ, Trẻ em 820.000 VNĐ.",
+      "answer": "- Vé tiêu chuẩn:\n Người lớn: 950.000 VNĐ.\n Trẻ em và người già: 710.000 VNĐ.\n- Vé sau 16:00:\n Người lớn: 660.000 VNĐ.\n Trẻ em và người già: 500.000 VNĐ.\n- Combo vé + buffet:\n Người lớn: 1.100.000 VNĐ.\n Trẻ em và người già: 760.000 VNĐ.",
       "keywords": ["giá vé", "vé vào cửa", "giá tiền"],
       "category": "vé"
     },
     {
       "question": "Hiện tại khu Fairy Land có các nhà hàng nào?",
-      "answer": "Nhà hàng Coral – khu Fairy Land, Nhà hàng Wind & Sea – khu Fairy Land.",
+      "answer": "Hiện tại khu Fairy Land có các nhà hàng sau:\n- Nhà hàng Coral.\n- Nhà hàng Wind & Sea.",
       "keywords": ["nhà hàng", "ẩm thực", "Fairy Land"],
       "category": "ẩm thực"
     },
@@ -63,7 +57,7 @@
     },
     {
       "question": "Hiện tại có trò chơi nào đang bảo trì không?",
-      "answer": "Hiện tại trò chơi Đường đua nghẹt thở đang được bảo trì để đảm bảo an toàn. Các trò khác vẫn hoạt động bình thường.",
+      "answer": "Hiện tại trò chơi Đường đua nghẹt thở đang được bảo trì để đảm bảo an toàn. Các trò khác vẫn hoạt động bình thường. Mong bạn thông cảm cho VinWonders Nha Trang.",
       "keywords": ["bảo trì", "ngưng hoạt động"],
       "category": "thông tin chung"
     },
@@ -75,10 +69,11 @@
     },
     {
       "question": "Thời gian chờ của trò chơi Rạp phim Bay là bao lâu?",
-      "answer": "Thời gian chờ của Rạp phim Bay hiện tại là khoảng 20 phút.",
+      "answer": "Thời gian chờ của Rạp phim Bay hiện tại là khoảng 45 phút.",
       "keywords": ["rạp phim bay", "thời gian chờ"],
       "category": "trò chơi"
     }
+    
   ],
   "games": [
     {

@@ -99,7 +99,7 @@ function initChatbot() {
     const reply = await findAnswer(message);
     setTimeout(() => {
       hideTyping();
-      addMessage(reply || 'Xin lỗi, mình chưa có thông tin đó. Bạn có thể gọi hotline: 1900 6677.');
+      addMessage(reply || 'Rất tiếc, tôi không có dữ liệu cập nhật thời gian thực cho trường hợp này. Để đảm bảo độ chính xác, bạn vui lòng liên hệ với nhân viên hỗ trợ VinWonders Nha Trang qua các kênh sau nhé:\n- Hotline: 1900 6677 (nhấn phím #1)\n- Email: we-care@vinwonders.com');
       if (sendBtn) sendBtn.disabled = false;
       input.focus();
     }, 400);
