@@ -5,7 +5,7 @@
 // Khi deploy lên Vercel, PHẢI dùng Environment Variables
 
 // OpenAI API Key
-const OPENAI_API_KEY = 'sk-...DlcA'; // Thay bằng key: sk-...D1cA
+const OPENAI_API_KEY = "help"; // Thay bằng key: sk-...D1cA
 
 // ===== HƯỚNG DẪN SỬ DỤNG =====
 /*
@@ -24,6 +24,6 @@ const OPENAI_API_KEY = 'sk-...DlcA'; // Thay bằng key: sk-...D1cA
 */
 
 // Export (nếu cần)
-if (typeof module !== 'undefined' && module.exports) {
+if (typeof module !== "undefined" && module.exports) {
   module.exports = { OPENAI_API_KEY };
 }
