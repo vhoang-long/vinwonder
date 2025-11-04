@@ -20,9 +20,9 @@ function setActiveMenuItem() {
   const currentFile = path || "index.html";
   const menuMap = {
     "Trang chủ": "index.html",
-    "Mua vé": "ticket.html",
-    "Mua sắm": "shopping.html",
-    "Tài khoản": "user.html",
+    "Mua vé": "ticket",
+    "Mua sắm": "shopping",
+    "Tài khoản": "user",
   };
   document.querySelectorAll(".menuItemLink").forEach((link) => {
     const parent = link.closest(".menuItem");
