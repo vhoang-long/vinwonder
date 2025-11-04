@@ -1,9 +1,7 @@
-import process from "process"; // optional
-
 // ===== CHATBOT VINWONDERS - BÉ VIN (Phiên bản tối ưu local vs  OpenAI) =====
 
 // 🔑 API key demo
-let OPENAI_API_KEY = process.env.OPENAI_API_KEY; // Thay bằng key thật khi deploy
+let OPENAI_API_KEY = ""; // Thay bằng key thật khi deploy
 let vinwondersData = null;
 let openaiApiKey = OPENAI_API_KEY;
 
@@ -12,7 +10,9 @@ async function loadData() {
   try {
     const response = await fetch("./chatbot/data.json");
     vinwondersData = await response.json();
-    console.log("✅ Dữ liệu VinWonders đã load (local)");
+    const apiKeyResponse = await fetch("./chatbot/api.json");
+    const apiKeyData = await apiKeyResponse.json();
+    OPENAI_API_KEY = apiKeyData.OPENAI_API_KEY;
   } catch (error) {
     console.error("❌ Lỗi load dữ liệu:", error);
   }
