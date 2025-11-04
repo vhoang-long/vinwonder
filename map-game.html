@@ -125,6 +125,56 @@
       document.body.appendChild(leafletScript);
 
       leafletScript.onload = function () {
+        // Attractions data
+        const attractions = [
+          { name: "Giải mã mê cung", x: 1259, y: 1154, wait_time: 30 },
+          { name: "Đường đua nghẹt thở", x: 1378, y: 1124, wait_time: null },
+          { name: "Đường lượn nhớ đời", x: 1494, y: 1040, wait_time: 32 },
+          { name: "Bật nhảy bungee", x: 1750, y: 1054, wait_time: 17 },
+          { name: "Tháp rơi tự do", x: 1858, y: 1052, wait_time: 15 },
+          { name: "Đua xe trên không", x: 1962, y: 1078, wait_time: 27 },
+          { name: "Cuộc phiêu lưu hầm mỏ", x: 2116, y: 1226, wait_time: 13 },
+          { name: "Đu quay dây vàng", x: 1912, y: 1260, wait_time: 10 },
+          { name: "Tata Show", x: 1460, y: 1298, wait_time: 60 },
+          { name: "Cung điện ánh sáng", x: 1556, y: 1368, wait_time: 12 },
+          { name: "Vương quốc kẹo ngọt", x: 1374, y: 1492, wait_time: 13 },
+          { name: "Cuộc chiến cầu vồng", x: 1472, y: 1798, wait_time: 30 },
+          { name: "Rạp phim bay", x: 1720, y: 1674, wait_time: 45 },
+          { name: "Vườn thú", x: 2092, y: 1774, wait_time: 7 },
+          { name: "Cú rơi thót tim", x: 1404, y: 2048, wait_time: 23 },
+          { name: "Đĩa bay vũ trụ", x: 1522, y: 2192, wait_time: 10 },
+          { name: "Vòi rồng hung hãn", x: 1414, y: 2286, wait_time: 15 },
+          { name: "Thác đôi thần bí", x: 1812, y: 2263, wait_time: 8 },
+          { name: "Cuộc đua báo Cheetah", x: 1744, y: 2332, wait_time: 17 },
+          { name: "Tẩu thoát ngoạn mục", x: 1730, y: 2422, wait_time: 20 },
+          { name: "Pháo đài kì bí", x: 1518, y: 2564, wait_time: 18 },
+          { name: "Ngôi làng thủy tộc", x: 1704, y: 2614, wait_time: 22 },
+          { name: "Ngôi đền huyền thoại", x: 1594, y: 2780, wait_time: 12 },
+          { name: "Sắc màu mùa đông", x: 2128, y: 2288, wait_time: 7 },
+          { name: "Hoang mạc châu Phi", x: 2264, y: 2440, wait_time: 9 },
+          { name: "Vườn Nhật", x: 2474, y: 2488, wait_time: 16 },
+          { name: "Vườn bướm", x: 2324, y: 2604, wait_time: 10 },
+          { name: "Lầu vọng cảnh", x: 2434, y: 2682, wait_time: 8 },
+          { name: "Bánh xe bầu trời", x: 2052, y: 2710, wait_time: 12 },
+          { name: "Sky Garden", x: 2174, y: 2760, wait_time: 15 },
+          { name: "Sắc màu Bromelias", x: 2324, y: 2748, wait_time: 8 },
+          { name: "Zipline", x: 2720, y: 874, wait_time: 28 },
+        ];
+
+        function getCrowdStatus(waitTime) {
+          if (waitTime === null) {
+            return { status: "Bảo trì", color: "#999", icon: "🔧" };
+          } else if (waitTime < 10) {
+            return { status: "Thông thoáng", color: "#4CAF50", icon: "✓" };
+          } else if (waitTime < 20) {
+            return { status: "Bình thường", color: "#FFC107", icon: "○" };
+          } else if (waitTime < 40) {
+            return { status: "Đông", color: "#FF9800", icon: "◐" };
+          } else {
+            return { status: "Rất đông", color: "#F44336", icon: "●" };
+          }
+        }
+
         // Use custom image as map base
         // Set image dimensions (replace with your actual image size)
         const imageWidth = 3000; // <-- set your map image width in pixels
@@ -156,6 +206,41 @@
 
         // Ready for adding markers/points later
         // To add a marker: L.marker([y, x]).addTo(map)
+        attractions.forEach((attraction) => {
+          const crowdInfo = getCrowdStatus(attraction.wait_time);
+
+          // Create custom icon with color based on crowd status
+          const customIcon = L.divIcon({
+            className: "custom-marker",
+            html: `<div style="background-color: ${crowdInfo.color}; width: 20px; height: 20px; border-radius: 50%; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>`,
+            iconSize: [20, 20],
+            iconAnchor: [10, 10],
+          });
+
+          const marker = L.marker([attraction.y, attraction.x], {
+            icon: customIcon,
+          }).addTo(map);
+
+          const waitTimeText =
+            attraction.wait_time === null
+              ? '<span style="color: #999; font-weight: bold;">Đang bảo trì 🔧</span>'
+              : `<span style="color: ${crowdInfo.color}; font-weight: bold;">${attraction.wait_time} phút</span>`;
+
+          const popupContent = `
+                  <div style="min-width: 150px; padding: 5px;">
+                    <h4 style="margin: 0 0 8px 0; color: #333; font-size: 14px;">${attraction.name}</h4>
+                    <p style="margin: 4px 0; font-size: 13px;">
+                      <strong>Thời gian chờ:</strong> ${waitTimeText}
+                    </p>
+                    <p style="margin: 4px 0; font-size: 13px;">
+                      <strong>Tình trạng:</strong>
+                      <span style="color: ${crowdInfo.color}; font-weight: bold;">${crowdInfo.icon} ${crowdInfo.status}</span>
+                    </p>
+                  </div>
+                `;
+
+          marker.bindPopup(popupContent);
+        });
       };
     </script>
     <!-- LeafletJS JS -->
