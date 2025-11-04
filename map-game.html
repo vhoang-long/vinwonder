@@ -1,8 +1,11 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
     <title>VinWonders</title>
     <link rel="icon" type="image/png" href="/assets/iconlogo.png" />
     <link rel="stylesheet" href="style.css" />
@@ -13,6 +16,8 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <!-- LeafletJS CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
       /* You can move these to style.css */
       body {
@@ -38,7 +43,6 @@
         padding-top: max(10px, env(safe-area-inset-top));
         font-size: 18px;
       }
-
 
       .map-wrapper {
         position: relative;
@@ -101,160 +105,60 @@
       </div>
 
       <div class="map-wrapper">
-        <img
-          id="mapImage"
-          src="./assets/map.jpg"
-          alt="VinWonders Nha Trang"
-          class="map"
-        />
-
+        <div id="map" style="width: 100%; height: 100%"></div>
         <div class="zoom-controls">
-          <button class="zoom-btn" id="zoomIn"><i class="fa-solid fa-plus"></i></button>
-          <button class="zoom-btn" id="zoomOut"><i class="fa-solid fa-minus"></i></button>
+          <button class="zoom-btn" id="zoomIn">
+            <i class="fa-solid fa-plus"></i>
+          </button>
+          <button class="zoom-btn" id="zoomOut">
+            <i class="fa-solid fa-minus"></i>
+          </button>
         </div>
       </div>
     </div>
 
     <script>
-      const mapImage = document.getElementById("mapImage");
-      const zoomInBtn = document.getElementById("zoomIn");
-      const zoomOutBtn = document.getElementById("zoomOut");
-      const wrapper = document.querySelector('.map-wrapper');
+      // LeafletJS integration
+      // Add LeafletJS script
+      const leafletScript = document.createElement("script");
+      leafletScript.src = "https://unpkg.com/leaflet/dist/leaflet.js";
+      document.body.appendChild(leafletScript);
 
-      let zoomLevel = 1; // initial scale (100%)
-      let translateX = 0; // current translate in px
-      let translateY = 0;
+      leafletScript.onload = function () {
+        // Use custom image as map base
+        // Set image dimensions (replace with your actual image size)
+        const imageWidth = 3000; // <-- set your map image width in pixels
+        const imageHeight = 3000; // <-- set your map image height in pixels
 
-      // For dragging
-      let isDragging = false;
-      let startX = 0;
-      let startY = 0;
-      let startTx = 0;
-      let startTy = 0;
-      let dragMaxOffsetX = 0;
-      let dragMaxOffsetY = 0;
+        // Define image bounds: top-left [0,0], bottom-right [imageHeight, imageWidth]
+        const bounds = [
+          [0, 0],
+          [imageHeight, imageWidth],
+        ];
 
-      zoomInBtn.addEventListener("click", () => {
-        zoomLevel = +(zoomLevel + 0.5).toFixed(2);
-        // Enable transition for smooth zoom
-        mapImage.style.transition = 'transform 0.3s ease';
-        clampAndApply();
-      });
+        // Initialize Leaflet map with simple CRS and restrict view to image bounds
+        const map = L.map("map", {
+          crs: L.CRS.Simple,
+          minZoom: -2,
+          maxZoom: 4,
+          zoomControl: false,
+          maxBounds: bounds,
+          maxBoundsViscosity: 1.0,
+        });
 
-      zoomOutBtn.addEventListener("click", () => {
-        zoomLevel = Math.max(1, +(zoomLevel - 0.5).toFixed(2));
-        if (zoomLevel === 1) {
-          translateX = 0;
-          translateY = 0;
-        }
-        // Enable transition for smooth zoom
-        mapImage.style.transition = 'transform 0.3s ease';
-        clampAndApply();
-      });
+        // Add image overlay
+        L.imageOverlay("./assets/map.jpg", bounds).addTo(map);
+        map.fitBounds(bounds);
 
+        // Custom zoom controls
+        document.getElementById("zoomIn").onclick = () => map.zoomIn();
+        document.getElementById("zoomOut").onclick = () => map.zoomOut();
 
-      function applyTransform() {
-        mapImage.style.transform = `translate(${translateX}px, ${translateY}px) scale(${zoomLevel})`;
-      }
-
-      function clampAndApply() {
-        // compute base (unscaled) size of image as it's rendered
-        const wrapperRect = wrapper.getBoundingClientRect();
-        // Get current rendered size of the image at scale=1 by temporarily resetting transform
-        const prevTransform = mapImage.style.transform;
-        mapImage.style.transform = 'translate(0px, 0px) scale(1)';
-        const baseRect = mapImage.getBoundingClientRect();
-        const baseWidth = baseRect.width;
-        const baseHeight = baseRect.height;
-        // restore previous transform
-        mapImage.style.transform = prevTransform;
-
-        const scaledWidth = baseWidth * zoomLevel;
-        const scaledHeight = baseHeight * zoomLevel;
-
-        // allowed offset from center (half the overflow amount)
-        const maxOffsetX = Math.max(0, (scaledWidth - wrapperRect.width) / 2);
-        const maxOffsetY = Math.max(0, (scaledHeight - wrapperRect.height) / 2);
-
-        // clamp translateX/Y to [-maxOffset, maxOffset]
-        translateX = Math.min(maxOffsetX, Math.max(-maxOffsetX, translateX));
-        translateY = Math.min(maxOffsetY, Math.max(-maxOffsetY, translateY));
-
-        // update cursor affordance
-        if (zoomLevel > 1) {
-          mapImage.style.cursor = 'grab';
-        } else {
-          mapImage.style.cursor = 'default';
-        }
-
-        applyTransform();
-      }
-
-      // Pointer-based drag (works for mouse and touch)
-      wrapper.addEventListener('pointerdown', (e) => {
-        // Ignore pointerdown events that originate from UI controls (zoom buttons)
-        if (e.target.closest('.zoom-controls') || e.target.closest('button')) return;
-        if (zoomLevel <= 1) return; // only pan when zoomed
-        if (e.button && e.button !== 0) return; // left button only
-        
-        e.preventDefault(); // prevent default behavior
-        isDragging = true;
-        try { wrapper.setPointerCapture(e.pointerId); } catch (err) {}
-        startX = e.clientX;
-        startY = e.clientY;
-        startTx = translateX;
-        startTy = translateY;
-        mapImage.classList.add('grabbing');
-        
-        // Disable transition during drag for immediate feedback
-        mapImage.style.transition = 'none';
-
-        // compute drag bounds once and cache for pointermove
-        const wrapperRect = wrapper.getBoundingClientRect();
-        const prevTransform = mapImage.style.transform;
-        mapImage.style.transform = 'translate(0px, 0px) scale(1)';
-        const baseRect = mapImage.getBoundingClientRect();
-        mapImage.style.transform = prevTransform;
-        const baseWidth = baseRect.width;
-        const baseHeight = baseRect.height;
-        const scaledWidth = baseWidth * zoomLevel;
-        const scaledHeight = baseHeight * zoomLevel;
-        dragMaxOffsetX = Math.max(0, (scaledWidth - wrapperRect.width) / 2);
-        dragMaxOffsetY = Math.max(0, (scaledHeight - wrapperRect.height) / 2);
-      });
-
-      wrapper.addEventListener('pointermove', (e) => {
-        if (!isDragging) return;
-        e.preventDefault(); // prevent default behavior
-        const dx = e.clientX - startX;
-        const dy = e.clientY - startY;
-        translateX = startTx + dx;
-        translateY = startTy + dy;
-        // clamp during move using cached dragMaxOffsetX/Y
-        translateX = Math.min(dragMaxOffsetX, Math.max(-dragMaxOffsetX, translateX));
-        translateY = Math.min(dragMaxOffsetY, Math.max(-dragMaxOffsetY, translateY));
-        // apply without transition for immediate feedback
-        mapImage.style.transform = `translate(${translateX}px, ${translateY}px) scale(${zoomLevel})`;
-      });
-
-      wrapper.addEventListener('pointerup', (e) => {
-        if (!isDragging) return;
-        isDragging = false;
-        try { wrapper.releasePointerCapture(e.pointerId); } catch (er) {}
-        mapImage.classList.remove('grabbing');
-        clampAndApply();
-      });
-
-      wrapper.addEventListener('pointercancel', (e) => {
-        if (!isDragging) return;
-        isDragging = false;
-        try { wrapper.releasePointerCapture(e.pointerId); } catch (er) {}
-        mapImage.classList.remove('grabbing');
-        clampAndApply();
-      });
-
-      // initialize
-      clampAndApply();
+        // Ready for adding markers/points later
+        // To add a marker: L.marker([y, x]).addTo(map)
+      };
     </script>
+    <!-- LeafletJS JS -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   </body>
 </html>

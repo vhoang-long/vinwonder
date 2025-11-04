@@ -1314,12 +1314,19 @@
 
 .map-wrapper {
   width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
+  position: relative;
+  overflow: hidden;
 }
 
-.map {
-  width: 47%;
+#map {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .map-head {
