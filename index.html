@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>VinWonders</title>
-      <link rel="icon" type="image/png" href="/assets/iconlogo.png" />
+    <link rel="icon" type="image/png" href="/assets/iconlogo.png" />
     <link rel="stylesheet" href="./chatbot/chatbot.css" />
     <link rel="stylesheet" href="./style.css" />
     <link
@@ -12,7 +12,8 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
       integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
       crossorigin="anonymous"
-      referrerpolicy="no-referrer" />
+      referrerpolicy="no-referrer"
+    />
   </head>
 
   <body>
@@ -118,7 +119,9 @@
           </a>
         </div>
         <div class="bodySlider-wrapper">
-          <button class="slider-nav slider-nav-left" aria-label="Previous"><i class="fa-solid fa-chevron-left"></i></button>
+          <button class="slider-nav slider-nav-left" aria-label="Previous">
+            <i class="fa-solid fa-chevron-left"></i>
+          </button>
           <div class="bodySlider">
             <a href="./ticket.html">
               <div class="sliderItem">
@@ -201,15 +204,14 @@
               </div>
             </a>
           </div>
-          <button class="slider-nav slider-nav-right" aria-label="Next"><i class="fa-solid fa-chevron-right"></i></button>
+          <button class="slider-nav slider-nav-right" aria-label="Next">
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
         </div>
 
         <div class="journey-section">
           <div class="journey-content">
-            <p>
-              Xây dựng hành trình trải nghiệm cho riêng bạn cùng
-              VinWonders
-            </p>
+            <p>Xây dựng hành trình trải nghiệm cho riêng bạn cùng VinWonders</p>
             <a href="./ticket.html">
               <button class="journey-btn">Tạo hành trình</button>
             </a>
@@ -220,25 +222,9 @@
           </div>
         </div>
 
-
         <div class="queue-card">
-          <div class="queue-content">
-            <p class="queue-text">
-              Tiết kiệm thời gian xếp hàng chờ các trò chơi hấp dẫn
-            </p>
-            <button class="queue-btn" id="joinQueueBtn">Tham gia ngay</button>
-          </div>
-          <img
-            src="./assets/banbe.jpg"
-            alt="Nhóm khách tham quan"
-            class="queue-img" />
-        </div>
-          
-        <div class="queue-card-first">
           <div class="queue-content-first">
-            <p class="queue-text-first">
-              Vào cổng nhanh hơn với lối đi riêng dành cho bạn
-            </p>
+            <p class="queue-text-first">Đặt vé nè, ngon, ngon, ngon!!!</p>
             <button class="queue-btn-first" id="joinQueueBtnFirst">
               Tham gia ngay
             </button>
@@ -246,7 +232,8 @@
           <img
             src="./assets/game1.webp"
             alt="Nhóm khách tham quan"
-            class="queue-img-first" />
+            class="queue-img-first"
+          />
         </div>
       </div>
       <div class="menu">
@@ -326,22 +313,27 @@
 
       // Responsive slider logic
       function updateSlider() {
-        const slider = document.querySelector('.bodySlider');
-        const items = slider.querySelectorAll('.sliderItem');
-        const wrapper = document.querySelector('.bodySlider-wrapper');
-        const leftBtn = document.querySelector('.slider-nav-left');
-        const rightBtn = document.querySelector('.slider-nav-right');
-        if (!slider || !items.length || !wrapper || !leftBtn || !rightBtn) return;
+        const slider = document.querySelector(".bodySlider");
+        const items = slider.querySelectorAll(".sliderItem");
+        const wrapper = document.querySelector(".bodySlider-wrapper");
+        const leftBtn = document.querySelector(".slider-nav-left");
+        const rightBtn = document.querySelector(".slider-nav-right");
+        if (!slider || !items.length || !wrapper || !leftBtn || !rightBtn)
+          return;
 
         // Get item width (including margin)
         const itemStyle = getComputedStyle(items[0]);
-        const itemWidth = items[0].offsetWidth + parseInt(itemStyle.marginRight || 0);
+        const itemWidth =
+          items[0].offsetWidth + parseInt(itemStyle.marginRight || 0);
         const wrapperWidth = wrapper.offsetWidth;
         const visibleCount = Math.floor(wrapperWidth / itemWidth);
         let currentIndex = 0;
 
         function showItems() {
-          slider.scrollTo({ left: currentIndex * itemWidth, behavior: 'smooth' });
+          slider.scrollTo({
+            left: currentIndex * itemWidth,
+            behavior: "smooth",
+          });
           leftBtn.disabled = currentIndex === 0;
           rightBtn.disabled = currentIndex >= items.length - visibleCount;
         }
@@ -354,12 +346,15 @@
         };
         rightBtn.onclick = () => {
           if (currentIndex < items.length - visibleCount) {
-            currentIndex = Math.min(items.length - visibleCount, currentIndex + visibleCount);
+            currentIndex = Math.min(
+              items.length - visibleCount,
+              currentIndex + visibleCount,
+            );
             showItems();
           }
         };
 
-        window.addEventListener('resize', () => {
+        window.addEventListener("resize", () => {
           // recalculate visibleCount and reset scroll
           const newWrapperWidth = wrapper.offsetWidth;
           const newVisibleCount = Math.floor(newWrapperWidth / itemWidth);
@@ -370,12 +365,12 @@
         showItems();
       }
 
-      window.addEventListener('DOMContentLoaded', updateSlider);
-      window.addEventListener('resize', updateSlider);
+      window.addEventListener("DOMContentLoaded", updateSlider);
+      window.addEventListener("resize", updateSlider);
     </script>
     <script src="./main.js"></script>
     <!-- ========== CHATBOT BÉ VIN ========== -->
-    
+
     <div id="chatbot-root"></div>
     <script>
       fetch("./chatbot/chatbot.html")
