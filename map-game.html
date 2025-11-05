@@ -19,312 +19,353 @@
     <!-- LeafletJS CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
-      /* You can move these to style.css */
-      body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        padding-top: env(safe-area-inset-top);
-        padding-bottom: env(safe-area-inset-bottom);
-      }
+                  /* You can move these to style.css */
+                  body {
+                    margin: 0;
+                    font-family: Arial, sans-serif;
+                    padding-top: env(safe-area-inset-top);
+                    padding-bottom: env(safe-area-inset-bottom);
+                  }
 
-      .zoom-btn:active {
-        background: linear-gradient(135deg, #d65c00 0%, #ff9447 100%);
-        transform: scale(0.97);
-        box-shadow: 0 2px 8px rgba(247, 113, 25, 0.18);
-      }
+                  .zoom-btn:active {
+                    background: linear-gradient(135deg, #d65c00 0%, #ff9447 100%);
+                    transform: scale(0.97);
+                    box-shadow: 0 2px 8px rgba(247, 113, 25, 0.18);
+                  }
 
-      .zoom-btn i {
-        pointer-events: none;
-      }
+                  .zoom-btn i {
+                    pointer-events: none;
+                  }
 
-      .map-container {
-        display: flex;
-        flex-direction: column;
-        height: 100vh;
-      }
+                  .map-container {
+                    display: flex;
+                    flex-direction: column;
+                    height: 100vh;
+                  }
 
-      .map-head {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        background-color: #f77119;
-        color: white;
-        padding: 10px 16px;
-        padding-top: max(10px, env(safe-area-inset-top));
-        font-size: 18px;
-      }
+                  .map-head {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    background-color: #f77119;
+                    color: white;
+                    padding: 10px 16px;
+                    padding-top: max(10px, env(safe-area-inset-top));
+                    font-size: 18px;
+                  }
 
-      .map-wrapper {
-        position: relative;
-        flex: 1;
-        overflow: hidden;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: #ffe2c5;
-      }
+                  .map-wrapper {
+                    position: relative;
+                    flex: 1;
+                    overflow: hidden;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background: #ffe2c5;
+                  }
 
-      .map {
-        max-height: 100%;
-        width: auto;
-        cursor: grab; /* show grab cursor when pannable */
-        touch-action: none; /* allow pointer events for touch panning */
-        will-change: transform;
-        user-select: none; /* prevent text selection during drag */
-      }
+                  .map {
+                    max-height: 100%;
+                    width: auto;
+                    cursor: grab; /* show grab cursor when pannable */
+                    touch-action: none; /* allow pointer events for touch panning */
+                    will-change: transform;
+                    user-select: none; /* prevent text selection during drag */
+                  }
 
-      .map.grabbing {
-        cursor: grabbing;
-      }
+                  .map.grabbing {
+                    cursor: grabbing;
+                  }
 
-      /* Zoom buttons */
-      .zoom-controls {
-        position: absolute;
-        bottom: max(20px, env(safe-area-inset-bottom));
-        right: 20px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        z-index: 1000;
-        align-items: flex-end;
-      }
+                  /* Zoom buttons */
+                  .zoom-controls {
+                    position: absolute;
+                    bottom: max(20px, env(safe-area-inset-bottom));
+                    right: 20px;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                    z-index: 1000;
+                    align-items: flex-end;
+                  }
 
-      .zoom-btn {
-        background: linear-gradient(135deg, #f77119 0%, #ff9447 100%);
-        color: white;
-        border: none;
-        border-radius: 50%;
-        width: 48px;
-        height: 48px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 22px;
-        cursor: pointer;
-        box-shadow: 0 4px 16px rgba(247, 113, 25, 0.18), 0 1.5px 4px rgba(0,0,0,0.08);
-        transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-        outline: none;
-        border: 2px solid #fff7f0;
-      }
+                  .zoom-btn {
+                    background: linear-gradient(135deg, #f77119 0%, #ff9447 100%);
+                    color: white;
+                    border: none;
+                    border-radius: 50%;
+                    width: 48px;
+                    height: 48px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 22px;
+                    cursor: pointer;
+                    box-shadow: 0 4px 16px rgba(247, 113, 25, 0.18), 0 1.5px 4px rgba(0,0,0,0.08);
+                    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+                    outline: none;
+                    border: 2px solid #fff7f0;
+                  }
 
-      .zoom-btn:hover {
-        background: linear-gradient(135deg, #ec6003 0%, #ff9447 100%);
-        transform: scale(1.08);
-        box-shadow: 0 8px 24px rgba(247, 113, 25, 0.25);
-      }
+                  .zoom-btn:hover {
+                    background: linear-gradient(135deg, #ec6003 0%, #ff9447 100%);
+                    transform: scale(1.08);
+                    box-shadow: 0 8px 24px rgba(247, 113, 25, 0.25);
+                  }
 
-      /* Search and filter controls */
-      .search-filter-panel {
-        position: absolute;
-        top: max(20px, env(safe-area-inset-top));
-        left: 20px;
-        background: white;
-        border-radius: 12px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-        padding: 12px;
-        z-index: 1000;
-        max-width: 300px;
-        width: calc(100vw - 40px);
-      }
+                  /* Search and filter controls */
 
-      .search-box {
-        width: 100%;
-        padding: 10px 12px;
-        border: 2px solid #ffe2c5;
-        border-radius: 8px;
-        font-size: 14px;
-        outline: none;
-        transition: border-color 0.3s;
-        margin-bottom: 10px;
-      }
 
-      .search-box:focus {
-        border-color: #f77119;
-      }
+            .search-toggle {
+              position: absolute;
+              top: max(20px, env(safe-area-inset-top));
+              left: 20px;
+              background: #f77119;
+              color: white;
+              border: none;
+              border-radius: 8px;
+              padding: 10px 14px;
+              font-size: 18px;
+              cursor: pointer;
+              box-shadow: 0 2px 10px rgba(247, 113, 25, 0.3);
+              transition: all 0.3s;
+              z-index: 1000;
+              display: none;
+            }
+            .search-toggle:hover {
+              background: #ec6003;
+              transform: scale(1.05);
+            }
+            .search-toggle:active {
+              background: #d65c00;
+            }
+            .search-toggle i {
+              pointer-events: none;
+            }
 
-      .filter-buttons {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 6px;
-      }
+            /* Show/hide animation for search/filter panel */
+            .search-filter-panel {
+      position: absolute;
+                    top: max(20px, env(safe-area-inset-top));
+                    left: 20px;
+                    background: white;
+                    border-radius: 12px;
+                    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+                    padding: 12px;
+                    z-index: 1000;
+                    max-width: 300px;
+                    width: calc(100vw - 40px);
 
-      .filter-btn {
-        padding: 6px 12px;
-        border: 2px solid #ffe2c5;
-        background: white;
-        border-radius: 20px;
-        font-size: 12px;
-        cursor: pointer;
-        transition: all 0.3s;
-        display: flex;
-        align-items: center;
-        gap: 4px;
-      }
+              transition: opacity 0.25s, visibility 0.25s, transform 0.25s;
+              opacity: 1;
+              visibility: visible;
+              transform: translateY(0);
+            }
+            .search-filter-panel.hide {
+              opacity: 0;
+              visibility: hidden;
+              pointer-events: none;
+              transform: translateY(-10px);
+            }
 
-      .filter-btn:hover {
-        border-color: #f77119;
-        background: #fff7f0;
-      }
+                  .search-box {
+                    width: 100%;
+                    padding: 10px 12px;
+                    border: 2px solid #ffe2c5;
+                    border-radius: 8px;
+                    font-size: 14px;
+                    outline: none;
+                    transition: border-color 0.3s;
+                    margin-bottom: 10px;
+                  }
 
-      .filter-btn.active {
-        background: #f77119;
-        color: white;
-        border-color: #f77119;
-      }
+                  .search-box:focus {
+                    border-color: #f77119;
+                  }
 
-      .legend-toggle {
-        position: absolute;
-        top: max(20px, env(safe-area-inset-top));
-        right: 20px;
-        background: #f77119;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        padding: 10px 14px;
-        font-size: 16px;
-        cursor: pointer;
-        box-shadow: 0 2px 10px rgba(247, 113, 25, 0.3);
-        transition: all 0.3s;
-        z-index: 1000;
-      }
+                  .filter-buttons {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 6px;
+                  }
 
-      .legend-toggle:hover {
-        background: #ec6003;
-        transform: scale(1.05);
-      }
+                  .filter-btn {
+                    padding: 6px 12px;
+                    border: 2px solid #ffe2c5;
+                    background: white;
+                    border-radius: 20px;
+                    font-size: 12px;
+                    cursor: pointer;
+                    transition: all 0.3s;
+                    display: flex;
+                    align-items: center;
+                    gap: 4px;
+                  }
 
-      .legend-panel {
-        position: absolute;
-        top: 70px;
-      right: 20px;
-        background: white;
-        border-radius: 12px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-        padding: 16px;
-        z-index: 1000;
-        max-width: 250px;
-        display: none;
-      }
+                  .filter-btn:hover {
+                    border-color: #f77119;
+                    background: #fff7f0;
+                  }
 
-      .legend-panel.show {
-        display: block;
-        animation: fadeInRight 0.3s ease-out;
-      }
+                  .filter-btn.active {
+                    background: #f77119;
+                    color: white;
+                    border-color: #f77119;
+                  }
 
-      @keyframes fadeInRight {
-        from {
-          opacity: 0;
-          transform: translateX(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateX(0);
-        }
-      }
+                  .legend-toggle {
+                    position: absolute;
+                    top: max(20px, env(safe-area-inset-top));
+                    right: 20px;
+                    background: #f77119;
+                    color: white;
+                    border: none;
+                    border-radius: 8px;
+                    padding: 10px 14px;
+                    font-size: 16px;
+                    cursor: pointer;
+                    box-shadow: 0 2px 10px rgba(247, 113, 25, 0.3);
+                    transition: all 0.3s;
+                    z-index: 1000;
+                  }
 
-      .legend-item {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-bottom: 10px;
-        font-size: 13px;
-      }
+                  .legend-toggle:hover {
+                    background: #ec6003;
+                    transform: scale(1.05);
+                  }
 
-      .legend-color {
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        border: 2px solid white;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-      }
+                  .legend-panel {
+                    position: absolute;
+                    top: 70px;
+                    right: 20px;
+                    background: white;
+                    border-radius: 12px;
+                    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+                    padding: 16px;
+                    z-index: 1000;
+                    max-width: 250px;
+                    display: none;
+                  }
 
-      /* Leaflet popup customization */
-      .leaflet-popup-content-wrapper {
-        padding: 0;
-        border-radius: 12px;
-        box-shadow: 0 8px 30px rgba(247, 113, 25, 0.4);
-        max-height: none;
-      }
+                  .legend-panel.show {
+                    display: block;
+                    animation: fadeInRight 0.3s ease-out;
+                  }
 
-      .leaflet-popup-content {
-        margin: 0;
-        line-height: 1.4;
-        max-height: none;
-        width: 320px;
-      }
+                  @keyframes fadeInRight {
+                    from {
+                      opacity: 0;
+                      transform: translateX(20px);
+                    }
+                    to {
+                      opacity: 1;
+                      transform: translateX(0);
+                    }
+                  }
 
-      /* Scrollable popup inner container */
-      .popup-scroll-container {
-        max-height: 70vh;
-        overflow-y: auto;
-        overflow-x: hidden;
-      }
+                  .legend-item {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    margin-bottom: 10px;
+                    font-size: 13px;
+                  }
 
-      .popup-scroll-container::-webkit-scrollbar {
-        width: 6px;
-      }
+                  .legend-color {
+                    width: 20px;
+                    height: 20px;
+                    border-radius: 50%;
+                    border: 2px solid white;
+                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+                  }
 
-      .popup-scroll-container::-webkit-scrollbar-track {
-        background: #ffe2c5;
-        border-radius: 3px;
-      }
+                  /* Leaflet popup customization */
+                  .leaflet-popup-content-wrapper {
+                    padding: 0;
+                    border-radius: 12px;
+                    box-shadow: 0 8px 30px rgba(247, 113, 25, 0.4);
+                    max-height: none;
+                  }
 
-      .popup-scroll-container::-webkit-scrollbar-thumb {
-        background: #f77119;
-        border-radius: 3px;
-      }
+                  .leaflet-popup-content {
+                    margin: 0;
+                    line-height: 1.4;
+                    max-height: none;
+                    width: 320px;
+                  }
 
-      .popup-scroll-container::-webkit-scrollbar-thumb:hover {
-        background: #ec6003;
-      }
-      }
+                  /* Scrollable popup inner container */
+                  .popup-scroll-container {
+                    max-height: 70vh;
+                    overflow-y: auto;
+                    overflow-x: hidden;
+                  }
 
-      .leaflet-popup-tip {
-        background: #fff7f0;
-        box-shadow: 0 2px 10px rgba(247, 113, 25, 0.2);
-      }
+                  .popup-scroll-container::-webkit-scrollbar {
+                    width: 6px;
+                  }
 
-      .custom-popup .leaflet-popup-close-button {
-        color: #f77119 !important;
-        font-size: 24px !important;
-        font-weight: bold !important;
-        padding: 8px 12px !important;
-        transition: all 0.3s ease;
-      }
+                  .popup-scroll-container::-webkit-scrollbar-track {
+                    background: #ffe2c5;
+                    border-radius: 3px;
+                  }
 
-      .custom-popup .leaflet-popup-close-button:hover {
-        color: #ec6003 !important;
-        transform: scale(1.2);
-      }
+                  .popup-scroll-container::-webkit-scrollbar-thumb {
+                    background: #f77119;
+                    border-radius: 3px;
+                  }
 
-      /* Pulse animation for markers */
-      @keyframes pulse {
-        0%,
-        100% {
-          opacity: 0.6;
-          transform: translate(-50%, -50%) scale(1);
-        }
-        50% {
-          opacity: 0;
-          transform: translate(-50%, -50%) scale(1.8);
-        }
-      }
+                  .popup-scroll-container::-webkit-scrollbar-thumb:hover {
+                    background: #ec6003;
+                  }
+                  }
 
-      /* Fade in animation for popup */
-      .leaflet-popup {
-        animation: fadeInUp 0.3s ease-out;
-      }
+                  .leaflet-popup-tip {
+                    background: #fff7f0;
+                    box-shadow: 0 2px 10px rgba(247, 113, 25, 0.2);
+                  }
 
-      @keyframes fadeInUp {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
+                  .custom-popup .leaflet-popup-close-button {
+                    color: #f77119 !important;
+                    font-size: 24px !important;
+                    font-weight: bold !important;
+                    padding: 8px 12px !important;
+                    transition: all 0.3s ease;
+                  }
+
+                  .custom-popup .leaflet-popup-close-button:hover {
+                    color: #ec6003 !important;
+                    transform: scale(1.2);
+                  }
+
+                  /* Pulse animation for markers */
+                  @keyframes pulse {
+                    0%,
+                    100% {
+                      opacity: 0.6;
+                      transform: translate(-50%, -50%) scale(1);
+                    }
+                    50% {
+                      opacity: 0;
+                      transform: translate(-50%, -50%) scale(1.8);
+                    }
+                  }
+
+                  /* Fade in animation for popup */
+                  .leaflet-popup {
+                    animation: fadeInUp 0.3s ease-out;
+                  }
+
+                  @keyframes fadeInUp {
+                    from {
+                      opacity: 0;
+                      transform: translateY(20px);
+                    }
+                    to {
+                      opacity: 1;
+                      transform: translateY(0);
+                    }
+                  }
     </style>
   </head>
 
@@ -341,8 +382,25 @@
       <div class="map-wrapper">
         <div id="map" style="width: 100%; height: 100%"></div>
 
+        <!-- Search/Filter Toggle Button -->
+        <button
+          class="search-toggle"
+          id="searchToggle"
+          title="Tìm kiếm địa điểm"
+        >
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+
         <!-- Search and Filter Panel -->
-        <div class="search-filter-panel">
+        <button
+          class="search-toggle"
+          id="searchToggle"
+          title="Tìm kiếm địa điểm"
+        >
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+
+        <div class="search-filter-panel" id="searchPanel">
           <input
             type="text"
             id="searchBox"
@@ -1684,6 +1742,36 @@
         }
 
         // Legend toggle functionality
+        const searchToggle = document.getElementById("searchToggle");
+        const searchPanel = document.getElementById("searchPanel");
+
+        // Show toggle button when panel is hidden, hide when panel is shown
+        function updateSearchToggle() {
+          if (searchPanel.classList.contains("hide")) {
+            searchToggle.style.display = "block";
+          } else {
+            searchToggle.style.display = "none";
+          }
+        }
+
+        // Toggle panel on button click
+        searchToggle.addEventListener("click", function () {
+          searchPanel.classList.remove("hide");
+          updateSearchToggle();
+        });
+
+        // Hide panel and show toggle button when clicking outside panel
+        document.addEventListener("click", function (e) {
+          if (
+            !searchPanel.contains(e.target) &&
+            !searchToggle.contains(e.target) &&
+            !e.target.classList.contains("search-box") // allow typing in search
+          ) {
+            searchPanel.classList.add("hide");
+            updateSearchToggle();
+          }
+        });
+
         const legendToggle = document.getElementById("legendToggle");
         const legendPanel = document.getElementById("legendPanel");
 
