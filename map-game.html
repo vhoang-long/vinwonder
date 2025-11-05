@@ -27,6 +27,16 @@
         padding-bottom: env(safe-area-inset-bottom);
       }
 
+      .zoom-btn:active {
+        background: linear-gradient(135deg, #d65c00 0%, #ff9447 100%);
+        transform: scale(0.97);
+        box-shadow: 0 2px 8px rgba(247, 113, 25, 0.18);
+      }
+
+      .zoom-btn i {
+        pointer-events: none;
+      }
+
       .map-container {
         display: flex;
         flex-direction: column;
@@ -75,21 +85,32 @@
         display: flex;
         flex-direction: column;
         gap: 10px;
+        z-index: 1000;
+        align-items: flex-end;
       }
 
       .zoom-btn {
-        background-color: #f77119;
+        background: linear-gradient(135deg, #f77119 0%, #ff9447 100%);
         color: white;
         border: none;
-        border-radius: 6px;
-        padding: 10px 14px;
-        font-size: 18px;
+        border-radius: 50%;
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
         cursor: pointer;
-        transition: background-color 0.2s;
+        box-shadow: 0 4px 16px rgba(247, 113, 25, 0.18), 0 1.5px 4px rgba(0,0,0,0.08);
+        transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+        outline: none;
+        border: 2px solid #fff7f0;
       }
 
       .zoom-btn:hover {
-        background-color: #ec6003;
+        background: linear-gradient(135deg, #ec6003 0%, #ff9447 100%);
+        transform: scale(1.08);
+        box-shadow: 0 8px 24px rgba(247, 113, 25, 0.25);
       }
 
       /* Search and filter controls */
@@ -154,7 +175,7 @@
       .legend-toggle {
         position: absolute;
         top: max(20px, env(safe-area-inset-top));
-        right: 80px;
+        right: 20px;
         background: #f77119;
         color: white;
         border: none;
@@ -175,7 +196,7 @@
       .legend-panel {
         position: absolute;
         top: 70px;
-        right: 20px;
+      right: 20px;
         background: white;
         border-radius: 12px;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
@@ -350,7 +371,7 @@
 
         <!-- Legend Panel -->
         <div class="legend-panel" id="legendPanel">
-          <h4 style="margin: 0 0 12px 0; color: #f77119; font-size: 14px;">
+          <h4 style="margin: 0 0 12px 0; color: #f77119; font-size: 14px">
             📊 Chú thích
           </h4>
           <div class="legend-item">
