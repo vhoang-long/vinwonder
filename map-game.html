@@ -91,6 +91,219 @@
       .zoom-btn:hover {
         background-color: #ec6003;
       }
+
+      /* Search and filter controls */
+      .search-filter-panel {
+        position: absolute;
+        top: max(20px, env(safe-area-inset-top));
+        left: 20px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        padding: 12px;
+        z-index: 1000;
+        max-width: 300px;
+        width: calc(100vw - 40px);
+      }
+
+      .search-box {
+        width: 100%;
+        padding: 10px 12px;
+        border: 2px solid #ffe2c5;
+        border-radius: 8px;
+        font-size: 14px;
+        outline: none;
+        transition: border-color 0.3s;
+        margin-bottom: 10px;
+      }
+
+      .search-box:focus {
+        border-color: #f77119;
+      }
+
+      .filter-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      .filter-btn {
+        padding: 6px 12px;
+        border: 2px solid #ffe2c5;
+        background: white;
+        border-radius: 20px;
+        font-size: 12px;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .filter-btn:hover {
+        border-color: #f77119;
+        background: #fff7f0;
+      }
+
+      .filter-btn.active {
+        background: #f77119;
+        color: white;
+        border-color: #f77119;
+      }
+
+      .legend-toggle {
+        position: absolute;
+        top: max(20px, env(safe-area-inset-top));
+        right: 80px;
+        background: #f77119;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 14px;
+        font-size: 16px;
+        cursor: pointer;
+        box-shadow: 0 2px 10px rgba(247, 113, 25, 0.3);
+        transition: all 0.3s;
+        z-index: 1000;
+      }
+
+      .legend-toggle:hover {
+        background: #ec6003;
+        transform: scale(1.05);
+      }
+
+      .legend-panel {
+        position: absolute;
+        top: 70px;
+        right: 20px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        padding: 16px;
+        z-index: 1000;
+        max-width: 250px;
+        display: none;
+      }
+
+      .legend-panel.show {
+        display: block;
+        animation: fadeInRight 0.3s ease-out;
+      }
+
+      @keyframes fadeInRight {
+        from {
+          opacity: 0;
+          transform: translateX(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 10px;
+        font-size: 13px;
+      }
+
+      .legend-color {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        border: 2px solid white;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Leaflet popup customization */
+      .leaflet-popup-content-wrapper {
+        padding: 0;
+        border-radius: 12px;
+        box-shadow: 0 8px 30px rgba(247, 113, 25, 0.4);
+        max-height: none;
+      }
+
+      .leaflet-popup-content {
+        margin: 0;
+        line-height: 1.4;
+        max-height: none;
+        width: 320px;
+      }
+
+      /* Scrollable popup inner container */
+      .popup-scroll-container {
+        max-height: 70vh;
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
+
+      .popup-scroll-container::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      .popup-scroll-container::-webkit-scrollbar-track {
+        background: #ffe2c5;
+        border-radius: 3px;
+      }
+
+      .popup-scroll-container::-webkit-scrollbar-thumb {
+        background: #f77119;
+        border-radius: 3px;
+      }
+
+      .popup-scroll-container::-webkit-scrollbar-thumb:hover {
+        background: #ec6003;
+      }
+      }
+
+      .leaflet-popup-tip {
+        background: #fff7f0;
+        box-shadow: 0 2px 10px rgba(247, 113, 25, 0.2);
+      }
+
+      .custom-popup .leaflet-popup-close-button {
+        color: #f77119 !important;
+        font-size: 24px !important;
+        font-weight: bold !important;
+        padding: 8px 12px !important;
+        transition: all 0.3s ease;
+      }
+
+      .custom-popup .leaflet-popup-close-button:hover {
+        color: #ec6003 !important;
+        transform: scale(1.2);
+      }
+
+      /* Pulse animation for markers */
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 0.6;
+          transform: translate(-50%, -50%) scale(1);
+        }
+        50% {
+          opacity: 0;
+          transform: translate(-50%, -50%) scale(1.8);
+        }
+      }
+
+      /* Fade in animation for popup */
+      .leaflet-popup {
+        animation: fadeInUp 0.3s ease-out;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
     </style>
   </head>
 
@@ -106,6 +319,62 @@
 
       <div class="map-wrapper">
         <div id="map" style="width: 100%; height: 100%"></div>
+
+        <!-- Search and Filter Panel -->
+        <div class="search-filter-panel">
+          <input
+            type="text"
+            id="searchBox"
+            class="search-box"
+            placeholder="🔍 Tìm kiếm địa điểm..."
+          />
+          <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">
+              🎯 Tất cả
+            </button>
+            <button class="filter-btn" data-filter="ride">🎢 Trò chơi</button>
+            <button class="filter-btn" data-filter="restaurant">
+              🍽️ Nhà hàng
+            </button>
+            <button class="filter-btn" data-filter="shop">🛍️ Cửa hàng</button>
+            <button class="filter-btn" data-filter="toilet">🚻 WC</button>
+            <button class="filter-btn" data-filter="zoo">🦁 Vườn thú</button>
+            <button class="filter-btn" data-filter="medical">🚑 Y tế</button>
+          </div>
+        </div>
+
+        <!-- Legend Toggle Button -->
+        <button class="legend-toggle" id="legendToggle">
+          <i class="fa-solid fa-info-circle"></i>
+        </button>
+
+        <!-- Legend Panel -->
+        <div class="legend-panel" id="legendPanel">
+          <h4 style="margin: 0 0 12px 0; color: #f77119; font-size: 14px;">
+            📊 Chú thích
+          </h4>
+          <div class="legend-item">
+            <div class="legend-color" style="background: #4caf50"></div>
+            <span>✓ Thông thoáng (&lt;10 phút)</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-color" style="background: #ffc107"></div>
+            <span>○ Bình thường (10-20 phút)</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-color" style="background: #ff9800"></div>
+            <span>◐ Đông (20-40 phút)</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-color" style="background: #f44336"></div>
+            <span>● Rất đông (&gt;40 phút)</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-color" style="background: #999"></div>
+            <span>🔧 Đang bảo trì</span>
+          </div>
+        </div>
+
         <div class="zoom-controls">
           <button class="zoom-btn" id="zoomIn">
             <i class="fa-solid fa-plus"></i>
@@ -1029,6 +1298,9 @@
         document.getElementById("zoomIn").onclick = () => map.zoomIn();
         document.getElementById("zoomOut").onclick = () => map.zoomOut();
 
+        // Store all markers for filtering
+        const allMarkers = [];
+
         // Ready for adding markers/points later
         // To add a marker: L.marker([y, x]).addTo(map)
         map.on("click", function (e) {
@@ -1085,30 +1357,212 @@
             title: attraction.name,
           }).addTo(map);
 
-          const waitTimeText =
-            attraction.wait_time === null
-              ? '<span style="color: #999; font-weight: bold;">Đang bảo trì 🔧</span>'
-              : `<span style="color: ${crowdInfo.color}; font-weight: bold;">${attraction.wait_time} phút</span>`;
+          // Build comprehensive popup content
+          let popupContent = `
+            <div style="width: 320px; font-family: 'Arial', sans-serif; background: linear-gradient(135deg, #fff7f0 0%, #ffe8d6 100%); border-radius: 12px; overflow: hidden;">
+              <div class="popup-scroll-container">
+          `;
 
-          const popupContent = `
-      <div style="min-width: 180px; padding: 8px 8px 4px 8px; border-radius: 10px; background: #fff7f0; box-shadow: 0 2px 8px #f7711933;">
-        <div style="display: flex; align-items: center; gap: 8px;">
-          <span style="font-size: 20px;">${crowdInfo.icon}</span>
-          <h4 style="margin: 0; color: #f77119; font-size: 16px; font-weight: bold;">${attraction.name}</h4>
-        </div>
-        <hr style="border: none; border-top: 1px solid #ffe2c5; margin: 6px 0 8px 0;">
-        <p style="margin: 0 0 4px 0; font-size: 14px;">
-          <strong>Thời gian chờ:</strong> ${waitTimeText}
-        </p>
-        <p style="margin: 0 0 4px 0; font-size: 14px;">
-          <strong>Tình trạng:</strong>
-          <span style="color: ${crowdInfo.color}; font-weight: bold;">${crowdInfo.status}</span>
-        </p>
-        <div style="margin-top: 6px; text-align: right; font-size: 11px; color: #bbb;">#${idx + 1}</div>
-      </div>
-    `;
+          // Image section
+          if (attraction.image) {
+            popupContent += `
+              <div style="position: relative; width: 100%; height: 180px; overflow: hidden;">
+                <img src="${attraction.image}" alt="${attraction.name}" style="width: 100%; height: 100%; object-fit: cover;">
+                <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.7) 100%);"></div>
+                <div style="position: absolute; bottom: 10px; left: 12px; right: 12px;">
+                  <h3 style="margin: 0; color: white; font-size: 18px; font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">${attraction.name}</h3>
+                </div>
+                <div style="position: absolute; top: 10px; right: 10px; background: ${crowdInfo.color}; color: white; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; box-shadow: 0 2px 8px rgba(0,0,0,0.3);">
+                  ${crowdInfo.icon} ${crowdInfo.status}
+                </div>
+              </div>
+            `;
+          } else {
+            // No image, show header with gradient
+            popupContent += `
+              <div style="background: linear-gradient(135deg, #f77119 0%, #ff9447 100%); padding: 16px; text-align: center;">
+                <div style="font-size: 32px; margin-bottom: 8px;">${crowdInfo.icon}</div>
+                <h3 style="margin: 0; color: white; font-size: 18px; font-weight: bold; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">${attraction.name}</h3>
+              </div>
+            `;
+          }
 
-          marker.bindPopup(popupContent);
+          // Content section
+          popupContent += `<div style="padding: 14px;">`;
+
+          // Wait time and status (for rides)
+          if (attraction.type === "ride") {
+            const waitTimeText =
+              attraction.wait_time === null
+                ? '<span style="color: #999; font-weight: bold;">Đang bảo trì 🔧</span>'
+                : `<span style="color: ${crowdInfo.color}; font-weight: bold; font-size: 18px;">${attraction.wait_time} phút</span>`;
+
+            popupContent += `
+              <div style="background: white; padding: 10px; border-radius: 8px; margin-bottom: 12px; border-left: 4px solid #f77119;">
+                <div style="font-size: 12px; color: #666; margin-bottom: 4px;">⏱️ Thời gian chờ</div>
+                <div style="font-size: 16px;">${waitTimeText}</div>
+              </div>
+            `;
+          }
+
+          // Location
+          if (attraction.location) {
+            popupContent += `
+              <div style="margin-bottom: 10px; display: flex; align-items: start; gap: 8px;">
+                <span style="color: #f77119; font-size: 16px; margin-top: 2px;">📍</span>
+                <div>
+                  <div style="font-size: 11px; color: #999; text-transform: uppercase; letter-spacing: 0.5px;">Khu vực</div>
+                  <div style="font-size: 13px; color: #333; font-weight: 600;">${attraction.location}</div>
+                </div>
+              </div>
+            `;
+          }
+
+          // Description
+          if (attraction.description) {
+            const shortDesc =
+              attraction.description.length > 150
+                ? attraction.description.substring(0, 150) + "..."
+                : attraction.description;
+            popupContent += `
+              <div style="background: rgba(255, 255, 255, 0.7); padding: 10px; border-radius: 8px; margin-bottom: 12px; font-size: 13px; line-height: 1.5; color: #555; border: 1px solid #ffe2c5;">
+                ${shortDesc}
+              </div>
+            `;
+          }
+
+          // Details grid
+          popupContent += `<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px;">`;
+
+          // Ages
+          if (attraction.ages && attraction.ages.length > 0) {
+            popupContent += `
+              <div style="background: white; padding: 8px; border-radius: 6px; text-align: center; border: 1px solid #ffe2c5;">
+                <div style="font-size: 16px; margin-bottom: 4px;">👥</div>
+                <div style="font-size: 10px; color: #999; margin-bottom: 2px;">Độ tuổi</div>
+                <div style="font-size: 11px; color: #f77119; font-weight: bold;">${attraction.ages.join(", ")}</div>
+              </div>
+            `;
+          }
+
+          // Height requirement
+          if (attraction.height) {
+            popupContent += `
+              <div style="background: white; padding: 8px; border-radius: 6px; text-align: center; border: 1px solid #ffe2c5;">
+                <div style="font-size: 16px; margin-bottom: 4px;">📏</div>
+                <div style="font-size: 10px; color: #999; margin-bottom: 2px;">Chiều cao</div>
+                <div style="font-size: 11px; color: #f77119; font-weight: bold;">${attraction.height}</div>
+              </div>
+            `;
+          }
+
+          // Level/Intensity
+          if (attraction.level) {
+            popupContent += `
+              <div style="background: white; padding: 8px; border-radius: 6px; text-align: center; border: 1px solid #ffe2c5;">
+                <div style="font-size: 16px; margin-bottom: 4px;">⚡</div>
+                <div style="font-size: 10px; color: #999; margin-bottom: 2px;">Độ kích thích</div>
+                <div style="font-size: 11px; color: #f77119; font-weight: bold;">${attraction.level}</div>
+              </div>
+            `;
+          }
+
+          // Weight limit
+          if (attraction.weight) {
+            popupContent += `
+              <div style="background: white; padding: 8px; border-radius: 6px; text-align: center; border: 1px solid #ffe2c5;">
+                <div style="font-size: 16px; margin-bottom: 4px;">⚖️</div>
+                <div style="font-size: 10px; color: #999; margin-bottom: 2px;">Cân nặng</div>
+                <div style="font-size: 11px; color: #f77119; font-weight: bold;">${attraction.weight}</div>
+              </div>
+            `;
+          }
+
+          // Restaurant type
+          if (attraction.restaurant_type) {
+            popupContent += `
+              <div style="background: white; padding: 8px; border-radius: 6px; text-align: center; border: 1px solid #ffe2c5;">
+                <div style="font-size: 16px; margin-bottom: 4px;">🍽️</div>
+                <div style="font-size: 10px; color: #999; margin-bottom: 2px;">Loại hình</div>
+                <div style="font-size: 11px; color: #f77119; font-weight: bold;">${attraction.restaurant_type}</div>
+              </div>
+            `;
+          }
+
+          // Cuisine
+          if (attraction.cuisine) {
+            popupContent += `
+              <div style="background: white; padding: 8px; border-radius: 6px; text-align: center; border: 1px solid #ffe2c5;">
+                <div style="font-size: 16px; margin-bottom: 4px;">🌍</div>
+                <div style="font-size: 10px; color: #999; margin-bottom: 2px;">Ẩm thực</div>
+                <div style="font-size: 11px; color: #f77119; font-weight: bold;">${attraction.cuisine}</div>
+              </div>
+            `;
+          }
+
+          popupContent += `</div>`; // Close grid
+
+          // Weather warning
+          if (attraction.weather_stop) {
+            popupContent += `
+              <div style="background: #fff3cd; border: 1px solid #ffecb5; border-radius: 6px; padding: 8px; margin-top: 8px; display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 16px;">⛈️</span>
+                <span style="font-size: 11px; color: #856404;">Có thể tạm dừng khi thời tiết xấu</span>
+              </div>
+            `;
+          }
+
+          // Maintenance warning
+          if (attraction.maintainance) {
+            popupContent += `
+              <div style="background: #f8d7da; border: 1px solid #f5c2c7; border-radius: 6px; padding: 8px; margin-top: 8px; display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 16px;">🔧</span>
+                <span style="font-size: 11px; color: #842029; font-weight: bold;">Đang bảo trì</span>
+              </div>
+            `;
+          }
+
+          // Footer
+          popupContent += `
+            <div style="margin-top: 12px; padding-top: 10px; border-top: 1px solid #ffe2c5; display: flex; justify-content: space-between; align-items: center;">
+              <div style="font-size: 10px; color: #999;">Điểm #${idx + 1}</div>
+              <div style="font-size: 18px;">🎢</div>
+            </div>
+          `;
+
+          popupContent += `</div></div>`; // Close content and main container
+          popupContent += `</div>`; // Close scroll container
+          popupContent += `</div>`; // Close main wrapper
+
+          marker.bindPopup(popupContent, {
+            maxWidth: 340,
+            className: "custom-popup",
+            autoPan: true,
+            autoPanPaddingTopLeft: [10, 10],
+            autoPanPaddingBottomRight: [10, 10],
+            autoPanPadding: [50, 50],
+            keepInView: true,
+            closeButton: true,
+            autoClose: true,
+            closeOnClick: false,
+          });
+
+          // Smooth pan to marker when popup opens
+          marker.on("click", function (e) {
+            setTimeout(() => {
+              map.panTo(e.latlng, {
+                animate: true,
+                duration: 0.5,
+                easeLinearity: 0.25,
+              });
+            }, 100);
+          });
+
+          // Store marker with attraction data for filtering
+          allMarkers.push({
+            marker: marker,
+            data: attraction,
+          });
         });
         // attractions.forEach((attraction) => {
         //   const crowdInfo = getCrowdStatus(attraction.wait_time);
@@ -1145,6 +1599,86 @@
         //
         //   marker.bindPopup(popupContent);
         // });
+
+        // Search functionality
+        const searchBox = document.getElementById("searchBox");
+        searchBox.addEventListener("input", function (e) {
+          const searchTerm = e.target.value.toLowerCase().trim();
+          filterMarkers(searchTerm, currentFilter);
+        });
+
+        // Filter functionality
+        let currentFilter = "all";
+        const filterButtons = document.querySelectorAll(".filter-btn");
+
+        filterButtons.forEach((btn) => {
+          btn.addEventListener("click", function () {
+            // Update active button
+            filterButtons.forEach((b) => b.classList.remove("active"));
+            this.classList.add("active");
+
+            // Get filter type
+            currentFilter = this.getAttribute("data-filter");
+            const searchTerm = searchBox.value.toLowerCase().trim();
+            filterMarkers(searchTerm, currentFilter);
+          });
+        });
+
+        // Filter markers based on search and filter type
+        function filterMarkers(searchTerm, filterType) {
+          allMarkers.forEach(({ marker, data }) => {
+            let showMarker = true;
+
+            // Filter by type
+            if (filterType !== "all" && data.type !== filterType) {
+              showMarker = false;
+            }
+
+            // Filter by search term
+            if (searchTerm && !data.name.toLowerCase().includes(searchTerm)) {
+              if (
+                !data.location ||
+                !data.location.toLowerCase().includes(searchTerm)
+              ) {
+                if (
+                  !data.description ||
+                  !data.description.toLowerCase().includes(searchTerm)
+                ) {
+                  showMarker = false;
+                }
+              }
+            }
+
+            // Show or hide marker
+            if (showMarker) {
+              if (!map.hasLayer(marker)) {
+                marker.addTo(map);
+              }
+            } else {
+              if (map.hasLayer(marker)) {
+                map.removeLayer(marker);
+              }
+            }
+          });
+        }
+
+        // Legend toggle functionality
+        const legendToggle = document.getElementById("legendToggle");
+        const legendPanel = document.getElementById("legendPanel");
+
+        legendToggle.addEventListener("click", function () {
+          legendPanel.classList.toggle("show");
+        });
+
+        // Close legend when clicking outside
+        document.addEventListener("click", function (e) {
+          if (
+            !legendPanel.contains(e.target) &&
+            !legendToggle.contains(e.target)
+          ) {
+            legendPanel.classList.remove("show");
+          }
+        });
       };
     </script>
     <!-- LeafletJS JS -->
