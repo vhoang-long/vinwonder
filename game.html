@@ -571,6 +571,37 @@
         margin-top: 12px;
       }
 
+      /* Toast notification */
+      .toast {
+        position: fixed;
+        top: 80px;
+        left: 50%;
+        transform: translateX(-50%) translateY(-100px);
+        background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+        color: white;
+        padding: 16px 24px;
+        border-radius: 12px;
+        font-size: 15px;
+        font-weight: 600;
+        opacity: 0;
+        transition: all 0.4s ease;
+        z-index: 2000;
+        box-shadow: 0 8px 24px rgba(231, 76, 60, 0.4);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        max-width: 90%;
+      }
+
+      .toast.show {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+
+      .toast i {
+        font-size: 20px;
+      }
+
       @media (max-width: 768px) {
         .card-grid {
           grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -615,6 +646,12 @@
       <div style="width: 40px"></div>
     </header>
 
+    <!-- Toast notification -->
+    <div id="toast" class="toast">
+      <i class="fa-solid fa-circle-exclamation"></i>
+      <span id="toastMessage"></span>
+    </div>
+
     <div class="container">
       <div class="card-grid" id="gameList"></div>
     </div>
@@ -630,9 +667,9 @@
         <div class="input-group">
           <label>Chọn khung giờ</label>
           <div class="time-options" id="priorityTimeOptions">
-            <button class="active" data-time="9:30">9:30</button>
-            <button data-time="11:00">11:00</button>
-            <button data-time="14:00">14:00</button>
+            <button class="time-btn active" data-time="9:30">9:30</button>
+            <button class="time-btn" data-time="11:00">11:00</button>
+            <button class="time-btn" data-time="14:00">14:00</button>
           </div>
         </div>
 
@@ -667,9 +704,9 @@
         <div class="input-group">
           <label>Chọn khung giờ</label>
           <div class="time-options" id="virtualTimeOptions">
-            <button class="active" data-time="9:30">9:30</button>
-            <button data-time="11:00">11:00</button>
-            <button data-time="14:00">14:00</button>
+            <button class="time-btn active" data-time="9:30">9:30</button>
+            <button class="time-btn" data-time="11:00">11:00</button>
+            <button class="time-btn" data-time="14:00">14:00</button>
           </div>
         </div>
 
@@ -702,6 +739,7 @@
     <script>
       const PRICE_PER_PLAYER = 100000;
       const MAX_VIRTUAL_PLAYERS = 7;
+      const MAX_CART_ITEMS = 3;
 
       const games = [
         {
@@ -956,6 +994,35 @@
       ];
 
       // Helper functions
+      function showToast(message) {
+        const toast = document.getElementById("toast");
+        const toastMessage = document.getElementById("toastMessage");
+        toastMessage.textContent = message;
+        toast.classList.add("show");
+        setTimeout(() => {
+          toast.classList.remove("show");
+        }, 3000);
+      }
+
+      function checkCartLimits(gameName) {
+        const cart = JSON.parse(localStorage.getItem("gameCart")) || [];
+
+        // Check if cart is full
+        if (cart.length >= MAX_CART_ITEMS) {
+          showToast(`Giỏ hàng chỉ chứa tối đa ${MAX_CART_ITEMS} trò chơi!`);
+          return false;
+        }
+
+        // Check if game already exists in cart
+        const gameExists = cart.some((item) => item.name === gameName);
+        if (gameExists) {
+          showToast("Trò chơi này đã có trong giỏ hàng!");
+          return false;
+        }
+
+        return true;
+      }
+
       function getQueueStatus(queue, isMaintainance = false) {
         if (isMaintainance) {
           return {
@@ -1180,6 +1247,11 @@
       document
         .getElementById("confirmPriority")
         .addEventListener("click", () => {
+          // Validate cart limits before adding
+          if (!checkCartLimits(currentGame.title)) {
+            return;
+          }
+
           const orderNo = Math.floor(Math.random() * 90000 + 10000);
           const total = PRICE_PER_PLAYER * priorityCount;
           const queuePosition = Math.floor(Math.random() * 3) + 3;
@@ -1196,6 +1268,7 @@
             <img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=Priority_${orderNo}" alt="QR">
             <p class="order-number">Mã đặt vé: ${orderNo}</p>
           </div>
+          <button class="save-btn" id="billConfirmBtn" style="margin-top: 16px;">Xác nhận</button>
         `;
 
           document.getElementById("billTitle").textContent =
@@ -1203,21 +1276,57 @@
           document.getElementById("billContent").innerHTML = billHTML;
           priorityModal.style.display = "none";
           billModal.style.display = "flex";
+
+          // Add handler for Xác nhận
+          setTimeout(() => {
+            const btn = document.getElementById("billConfirmBtn");
+            if (btn) {
+              btn.onclick = function () {
+                // Add to gameCart in localStorage
+                const cart = JSON.parse(localStorage.getItem("gameCart")) || [];
+                // Ensure image path is relative for game-cart
+                let imagePath = currentGame.image;
+                if (!/^\.\./.test(imagePath)) {
+                  imagePath = '../' + imagePath;
+                }
+                cart.push({
+                  name: currentGame.title,
+                  image: imagePath,
+                  ticketType: "veutien",
+                  time: priorityTime,
+                  count: priorityCount,
+                  order: queuePosition,
+                  names: [],
+                  price: total,
+                });
+                localStorage.setItem("gameCart", JSON.stringify(cart));
+                billModal.style.display = "none";
+                window.location.href = "game-cart/game-cart.html";
+              };
+            }
+          }, 100);
         });
 
       document
         .getElementById("confirmVirtual")
         .addEventListener("click", () => {
+          // Validate cart limits before adding
+          if (!checkCartLimits(currentGame.title)) {
+            return;
+          }
+
           const orderNo = Math.floor(Math.random() * 90000 + 10000);
           const queuePosition = Math.floor(Math.random() * 30) + 40;
 
           let playersHTML =
             "<p><strong>Danh sách người chơi:</strong></p><ol style='padding-left: 20px; margin: 10px 0;'>";
+          let playerNames = [];
           for (let i = 1; i <= virtualCount; i++) {
             const name =
               document.getElementById(`playerName${i}`).value.trim() ||
               `Người chơi ${i}`;
             playersHTML += `<li style='margin: 4px 0;'>${name}</li>`;
+            playerNames.push(name);
           }
           playersHTML += "</ol>";
 
@@ -1234,12 +1343,42 @@
             <img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=Virtual_${orderNo}" alt="QR">
             <p class="order-number">Mã đặt chỗ: ${orderNo}</p>
           </div>
+          <button class="save-btn" id="billConfirmBtn" style="margin-top: 16px;">Xác nhận</button>
         `;
 
           document.getElementById("billTitle").textContent = "Xác nhận hàng ảo";
           document.getElementById("billContent").innerHTML = billHTML;
           virtualModal.style.display = "none";
           billModal.style.display = "flex";
+
+          // Add handler for Xác nhận
+          setTimeout(() => {
+            const btn = document.getElementById("billConfirmBtn");
+            if (btn) {
+              btn.onclick = function () {
+                // Add to gameCart in localStorage
+                const cart = JSON.parse(localStorage.getItem("gameCart")) || [];
+                // Ensure image path is relative for game-cart
+                let imagePath = currentGame.image;
+                if (!/^\.\./.test(imagePath)) {
+                  imagePath = '../' + imagePath;
+                }
+                cart.push({
+                  name: currentGame.title,
+                  image: imagePath,
+                  ticketType: "hangao",
+                  time: virtualTime,
+                  count: virtualCount,
+                  order: queuePosition,
+                  names: playerNames,
+                  price: null,
+                });
+                localStorage.setItem("gameCart", JSON.stringify(cart));
+                billModal.style.display = "none";
+                window.location.href = "game-cart/game-cart.html";
+              };
+            }
+          }, 100);
         });
 
       // Close modals
