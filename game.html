@@ -665,15 +665,6 @@
         <div class="modal-game-info" id="priorityGameInfo"></div>
 
         <div class="input-group">
-          <label>Chọn khung giờ</label>
-          <div class="time-options" id="priorityTimeOptions">
-            <button class="time-btn active" data-time="9:30">9:30</button>
-            <button class="time-btn" data-time="11:00">11:00</button>
-            <button class="time-btn" data-time="14:00">14:00</button>
-          </div>
-        </div>
-
-        <div class="input-group">
           <label>Số lượng người chơi</label>
           <div class="counter">
             <button id="priorityMinus">−</button>
@@ -720,6 +711,13 @@
         </div>
 
         <div id="playerNames"></div>
+        <div class="virtual-note" id="virtualNote" style="display: none">
+          <i class="fa-solid fa-lightbulb"></i>
+          <span
+            >Nếu bạn không muốn chờ đợi, hãy mua <b>Vé ưu tiên</b> để vào chơi
+            ngay.</span
+          >
+        </div>
 
         <button class="save-btn" id="confirmVirtual">
           <i class="fa-solid fa-check"></i> Xác nhận tham gia
@@ -1240,6 +1238,12 @@
             btn.classList.toggle("active", i === 0);
           });
 
+        const note = document.getElementById("virtualNote");
+        if (canBookPriority(currentGame.queue)) {
+          note.style.display = "flex";
+        } else {
+          note.style.display = "none";
+        }
         virtualModal.style.display = "flex";
       }
 
@@ -1260,7 +1264,6 @@
           <p><strong>Trò chơi:</strong> ${currentGame.title}</p>
           <p><strong>Loại vé:</strong> Vé ưu tiên</p>
           <p><strong>Thứ tự ưu tiên:</strong> <span style="color: #f77119; font-weight: 700;">${queuePosition}</span></p>
-          <p><strong>Khung giờ:</strong> ${priorityTime}</p>
           <p><strong>Số lượng:</strong> ${priorityCount} người</p>
           <p><strong>Tổng tiền:</strong> <span style="color: #f77119; font-weight: 700;">${total.toLocaleString("vi-VN")} đ</span></p>
           <div class="qr-section">
@@ -1287,13 +1290,13 @@
                 // Ensure image path is relative for game-cart
                 let imagePath = currentGame.image;
                 if (!/^\.\./.test(imagePath)) {
-                  imagePath = '../' + imagePath;
+                  imagePath = "../" + imagePath;
                 }
                 cart.push({
                   name: currentGame.title,
                   image: imagePath,
                   ticketType: "veutien",
-                  time: priorityTime,
+                  time: null,
                   count: priorityCount,
                   order: queuePosition,
                   names: [],
@@ -1361,7 +1364,7 @@
                 // Ensure image path is relative for game-cart
                 let imagePath = currentGame.image;
                 if (!/^\.\./.test(imagePath)) {
-                  imagePath = '../' + imagePath;
+                  imagePath = "../" + imagePath;
                 }
                 cart.push({
                   name: currentGame.title,

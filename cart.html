@@ -1,24 +1,25 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>VinWonders</title>
-      <link rel="icon" type="image/png" href="/assets/iconlogo.png" />
+    <link rel="icon" type="image/png" href="/assets/iconlogo.png" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
       integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
       crossorigin="anonymous"
-      referrerpolicy="no-referrer" />
+      referrerpolicy="no-referrer"
+    />
     <style>
-     @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+      @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 
-      *{
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-          font-family: "Open Sans", sans-serif;
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Open Sans", sans-serif;
       }
 
       body {
@@ -157,7 +158,6 @@
       .continue-btn {
         width: 100%;
         background: #f77119;
-;
         color: #fff;
         border: none;
         border-radius: 10px;
@@ -425,9 +425,18 @@
 
   <body>
     <div class="wrapperCart">
-      <a href="./ticket-detail.html">
+      <a href="#" id="backButton">
         <i class="fa-solid fa-arrow-left wrapperIcon"></i>
       </a>
+      <script>
+        document
+          .getElementById("backButton")
+          .addEventListener("click", function (e) {
+            e.preventDefault();
+            window.history.back();
+          });
+      </script>
+
       <h2>Giỏ hàng</h2>
       <div id="cartContainer"></div>
 
@@ -494,7 +503,8 @@
                 type="text"
                 id="fullName"
                 placeholder="Nhập họ tên của bạn"
-                required />
+                required
+              />
             </div>
 
             <div class="input-group">
@@ -503,13 +513,15 @@
                 type="tel"
                 id="phoneNumber"
                 placeholder="Nhập số điện thoại"
-                required />
+                required
+              />
             </div>
 
             <button
               id="confirmPaymentBtn"
               class="save-btn"
-              style="width: 100%; margin-top: 10px">
+              style="width: 100%; margin-top: 10px"
+            >
               Xác nhận thanh toán
             </button>
           </div>
@@ -597,7 +609,7 @@
               .forEach((b) => {
                 b.classList.toggle(
                   "active",
-                  b.textContent.trim() === item.branch
+                  b.textContent.trim() === item.branch,
                 );
               });
 
@@ -666,7 +678,7 @@
             .forEach((b) => {
               b.classList.toggle(
                 "active",
-                b.textContent.trim() === item.branch
+                b.textContent.trim() === item.branch,
               );
             });
 
@@ -705,7 +717,7 @@
       // --- Đóng modal ---
       editCloseBtn.addEventListener(
         "click",
-        () => (editModal.style.display = "none")
+        () => (editModal.style.display = "none"),
       );
 
       // --- Cập nhật tổng tiền ---
@@ -754,7 +766,7 @@
       saveBtn.addEventListener("click", () => {
         if (currentEditIndex !== null) {
           const branch = editModal.querySelector(
-            ".location-options .active"
+            ".location-options .active",
           ).textContent;
           const time = editModal.querySelector(".time-btn.active").textContent;
           const personCount = editModal.querySelector(".count").textContent;
@@ -822,8 +834,8 @@
             return `
         <div style="display:flex;align-items:center;margin-bottom:10px;border-bottom:1px solid #eee;padding-bottom:8px;">
           <img src="${item.image}" alt="${
-              item.title
-            }" style="width:60px;height:60px;border-radius:8px;margin-right:10px;">
+            item.title
+          }" style="width:60px;height:60px;border-radius:8px;margin-right:10px;">
           <div>
             <h4 style="font-size:14px;margin-bottom:4px;">${item.title}</h4>
             <p style="font-size:13px;color:#666;">${item.branch} - ${
@@ -833,7 +845,7 @@
               item.person
             }</p>
             <p style="font-size:13px;color:#f77119;">${item.price.toLocaleString(
-              "vi-VN"
+              "vi-VN",
             )} đ</p>
           </div>
         </div>
@@ -847,15 +859,15 @@
     <hr style="margin:10px 0;">
     ${itemsHTML}
     <h3 style="text-align:right;color:#f77119;margin-top:10px;">Tổng: ${total.toLocaleString(
-      "vi-VN"
+      "vi-VN",
     )} đ</h3>
     <div style="text-align:center;margin-top:20px;">
       <p>Quét mã QR để thanh toán</p>
       <img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=ThanhToan_${encodeURIComponent(
-        name
+        name,
       )}_${encodeURIComponent(
-          phone
-        )}_${Date.now()}" alt="QR" style="margin-top:8px;">
+        phone,
+      )}_${Date.now()}" alt="QR" style="margin-top:8px;">
     </div>
   `;
 

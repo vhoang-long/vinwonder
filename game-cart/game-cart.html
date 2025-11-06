@@ -14,7 +14,7 @@
   <body>
     <!-- Header -->
     <header class="header">
-      <button class="back-btn" onclick="window.location.href='../game.html'">
+      <button class="back-btn" onclick="window.history.back()">
         <i class="fa-solid fa-arrow-left"></i>
       </button>
       <h2>Giỏ vé trò chơi</h2>
@@ -94,11 +94,11 @@
             : "";
 
           div.innerHTML = `
-            <img src="${item.image}" alt="${item.name}">
+            <img src="${item.image}" alt="${item.name}" style="width: 40%; height: auto;"/>
             <div class="cart-info">
               <div class="type ${typeClass}">${typeText}</div>
               <h4>${item.name}</h4>
-              <div class="time"><i class="fa-regular fa-clock"></i> ${item.time}</div>
+${item.time ? `<div class="time"><i class="fa-regular fa-clock"></i> ${item.time}</div>` : ""}
               <div class="players"><i class="fa-solid fa-user-group"></i> ${item.count} người</div>
               <div class="order">Thứ tự: <b>${item.order}</b></div>
               ${namesHTML}
