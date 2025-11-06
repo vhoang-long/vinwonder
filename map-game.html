@@ -234,6 +234,27 @@
                     transform: scale(1.05);
                   }
 
+                  .cart-toggle {
+                    position: absolute;
+                    top: max(20px, env(safe-area-inset-top));
+                    right: 80px;
+                    background: #f77119;
+                    color: white;
+                    border: none;
+                    border-radius: 8px;
+                    padding: 10px 14px;
+                    font-size: 16px;
+                    cursor: pointer;
+                    box-shadow: 0 2px 10px rgba(247, 113, 25, 0.3);
+                    transition: all 0.3s;
+                    z-index: 1000;
+                  }
+
+                  .cart-toggle:hover {
+                    background: #ec6003;
+                    transform: scale(1.05);
+                  }
+
                   .legend-panel {
                     position: absolute;
                     top: 70px;
@@ -552,6 +573,13 @@
         <!-- Legend Toggle Button -->
         <button class="legend-toggle" id="legendToggle">
           <i class="fa-solid fa-info-circle"></i>
+        </button>
+
+        <button
+          class="cart-toggle"
+          onclick="window.location.href='game-cart/game-cart.html'"
+        >
+          <i class="fa-solid fa-cart-plus"></i>
         </button>
 
         <!-- Legend Panel -->
