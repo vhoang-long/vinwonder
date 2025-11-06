@@ -366,6 +366,133 @@
                       transform: translateY(0);
                     }
                   }
+
+                  /* Suggestion cards styling */
+                  .suggestions-section {
+                    margin-top: 16px;
+                    padding-top: 16px;
+                    border-top: 2px solid #ffe2c5;
+                  }
+
+                  .suggestions-title {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    margin-bottom: 12px;
+                    font-size: 14px;
+                    font-weight: bold;
+                    color: #f77119;
+                  }
+
+                  .suggestions-title i {
+                    font-size: 16px;
+                  }
+
+                  .suggestion-cards {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 8px;
+                  }
+
+                  .suggestion-card {
+                    background: linear-gradient(135deg, #ffffff 0%, #fff7f0 100%);
+                    border: 2px solid #ffe2c5;
+                    border-radius: 10px;
+                    padding: 10px;
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    position: relative;
+                    overflow: hidden;
+                  }
+
+                  .suggestion-card::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: -100%;
+                    width: 100%;
+                    height: 100%;
+                    background: linear-gradient(90deg, transparent, rgba(247, 113, 25, 0.1), transparent);
+                    transition: left 0.5s ease;
+                  }
+
+                  .suggestion-card:hover::before {
+                    left: 100%;
+                  }
+
+                  .suggestion-card:hover {
+                    transform: translateX(4px);
+                    border-color: #f77119;
+                    box-shadow: 0 4px 12px rgba(247, 113, 25, 0.2);
+                    background: linear-gradient(135deg, #fff7f0 0%, #ffe8d1 100%);
+                  }
+
+                  .suggestion-icon {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 18px;
+                    flex-shrink: 0;
+                    border: 2px solid white;
+                    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+                  }
+
+                  .suggestion-content {
+                    flex: 1;
+                    min-width: 0;
+                  }
+
+                  .suggestion-name {
+                    font-size: 13px;
+                    font-weight: bold;
+                    color: #333;
+                    margin-bottom: 4px;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                  }
+
+                  .suggestion-info {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    font-size: 11px;
+                    color: #666;
+                  }
+
+                  .suggestion-badge {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 3px;
+                    background: rgba(247, 113, 25, 0.1);
+                    padding: 2px 6px;
+                    border-radius: 12px;
+                    font-weight: 600;
+                  }
+
+                  .suggestion-arrow {
+                    color: #f77119;
+                    font-size: 16px;
+                    transition: transform 0.3s ease;
+                  }
+
+                  .suggestion-card:hover .suggestion-arrow {
+                    transform: translateX(4px);
+                  }
+
+                  .no-suggestions {
+                    text-align: center;
+                    padding: 12px;
+                    color: #999;
+                    font-size: 12px;
+                    font-style: italic;
+                  }
     </style>
   </head>
 
@@ -1348,6 +1475,198 @@
           }
         }
 
+        // Calculate distance between two points
+        function calculateDistance(x1, y1, x2, y2) {
+          return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+        }
+
+        // Get suggestions for an attraction
+        function getSuggestions(currentAttraction, allAttractions) {
+          const rides = [];
+          const utilities = [];
+
+          allAttractions.forEach((attraction) => {
+            // Skip current attraction and maintenance attractions
+            if (
+              attraction.name === currentAttraction.name ||
+              attraction.maintainance
+            ) {
+              return;
+            }
+
+            const distance = calculateDistance(
+              currentAttraction.x,
+              currentAttraction.y,
+              attraction.x,
+              attraction.y,
+            );
+
+            // Categorize by type
+            if (attraction.type === "ride" || attraction.type === "zoo") {
+              // For rides/zoo: score based on distance and wait time
+              const waitTime = attraction.wait_time || 0;
+              // Normalize scores (lower is better for both)
+              // Distance weight: 50%, Wait time weight: 50%
+              const distanceScore = distance;
+              const waitTimeScore = waitTime * 50; // Scale wait time to similar range as distance
+              const totalScore = distanceScore + waitTimeScore;
+
+              rides.push({
+                ...attraction,
+                distance: distance,
+                score: totalScore,
+              });
+            } else if (
+              ["restaurant", "toilet", "shop", "medical"].includes(
+                attraction.type,
+              )
+            ) {
+              // For utilities: score only based on distance
+              utilities.push({
+                ...attraction,
+                distance: distance,
+                score: distance,
+              });
+            }
+          });
+
+          // Sort by score (lower is better) and get top 3
+          rides.sort((a, b) => a.score - b.score);
+          utilities.sort((a, b) => a.score - b.score);
+
+          return {
+            rides: rides.slice(0, 3),
+            utilities: utilities.slice(0, 3),
+          };
+        }
+
+        // Format distance for display
+        function formatDistance(distance) {
+          if (distance < 100) {
+            return "Rất gần";
+          } else if (distance < 300) {
+            return "Gần";
+          } else if (distance < 600) {
+            return "Trung bình";
+          } else {
+            return "Xa";
+          }
+        }
+
+        // Create suggestion HTML
+        function createSuggestionsHTML(suggestions, currentAttractionName) {
+          let html = "";
+
+          // Rides and zoo section
+          if (suggestions.rides.length > 0) {
+            html += `
+              <div class="suggestions-section">
+                <div class="suggestions-title">
+                  <i class="fa-solid fa-star"></i>
+                  <span>Điểm vui chơi gợi ý</span>
+                </div>
+                <div class="suggestion-cards">
+            `;
+
+            suggestions.rides.forEach((attraction) => {
+              const crowdInfo = getCrowdStatus(
+                attraction.wait_time,
+                attraction.type,
+              );
+              const distanceText = formatDistance(attraction.distance);
+
+              html += `
+                <div class="suggestion-card" data-attraction-name="${attraction.name}">
+                  <div class="suggestion-icon" style="background: ${crowdInfo.color};">
+                    ${crowdInfo.icon}
+                  </div>
+                  <div class="suggestion-content">
+                    <div class="suggestion-name">${attraction.name}</div>
+                    <div class="suggestion-info">
+                      <span class="suggestion-badge">
+                        📍 ${distanceText}
+                      </span>
+                      ${
+                        attraction.wait_time !== null
+                          ? `
+                        <span class="suggestion-badge" style="color: ${crowdInfo.color}">
+                          ⏱️ ${attraction.wait_time}p
+                        </span>
+                      `
+                          : ""
+                      }
+                    </div>
+                  </div>
+                  <i class="fa-solid fa-arrow-right suggestion-arrow"></i>
+                </div>
+              `;
+            });
+
+            html += `
+                </div>
+              </div>
+            `;
+          }
+
+          // Utilities section
+          if (suggestions.utilities.length > 0) {
+            html += `
+              <div class="suggestions-section">
+                <div class="suggestions-title">
+                  <i class="fa-solid fa-map-pin"></i>
+                  <span>Tiện ích gợi ý</span>
+                </div>
+                <div class="suggestion-cards">
+            `;
+
+            suggestions.utilities.forEach((attraction) => {
+              const crowdInfo = getCrowdStatus(
+                attraction.wait_time,
+                attraction.type,
+              );
+              const distanceText = formatDistance(attraction.distance);
+
+              html += `
+                <div class="suggestion-card" data-attraction-name="${attraction.name}">
+                  <div class="suggestion-icon" style="background: ${crowdInfo.color};">
+                    ${crowdInfo.icon}
+                  </div>
+                  <div class="suggestion-content">
+                    <div class="suggestion-name">${attraction.name}</div>
+                    <div class="suggestion-info">
+                      <span class="suggestion-badge">
+                        📍 ${distanceText}
+                      </span>
+                    </div>
+                  </div>
+                  <i class="fa-solid fa-arrow-right suggestion-arrow"></i>
+                </div>
+              `;
+            });
+
+            html += `
+                </div>
+              </div>
+            `;
+          }
+
+          // Show message if no suggestions
+          if (
+            suggestions.rides.length === 0 &&
+            suggestions.utilities.length === 0
+          ) {
+            html += `
+              <div class="suggestions-section">
+                <div class="no-suggestions">
+                  Không có gợi ý nào khả dụng
+                </div>
+              </div>
+            `;
+          }
+
+          return html;
+        }
+
         // Use custom image as map base
         // Set image dimensions (replace with your actual image size)
         const imageWidth = 3000; // <-- set your map image width in pixels
@@ -1609,7 +1928,11 @@
             </div>
           `;
 
-          popupContent += `</div></div>`; // Close content and main container
+          // Add suggestions
+          const suggestions = getSuggestions(attraction, attractions);
+          popupContent += createSuggestionsHTML(suggestions, attraction.name);
+
+          popupContent += `</div>`; // Close content
           popupContent += `</div>`; // Close scroll container
           popupContent += `</div>`; // Close main wrapper
 
@@ -1635,6 +1958,47 @@
                 easeLinearity: 0.25,
               });
             }, 100);
+          });
+
+          // Add click handlers for suggestion cards after popup opens
+          marker.on("popupopen", function () {
+            const popup = marker.getPopup();
+            const popupElement = popup.getElement();
+
+            const suggestionCards =
+              popupElement.querySelectorAll(".suggestion-card");
+            suggestionCards.forEach((card) => {
+              card.addEventListener("click", function () {
+                const attractionName = this.getAttribute(
+                  "data-attraction-name",
+                );
+
+                // Find the marker for this attraction
+                const targetMarker = allMarkers.find(
+                  (m) => m.data.name === attractionName,
+                );
+                if (targetMarker) {
+                  // Close current popup
+                  map.closePopup();
+
+                  // Pan and zoom to the target marker
+                  map.setView(
+                    [targetMarker.data.y, targetMarker.data.x],
+                    map.getZoom(),
+                    {
+                      animate: true,
+                      duration: 0.8,
+                      easeLinearity: 0.25,
+                    },
+                  );
+
+                  // Open the target marker's popup after animation
+                  setTimeout(() => {
+                    targetMarker.marker.openPopup();
+                  }, 500);
+                }
+              });
+            });
           });
 
           // Store marker with attraction data for filtering
