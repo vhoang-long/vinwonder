@@ -1972,6 +1972,40 @@
             </div>
           `;
 
+          // Add booking buttons for rides only
+          if (attraction.type === "ride" && !attraction.maintainance) {
+            const showPriorityBtn = attraction.wait_time >= 20;
+
+            popupContent += `
+             <div style="display: flex; gap: 8px; margin-top: 16px;">
+               <button 
+                 class="popup-book-btn popup-book-virtual" 
+                 data-attraction-id="${idx}"
+                 style="flex: 1; padding: 10px 14px; border: none; border-radius: 10px; font-weight: 600; font-size: 13px; cursor: pointer; background: linear-gradient(135deg, #3498db 0%, #2980b9 100%); color: white; display: flex; align-items: center; justify-content: center; gap: 6px; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3);">
+                 <i class="fa-solid fa-clock"></i>
+                 Hàng ảo
+               </button>
+               <button 
+                 class="popup-book-btn popup-book-priority" 
+                 data-attraction-id="${idx}"
+                 ${!showPriorityBtn ? "disabled" : ""}
+                 style="flex: 1; padding: 10px 14px; border: none; border-radius: 10px; font-weight: 600; font-size: 13px; cursor: ${!showPriorityBtn ? "not-allowed" : "pointer"}; background: ${!showPriorityBtn ? "#bdc3c7" : "linear-gradient(135deg, #f77119 0%, #e55b00 100%)"}; color: white; display: flex; align-items: center; justify-content: center; gap: 6px; transition: all 0.3s ease; box-shadow: ${!showPriorityBtn ? "none" : "0 2px 8px rgba(247, 113, 25, 0.3)"}; opacity: ${!showPriorityBtn ? "0.6" : "1"};">
+                 <i class="fa-solid fa-star"></i>
+                 Vé ưu tiên
+               </button>
+             </div>
+           `;
+
+            // Add note about priority booking
+            if (showPriorityBtn) {
+              popupContent += `
+               <div style="display: flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #fff5eb 0%, #ffe8d1 100%); border-left: 4px solid #f77119; border-radius: 8px; padding: 10px 12px; margin-top: 10px; font-size: 12px; color: #a65b1a;">
+                 <i class="fa-solid fa-lightbulb" style="color: #f77119; font-size: 16px;"></i>
+                 <span>Nếu bạn không muốn chờ đợi, hãy mua <b>Vé ưu tiên</b> để vào chơi ngay.</span>
+               </div>
+             `;
+            }
+          }
           // Add suggestions
           const suggestions = getSuggestions(attraction, attractions);
           popupContent += createSuggestionsHTML(suggestions, attraction.name);
@@ -2041,6 +2075,56 @@
                     targetMarker.marker.openPopup();
                   }, 500);
                 }
+              });
+            });
+
+            // Add click handlers for booking buttons
+            const bookingButtons =
+              popupElement.querySelectorAll(".popup-book-btn");
+            bookingButtons.forEach((btn) => {
+              // Add hover effects
+              btn.addEventListener("mouseenter", function () {
+                if (!this.disabled) {
+                  this.style.transform = "translateY(-2px)";
+                  if (this.classList.contains("popup-book-virtual")) {
+                    this.style.boxShadow = "0 4px 12px rgba(52, 152, 219, 0.5)";
+                  } else {
+                    this.style.boxShadow = "0 4px 12px rgba(247, 113, 25, 0.5)";
+                  }
+                }
+              });
+
+              btn.addEventListener("mouseleave", function () {
+                if (!this.disabled) {
+                  this.style.transform = "translateY(0)";
+                  if (this.classList.contains("popup-book-virtual")) {
+                    this.style.boxShadow = "0 2px 8px rgba(52, 152, 219, 0.3)";
+                  } else {
+                    this.style.boxShadow = "0 2px 8px rgba(247, 113, 25, 0.3)";
+                  }
+                }
+              });
+
+              // Add click handler
+              btn.addEventListener("click", function () {
+                if (this.disabled) return;
+
+                const attractionId = parseInt(
+                  this.getAttribute("data-attraction-id"),
+                );
+                const bookingType = this.classList.contains(
+                  "popup-book-virtual",
+                )
+                  ? "virtual"
+                  : "priority";
+
+                // Navigate to game.html with parameters
+                const params = new URLSearchParams({
+                  attractionId: attractionId,
+                  bookingType: bookingType,
+                });
+
+                window.location.href = `./game.html?${params.toString()}`;
               });
             });
           });

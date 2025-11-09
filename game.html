@@ -620,6 +620,16 @@
         font-size: 20px;
       }
 
+     @keyframes highlight {
+       0%, 100% {
+         transform: scale(1);
+         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+       }
+       50% {
+         transform: scale(1.02);
+         box-shadow: 0 12px 40px rgba(247, 113, 25, 0.3);
+       }
+     }
       @media (max-width: 768px) {
         .card-grid {
           grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -757,6 +767,49 @@
       const MAX_VIRTUAL_PLAYERS = 7;
       const MAX_CART_ITEMS = 3;
 
+     // Map attraction data - matches the attractions array from map-game.html
+     const attractionDataMap = [
+       { name: "Ngôi đền huyền thoại", wait_time: 12, gameId: 1 },
+       { name: "Pháo đài kì bí", wait_time: 18, gameId: 2 },
+       { name: "Vòi rồng hung hãn", wait_time: 15, gameId: 3 },
+       { name: "Cú rơi thót tim", wait_time: 23, gameId: 4 },
+       { name: "Đĩa bay vũ trụ", wait_time: 10, gameId: 5 },
+       { name: "Thác đôi thần bí", wait_time: 8, gameId: 6 },
+       { name: "Cuộc đua báo Cheetah", wait_time: 17, gameId: 7 },
+       { name: "Tẩu thoát ngoạn mục", wait_time: 20, gameId: 8 },
+       { name: "Ngôi làng thủy tộc", wait_time: 22, gameId: 9 },
+       { name: "Cuộc chiến cầu vồng", wait_time: 30, gameId: 10 },
+       { name: "Vương quốc kẹo ngọt", wait_time: 12, gameId: 11 },
+       { name: "Cung điện ánh sáng", wait_time: 13, gameId: 12 },
+       { name: "Đường lượn nhớ đời", wait_time: 32, gameId: 13 },
+       { name: "Giải mã mê cung", wait_time: 30, gameId: 14 },
+       { name: "Đường đua nghẹt thở", wait_time: null, gameId: 15 },
+       { name: "Tata Show", wait_time: 60, gameId: 16 },
+       { name: "Rạp phim bay", wait_time: 45, gameId: 17 },
+       { name: "Bật nhảy bungee", wait_time: 17, gameId: 18 },
+       { name: "Tháp rơi tự do", wait_time: 15, gameId: 19 },
+       { name: "Đua xe trên không", wait_time: 27, gameId: 20 },
+       { name: "Đu quay dây văng", wait_time: 10, gameId: 21 },
+       { name: "Cuộc phiêu lưu hầm mỏ", wait_time: 13, gameId: 22 },
+       { name: "Zipline", wait_time: 28, gameId: 23 },
+       { name: "Bánh xe bầu trời", wait_time: 12, gameId: 24 },
+       { name: "Sky Garden", wait_time: 15, gameId: 25 },
+       { name: "Sắc màu Bromelias", wait_time: 8, gameId: 26 },
+       { name: "Lầu vọng cảnh", wait_time: 8, gameId: 27 },
+       { name: "Vườn bướm", wait_time: 10, gameId: 28 },
+       { name: "Vườn Nhật", wait_time: 16, gameId: 29 },
+       { name: "Hoang mạc châu Phi", wait_time: 9, gameId: 30 },
+       { name: "Sắc màu mùa đông", wait_time: 7, gameId: 31 },
+     ];
+
+     // Function to get URL parameters
+     function getUrlParams() {
+       const params = new URLSearchParams(window.location.search);
+       return {
+         attractionId: params.get('attractionId'),
+         bookingType: params.get('bookingType')
+       };
+     }
       const games = [
         {
           id: 1,
@@ -1416,6 +1469,49 @@
           e.target.style.display = "none";
         }
       };
+
+     // Auto-open modal if coming from map
+     window.addEventListener('DOMContentLoaded', () => {
+       const urlParams = getUrlParams();
+       
+       if (urlParams.attractionId !== null && urlParams.bookingType) {
+         const attractionId = parseInt(urlParams.attractionId);
+         
+         // Find the corresponding game from attraction data
+         if (attractionId >= 0 && attractionId < attractionDataMap.length) {
+           const attractionData = attractionDataMap[attractionId];
+           const game = games.find(g => g.id === attractionData.gameId);
+           
+           if (game) {
+             currentGame = game;
+             bookingType = urlParams.bookingType;
+             
+             // Scroll to the game card
+             setTimeout(() => {
+               const gameCards = document.querySelectorAll('.game-card');
+               const targetCard = Array.from(gameCards).find(card => {
+                 const h3 = card.querySelector('h3');
+                 return h3 && h3.textContent === game.title;
+               });
+               
+               if (targetCard) {
+                 targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                 targetCard.style.animation = 'highlight 1s ease-in-out';
+               }
+             }, 300);
+             
+             // Open the appropriate modal
+             setTimeout(() => {
+               if (urlParams.bookingType === 'priority') {
+                 openPriorityModal();
+               } else if (urlParams.bookingType === 'virtual') {
+                 openVirtualModal();
+               }
+             }, 500);
+           }
+         }
+       }
+     });
     </script>
   </body>
 </html>
