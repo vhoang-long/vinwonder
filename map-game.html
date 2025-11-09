@@ -1800,6 +1800,16 @@
           }).addTo(map);
 
           // Build comprehensive popup content
+          let popupDirection = "top";
+          let popupOffset = [0, -10];
+
+          if (attraction.y > imageHeight * 0.6) {
+            // Bottom 40% of map - show popup below
+            popupDirection = "bottom";
+            popupOffset = [0, 25];
+          }
+
+          // Build comprehensive popup content
           let popupContent = `
             <div style="width: 320px; font-family: 'Arial', sans-serif; background: linear-gradient(135deg, #fff7f0 0%, #ffe8d6 100%); border-radius: 12px; overflow: hidden;">
               <div class="popup-scroll-container">
@@ -2025,12 +2035,28 @@
             closeButton: true,
             autoClose: true,
             closeOnClick: false,
+            direction: popupDirection,
+            offset: popupOffset,
           });
 
           // Smooth pan to marker when popup opens
           marker.on("click", function (e) {
             setTimeout(() => {
-              map.panTo(e.latlng, {
+              // Adjust pan based on popup direction
+              let panOffset = [0, 0];
+              if (popupDirection === "bottom") {
+                // Pan slightly down when popup opens below
+                panOffset = [0, 50];
+              } else {
+                // Pan slightly up when popup opens above
+                panOffset = [0, -50];
+              }
+
+              const adjustedLatLng = map.containerPointToLatLng(
+                map.latLngToContainerPoint(e.latlng).subtract(panOffset),
+              );
+
+              map.panTo(adjustedLatLng, {
                 animate: true,
                 duration: 0.5,
                 easeLinearity: 0.25,
