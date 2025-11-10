@@ -1620,7 +1620,7 @@
               const distanceText = formatDistance(attraction.distance);
 
               html += `
-                <div class="suggestion-card" data-attraction-name="${attraction.name}">
+                <div class="suggestion-card" data-attraction-name="${attraction.name}" data-attraction-x="${attraction.x}" data-attraction-y="${attraction.y}">
                   <div class="suggestion-icon" style="background: ${crowdInfo.color};">
                     ${crowdInfo.icon}
                   </div>
@@ -1671,7 +1671,7 @@
               const distanceText = formatDistance(attraction.distance);
 
               html += `
-                <div class="suggestion-card" data-attraction-name="${attraction.name}">
+                <div class="suggestion-card" data-attraction-name="${attraction.name}" data-attraction-x="${attraction.x}" data-attraction-y="${attraction.y}">
                   <div class="suggestion-icon" style="background: ${crowdInfo.color};">
                     ${crowdInfo.icon}
                   </div>
@@ -2043,19 +2043,22 @@
               // Calculate smart offset based on marker position
               const mapSize = map.getSize();
               const markerPoint = map.latLngToContainerPoint(e.latlng);
-              
+
               // If marker is in bottom half of screen, pan it down to make room for popup
               let offsetY = 0;
               if (markerPoint.y > mapSize.y * 0.5) {
                 // Bottom half - offset downward (positive Y)
                 const distanceFromBottom = mapSize.y - markerPoint.y;
                 // Calculate offset: more offset if closer to bottom
-                offsetY = Math.min(200, Math.max(100, 250 - distanceFromBottom));
+                offsetY = Math.min(
+                  200,
+                  Math.max(100, 250 - distanceFromBottom),
+                );
               } else {
                 // Top half - small upward offset
                 offsetY = -50;
               }
-              
+
               // Apply offset
               const targetPoint = markerPoint.add([0, offsetY]);
               const adjustedLatLng = map.containerPointToLatLng(targetPoint);
@@ -2080,10 +2083,19 @@
                 const attractionName = this.getAttribute(
                   "data-attraction-name",
                 );
+                const attractionX = parseInt(
+                  this.getAttribute("data-attraction-x"),
+                );
+                const attractionY = parseInt(
+                  this.getAttribute("data-attraction-y"),
+                );
 
-                // Find the marker for this attraction
+                // Find the marker for this attraction (match name and coordinates)
                 const targetMarker = allMarkers.find(
-                  (m) => m.data.name === attractionName,
+                  (m) =>
+                    m.data.name === attractionName &&
+                    m.data.x === attractionX &&
+                    m.data.y === attractionY,
                 );
                 if (targetMarker) {
                   // Close current popup
