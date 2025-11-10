@@ -2028,33 +2028,37 @@
             maxWidth: 340,
             className: "custom-popup",
             autoPan: true,
-            autoPanPaddingTopLeft: [10, 10],
-            autoPanPaddingBottomRight: [10, 10],
-            autoPanPadding: [50, 50],
+            autoPanPaddingTopLeft: [20, 80],
+            autoPanPaddingBottomRight: [20, 20],
+            autoPanPadding: [70, 70],
             keepInView: true,
             closeButton: true,
             autoClose: true,
             closeOnClick: false,
-            direction: popupDirection,
-            offset: popupOffset,
           });
 
           // Smooth pan to marker when popup opens
           marker.on("click", function (e) {
             setTimeout(() => {
-              // Adjust pan based on popup direction
-              let panOffset = [0, 0];
-              if (popupDirection === "bottom") {
-                // Pan slightly down when popup opens below
-                panOffset = [0, 50];
+              // Calculate smart offset based on marker position
+              const mapSize = map.getSize();
+              const markerPoint = map.latLngToContainerPoint(e.latlng);
+              
+              // If marker is in bottom half of screen, pan it down to make room for popup
+              let offsetY = 0;
+              if (markerPoint.y > mapSize.y * 0.5) {
+                // Bottom half - offset downward (positive Y)
+                const distanceFromBottom = mapSize.y - markerPoint.y;
+                // Calculate offset: more offset if closer to bottom
+                offsetY = Math.min(200, Math.max(100, 250 - distanceFromBottom));
               } else {
-                // Pan slightly up when popup opens above
-                panOffset = [0, -50];
+                // Top half - small upward offset
+                offsetY = -50;
               }
-
-              const adjustedLatLng = map.containerPointToLatLng(
-                map.latLngToContainerPoint(e.latlng).subtract(panOffset),
-              );
+              
+              // Apply offset
+              const targetPoint = markerPoint.add([0, offsetY]);
+              const adjustedLatLng = map.containerPointToLatLng(targetPoint);
 
               map.panTo(adjustedLatLng, {
                 animate: true,
