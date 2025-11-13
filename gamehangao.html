@@ -1,0 +1,850 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VinWonders</title>
+    <link rel="icon" type="image/png" href="/assets/iconlogo.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300..800;1,300..800&display=swap");
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Montserrat";
+      }
+      body {
+        font-family: "Montserrat";
+        margin: 0;
+        background: #f3f4f6;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        box-sizing: border-box;
+        overflow-x: hidden;
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      .gameao-head {
+        width: 100%;
+        height: 60px;
+        padding: 0 20px;
+        background-color: #f77119;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+      }
+
+      .gameao-head h3 {
+        color: #fff;
+      }
+
+      .gameao-head i {
+        color: #ffffff;
+        font-size: 20px;
+        padding: 6px;
+      }
+
+      .game-list {
+        display: grid;
+        grid-template-columns: repeat(
+          auto-fit,
+          minmax(250px, 1fr)
+        ); /* ✅ tự co giãn */
+        margin-top: 30px;
+        gap: 20px;
+        width: 100%;
+        max-width: 900px; /* ✅ giới hạn độ rộng */
+        box-sizing: border-box;
+      }
+
+      .game-card {
+        background: #fff;
+        border-radius: 16px;
+        overflow: hidden;
+        transition: transform 0.2s;
+        width: 100%;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      }
+
+      .game-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .game-card img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+      }
+
+      .game-info {
+        padding: 15px;
+      }
+
+      .game-info h3 {
+        margin: 0 0 10px;
+        font-size: 18px;
+        color: #222;
+      }
+
+      .game-info p {
+        margin: 2px 0 6px;
+        font-size: 16px;
+        color: #222;
+      }
+
+      /* time line with icon */
+      .game-info .time {
+        margin: 6px 0 0;
+        color: #666;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 15px;
+      }
+
+      .game-info .time-icon {
+        color: #f77119;
+        font-size: 16px;
+      }
+
+      .join-btn {
+        background: #f77119;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.2s;
+        margin-top: 10px;
+        width: 100%;
+        font-size: 14px;
+      }
+
+      .join-btn:hover {
+        background: #e55c00;
+      }
+
+      /* ===== Modal ===== */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 10;
+        inset: 0; /* ✅ gọn hơn left/top/width/height */
+        background: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+        box-sizing: border-box;
+      }
+
+      .modal-content {
+        background: #fff;
+        padding: 25px;
+        border-radius: 16px;
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+        position: relative;
+        max-height: 90vh;
+        overflow-y: auto;
+        box-sizing: border-box;
+      }
+
+      .close {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: 22px;
+        cursor: pointer;
+      }
+
+      .time-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin: 15px 0;
+        flex-wrap: wrap; /* ✅ tránh tràn ngang */
+      }
+
+      .time-btn {
+        border: 1px solid #ccc;
+        background: white;
+        padding: 8px 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 500;
+      }
+
+      .time-btn.active {
+        background: #f77119;
+        color: white;
+        border-color: #ff6600;
+      }
+
+      .count-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        margin: 15px 0;
+        flex-wrap: wrap; /* ✅ responsive */
+      }
+
+      .count-btn {
+        background: #f77119;
+        border: none;
+        color: white;
+        font-size: 20px;
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        cursor: pointer;
+      }
+
+      .total {
+        font-weight: 600;
+        margin-top: 10px;
+        font-size: 16px;
+      }
+
+      .confirm-btn {
+        background: #f77119;
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        width: 100%;
+        font-size: 16px;
+        font-weight: 600;
+        margin-top: 15px;
+      }
+
+      .confirm-btn:hover {
+        background: #e55c00;
+      }
+
+      .invoice {
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+      }
+
+      /* center invoice title while keeping invoice body left-aligned */
+      .invoice h2 {
+        text-align: center;
+        margin: 0 0 12px;
+      }
+
+      .barcode {
+        width: 100%;
+        height: 60px;
+        background: repeating-linear-gradient(
+          90deg,
+          #000 0,
+          #000 2px,
+          #fff 2px,
+          #fff 4px
+        );
+        margin-top: 10px;
+      }
+
+      .player-input {
+        margin-bottom: 8px;
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+      }
+
+      .player-input label {
+        font-size: 14px;
+        margin-bottom: 4px;
+      }
+
+      .player-input input {
+        padding: 6px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      /* ✅ Responsive cho tablet và mobile */
+      @media (max-width: 768px) {
+        .modal-content {
+          width: 90%;
+          max-width: none;
+          padding: 16px;
+          border-radius: 12px;
+        }
+
+        .gameao-head {
+          width: 100%;
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        h3 {
+          font-size: 18px;
+        }
+
+        .time-buttons {
+          gap: 6px;
+        }
+
+        .time-btn {
+          padding: 6px 10px;
+          font-size: 14px;
+        }
+
+        .count-wrapper {
+          gap: 10px;
+        }
+
+        .count-btn {
+          width: 28px;
+          height: 28px;
+          font-size: 18px;
+        }
+
+        .player-input input {
+          padding: 8px;
+          font-size: 14px;
+        }
+
+        .confirm-btn {
+          font-size: 15px;
+          padding: 10px 16px;
+        }
+
+        .invoice h2 {
+          font-size: 20px;
+          text-align: center;
+        }
+
+        .invoice p,
+        .invoice ol li {
+          list-style: none;
+          font-size: 14px;
+          line-height: 1.4;
+        }
+        .invoice ol {
+          list-style-type: none;
+          padding-left: 0;
+        }
+        .barcode {
+          height: 40px;
+        }
+      }
+
+      /* ✅ Tối ưu thêm cho màn hình rất nhỏ (≤480px) */
+      @media (max-width: 480px) {
+        body {
+          padding: 8px;
+        }
+
+        .modal-content {
+          padding: 12px;
+          border-radius: 10px;
+          max-height: 85vh;
+          overflow-y: auto;
+        }
+
+        .close {
+          top: 6px;
+          right: 10px;
+          font-size: 20px;
+        }
+
+        .time-btn {
+          padding: 5px 8px;
+          font-size: 13px;
+        }
+
+        .player-input label {
+          font-size: 13px;
+        }
+
+        .player-input input {
+          font-size: 13px;
+          padding: 6px;
+        }
+
+        .confirm-btn {
+          font-size: 14px;
+          padding: 8px;
+        }
+
+        .total {
+          font-size: 14px;
+        }
+
+        .invoice h2 {
+          font-size: 18px;
+        }
+
+        .invoice p {
+          font-size: 13px;
+        }
+
+        .barcode {
+          height: 35px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="gameao-head">
+      <a href="./index.html">
+        <i class="fa-solid fa-arrow-left"></i>
+      </a>
+      <h3>Danh sách trò chơi</h3>
+      <div></div>
+    </div>
+    <div class="game-list" id="gameList"></div>
+
+    <!-- Modal đặt vé -->
+    <div class="modal" id="bookingModal">
+      <div class="modal-content">
+        <span class="close" id="closeBooking">&times;</span>
+        <img
+          id="modalImg"
+          src=""
+          width="100%"
+          height="150"
+          style="border-radius: 8px; object-fit: cover"
+        />
+        <h3 id="modalTitle"></h3>
+        <p id="modalDesc"></p>
+
+        <div>
+          <label><b>Chọn khung giờ</b></label>
+          <div class="time-buttons">
+            <button class="time-btn active" data-time="9:30">9:30</button>
+            <button class="time-btn" data-time="11:00">11:00</button>
+            <button class="time-btn" data-time="14:00">14:00</button>
+          </div>
+        </div>
+
+        <div>
+          <label><b>Số lượng người chơi</b></label>
+          <div class="count-wrapper">
+            <button class="count-btn" id="minusBtn">−</button>
+            <span id="playerCount">1</span>
+            <button class="count-btn" id="plusBtn">+</button>
+          </div>
+        </div>
+
+        <!-- Danh sách nhập tên người chơi -->
+        <div id="playerNames"></div>
+
+        <!-- <p class="total">Tổng tiền: <span id="totalPrice">100.000</span> đ</p> -->
+        <button class="confirm-btn" id="confirmBooking">Xác nhận đặt vé</button>
+      </div>
+    </div>
+
+    <!-- Modal hóa đơn -->
+    <div class="modal" id="invoiceModal">
+      <div class="modal-content invoice">
+        <span class="close" id="closeInvoice">&times;</span>
+        <h2>Hóa đơn trò chơi</h2>
+        <p><b>Tên trò chơi:</b> <span id="invoiceName"></span></p>
+        <p><b>Khung giờ:</b> <span id="invoiceTime"></span></p>
+        <p><b>Số lượng người chơi:</b> <span id="invoiceCount"></span></p>
+        <p><b>Thời gian chờ dự kiến:</b> <span>30 phút</span></p>
+        <!-- <p><b>Tổng tiền:</b> <span id="invoiceTotal"></span> đ</p> -->
+        <p><b>Số thứ tự:</b> <span id="invoiceOrder"></span></p>
+        <div id="playerList"></div>
+        <div class="barcode"></div>
+      </div>
+    </div>
+
+    <script>
+      const PRICE_PER_PLAYER = 100000;
+      const MAX_PLAYERS = 7;
+      const games = [
+        {
+          id: 1,
+          name: "Tàu lượn siêu tốc",
+          time: "9:00-18:30",
+          desc: "Trải nghiệm cảm giác mạnh với đường ray uốn lượn",
+          img: "./assets/tau-luon-sieu-toc.jpeg",
+        },
+        {
+          id: 2,
+          name: "Vòng quay mặt trời",
+          time: "9:00 - 19:30",
+          desc: "Ngắm toàn cảnh công viên từ trên cao.",
+          img: "./assets/slider2.jpg",
+        },
+        {
+          id: 3,
+          name: "Thế giới nước",
+          time: "10:00 - 18:00",
+          desc: "Thỏa sức vùng vẫy trong không gian mát lạnh.",
+          img: "./assets/slider8.jpg",
+        },
+        // --- BEGIN AUTO-GENERATED FROM map-game.html (type: ride) ---
+        {
+          id: 4,
+          name: "Ngôi đền huyền thoại",
+          time: "9:00-18:30",
+          desc: "Hành trình khám phá trên đoạn đường ray dài 1.000m xuyên lòng núi, đưa khám phá các hầm mỏ bí ẩn và những khúc cua ngoạn mục với trải nghiệm cực độ.",
+          img: "game-image/Ngôi đền huyền thoại.JPG",
+        },
+        {
+          id: 5,
+          name: "Pháo đài kì bí",
+          time: "10:00-19:00",
+          desc: "Hoá thân thành chiến binh không kích, trải nghiệm cảm giác rơi tự do từ zipfall cao 20m. Thử thách được yêu thích bởi các du khách ưa thích trò chơi cảm giác mạnh.",
+          img: "game-image/Pháo đài kì bí.PNG",
+        },
+        {
+          id: 6,
+          name: "Vòi rồng hung hãn",
+          time: "9:30-18:00",
+          desc: "Mang đến cho du khách những trải nghiệm khác biệt liên tiếp khi trượt quanh những vòng xoáy hình dạng chiếc đĩa, hoặc trải nghiệm hành trình rơi vào hộp đen đem đến cảm giác phấn khích cho du khách.",
+          img: "game-image/Vòi rồng hung hãn.JPG",
+        },
+        {
+          id: 7,
+          name: "Cú rơi thót tim",
+          time: "10:00-18:30",
+          desc: "Trải nghiệm cảm giác rơi tự do đầy gay cấn trên đường trượt nước được thiết kế với độ dốc ấn tượng.",
+          img: "game-image/Cú rơi thót tim.JPG",
+        },
+        {
+          id: 8,
+          name: "Đĩa bay vũ trụ",
+          time: "9:00-18:00",
+          desc: "Đường trượt lần đầu tiên có mặt tại Việt Nam, với giải thưởng 2015 IAAPA đường trượt nước tốt nhất.",
+          img: "game-image/Đĩa bay vũ trụ.JPG",
+        },
+        {
+          id: 9,
+          name: "Thác đôi thần bí",
+          time: "9:00-17:30",
+          desc: "Trò chơi dành cho những bạn trẻ liều lĩnh, gan dạ, trải nghiệm cảm giác như đang “bay” khỏi đường trượt có độ cao 21m, chạy đua cùng tốc độ tới 60km/h",
+          img: "game-image/Thác đôi thần bí.PNG",
+        },
+        {
+          id: 10,
+          name: "Cuộc đua báo Cheetah",
+          time: "9:30-18:30",
+          desc: "Cùng tạo nên những giây phút đáng nhớ cho gia đình qua những cuộc đua tại đường trượt nước rực rỡ sắc màu",
+          img: "game-image/Cuộc đua báo Cheetah.jpg",
+        },
+        {
+          id: 11,
+          name: "Tẩu thoát ngoạn mục",
+          time: "10:00-18:00",
+          desc: "Đường trượt cao 12m, gồm 4 máng trượt với các vòng cua và độ dốc uốn lượn riêng biệt, mỗi máng trượt hứa hẹn đem lại những trải nghiệm đầy bùng nổ.",
+          img: "game-image/Tẩu thoát ngoạn mục.jpg",
+        },
+        {
+          id: 12,
+          name: "Ngôi làng thủy tộc",
+          time: "9:00-18:00",
+          desc: "Bể bơi được thiết kế dành riêng cho các du khách nhí, với Ngôi nhà Hawaii, Súng bắn nước, Đường trượt thiên nga, Sứa phun mưa, Hành lang cầu vồng hay Ngôi nhà quả táo… hứa hẹn sẽ mang lại cảm giác bất ngờ và thú vị cho các bé.",
+          img: "game-image/Ngôi làng thuỷ tộc.jpg",
+        },
+        {
+          id: 13,
+          name: "Cuộc chiến cầu vồng",
+          time: "9:00-18:00",
+          desc: "Những chiếc xe điện đụng tại đây được thiết kế với hình thù ngộ nghĩnh, bắt mắt và đặc biệt, hệ thống có tính an toàn cao. Đây là trò chơi hoàn hảo đem lại những phút giây vui vẻ cho bạn và gia đình.",
+          img: "game-image/Cuộc chiến cầu vồng.jpg",
+        },
+        {
+          id: 14,
+          name: "Vương quốc kẹo ngọt",
+          time: "9:00-18:00",
+          desc: "Được xây dựng dựa trên câu chuyện Hansel & Gretel, Vương quốc kẹo ngọt gồm một tổ hợp các trò chơi trong nhà được trang trí theo chủ đề bánh kẹo.",
+          img: "game-image/Vương quốc kẹo ngọt.jpg",
+        },
+        {
+          id: 15,
+          name: "Cung điện ánh sáng",
+          time: "10:00-18:00",
+          desc: "Mở cửa vào thứ 6, 7 và Chủ Nhật vào lúc: 11:00-18:00",
+          img: "game-image/Cung điện án sáng.jpg",
+        },
+        {
+          id: 16,
+          name: "Đường lượn nhớ đời",
+          time: "9:00-18:30",
+          desc: "Thưởng ngoạn hành trình dài 1.865m khám phá bức tranh cảnh tráng lệ vòng quanh Đảo Hòn Tre trên hệ thống xe trượt quanh núi lớn nhất Đông Nam Á!",
+          img: "game-image/Đường lượn nhớ đời.jpg",
+        },
+        {
+          id: 17,
+          name: "Giải mã mê cung",
+          time: "9:30-18:00",
+          desc: "Trò chơi VR mang đến trải nghiệm tương tác độc đáo trong một mê cung ảo, hạ gục những con quái thú đang ẩn nấp giữa các tàn tích.",
+          img: "game-image/Giải mã mê cung.jpg",
+        },
+        {
+          id: 18,
+          name: "Đường đua nghẹt thở",
+          time: "10:00-18:00",
+          desc: "Khách hàng sẽ được trải nghiệm hoá thân thành tay đua chính hiệu, vượt qua những chướng ngại vật để về đích.",
+          img: "game-image/Đường đua nghẹt thở.jpg",
+        },
+        {
+          id: 19,
+          name: "Tata Show",
+          time: "19:00-20:00",
+          desc: "Sự kết hợp giữa công nghệ 3D mapping hiện đại bậc nhất, trình diễn ánh sáng, khói lửa và đặc biệt phần biểu diễn của hơn 100 diễn viên trong nước và quốc tế đã tạo ra màn trình diễn hoành tráng và mãn nhãn người xem. Vở diễn là hành trình khám phá, phiêu lưu kỳ thú của công chúa Tata và những người bạn thân thiết trong thế giới cổ tích diệu kỳ. Tại đây, du khách sẽ được khám phá xứ sở Vạn Hoa rực rỡ, lặn xuống biển sâu muôn cảnh thần tiên của thế giới Đại Dương và chứng kiến tận cùng lãnh địa Bóng Tối qua màn trình diễn hoành tráng.",
+          img: "game-image/Tata show.jpg",
+        },
+        {
+          id: 20,
+          name: "Rạp phim bay",
+          time: "10:00-18:00",
+          desc: "Rạp phim bay đầu tiên của Việt Nam mang tới cho du khách trải nghiệm trạng thái 'lơ lửng' giữa không trung và 'bay' vun vút thông qua hiệu ứng 'Flying Simulation' tối tân nhất thế giới. Chạm vào Châu Âu trong từng phân cảnh với hiệu ứng đặc biệt: gió, sương, muối, nước, mùi hương.",
+          img: "game-image/Rạp phim Bay.jpg",
+        },
+        {
+          id: 21,
+          name: "Bật nhảy bungee",
+          time: "9:00-18:00",
+          desc: "Trải nghiệm cảm giác rơi tự do nghẹt thở khi nhảy từ độ cao hàng chục mét xuống không trung! Với hệ thống dây đàn hồi chuyên dụng đạt tiêu chuẩn quốc tế, “Bật nhảy Bungee” mang đến thử thách cực đại cho những ai muốn chạm giới hạn của bản thân và tận hưởng cảm giác 'thót tim' khó quên.",
+          img: "game-image/Bật nhảy bungee.jpg",
+        },
+        {
+          id: 22,
+          name: "Tháp rơi tự do",
+          time: "9:00-18:00",
+          desc: "Chinh phục độ cao và thả mình trong khoảnh khắc “tim rơi ra ngoài” khi Tháp rơi tự do đưa bạn lao vun vút xuống đất chỉ trong vài giây. Hiệu ứng lực G mạnh mẽ kết hợp với độ cao choáng ngợp chắc chắn sẽ khiến bạn hét không ngừng nghỉ.",
+          img: "game-image/Tháp rơi tự do.jpg",
+        },
+        {
+          id: 23,
+          name: "Đua xe trên không",
+          time: "9:00-18:00",
+          desc: "Hóa thân thành tay đua siêu tốc và lướt trên không trung qua những khúc cua ngoạn mục! “Đua xe trên không” mang đến cảm giác vừa phấn khích vừa an toàn, kết hợp hiệu ứng tốc độ, độ cao và gió khiến người chơi như đang thật sự “lái xe” giữa bầu trời Nha Trang.",
+          img: "game-image/Đưa xe trên không.jpg",
+        },
+        {
+          id: 24,
+          name: "Đu quay dây văng",
+          time: "9:00-18:00",
+          desc: "Ở tư thế xoay tròn hoặc xoay nghiêng với độ cao 3m, trò chơi đu quay dây văng sẽ tạo cho bạn cảm giác như đang rơi tự do hoặc bay lượn trong không trung.",
+          img: "game-image/Đu quay dây văng.jpg",
+        },
+        {
+          id: 25,
+          name: "Cuộc phiêu lưu hầm mỏ",
+          time: "9:00-18:00",
+          desc: "Hành trình khám phá trên đoạn đường ray dài 1.000m xuyên lòng núi, đưa khám phá các hầm mỏ bí ẩn và những khúc cua ngoạn mục với trải nghiệm cực độ.",
+          img: "game-image/Cuộc phiêu lưu hầm mỏ.webp",
+        },
+        {
+          id: 26,
+          name: "Zipline",
+          time: "9:00-18:00",
+          desc: "Ga xuất phát của đường trượt zipline 3 kỷ lục\nTrải nghiệm cảm giác 'bay giữa không trung' và hòa mình vào cảnh sắc xanh ngát của biển, của trời tại Zipline 03 kỷ lục: đường trượt dài nhất, dốc nhất tại Việt Nam!\n30P / lượt / 10 khách\n16:50 lượt đón khách cuối cùng\nLƯU Ý : TRÒ CHƠI KHÔNG BAO GỒM TRONG GIÁ VÉ. GIÁ BÁN:\n300.000 VND/ LƯỢT/KHÁCH (Tặng kèm 01 voucher ẩm thực trị giá\n100.000 vnd hoặc 01 quà tặng Merchandise trị giá 100.000vnd)",
+          img: "game-image/Ziplinepng.png",
+        },
+        {
+          id: 27,
+          name: "Bánh xe bầu trời",
+          time: "9:00-18:00",
+          desc: "Cảm nhận được sự hồi hộp, phấn khích, xen lẫn choáng ngợp khi thu trọn toàn bộ cánh quan kỳ vĩ của vịnh biển quyến rũ ở độ cao 120m. Vòng xoay được xác nhận là vòng xoay lớn nhất Việt Nam và top 10 vòng xoay lớn nhất thế giới.",
+          img: "game-image/Bánh xe bầu trời.webp",
+        },
+        {
+          id: 28,
+          name: "Sky Garden",
+          time: "9:00-18:00",
+          desc: "Thưởng ngoạn khu vườn cây kỳ hoa dị thảo tái hiện khu rừng Nam\nMỹ huyền bí và sâu thắm, chinh phục mọi giác quan của du khách:\n• Lạc bước trong khung cảnh thiên nhiên tuyệt diệu với hàng nghìn cá thế kỳ\nhoa dị thảo và các loài cây quý hiếm.\n• Chiêm ngưỡng tuyệt tác được tạo nên từ các khối gỗ lũa hàng trăm tuổi\nnhư Sao Đen và các loại gỗ hóa thạch khác\n• Thưởng ngoạn và tận hưởng bầu không khí trong lành nơi rừng xanh\n• Check in cực chất với các góc ảnh mờ sương huyền ảo.",
+          img: "game-image/Sky Garden.jpg",
+        },
+        {
+          id: 29,
+          name: "Sắc màu Bromelias",
+          time: "9:00-18:00",
+          desc: "Năm bên Lầu Vọng Cảnh, nhà kính Sắc màu Bromeliads là một khu vườn cố tích đích thực, đưa bạn bước vào không gian thơ mộng của khúc 'hoa ca' ngập tràn hương sắc 8 :\n• Bộ ba nhạc công tài ba biểu diễn bản hòa ca mùa xuân trên chiếc thuyền hoa lộng lẫy\n• Hơn 20 sắc màu bromeliad lộng lẫy kiêu sa 'thánh thót' những nốt cao bay bổng, rực rỡ\n* Dàn cỏ mondo, lan lúa và ổ phụng... dịu dàng 'ngân vang' những giai điệu trâm du dương, êm ả",
+          img: "game-image/Sắc màu Bromeliads.png",
+        },
+        {
+          id: 30,
+          name: "Lầu vọng cảnh",
+          time: "9:00-18:00",
+          desc: "Năm ở điểm cao nhất của The World Garden, lầu vọng cảnh với kiến trúc mang hơi thở Địa Trung Hải, là nơi để du khách ngắm trọn vẻ đẹp của đảo Hòn Tre.",
+          img: "game-image/Lầu vọng cảnh.jpg",
+        },
+        {
+          id: 31,
+          name: "Vườn bướm",
+          time: "9:00-18:00",
+          desc: "Lạc vào thế giới cổ tích giữa mê cung bướm bay\nTựa như một khung trời mộng mơ bước ra từ truyện cố tích, vườn\nBướm ngập tràn sắc hoa rực rỡ, hàng trăm cánh bướm bay lượn rập rờn, nhẹ nhàng, duyên dáng, kỳ ảo như tranh vẽ.",
+          img: "game-image/Vườn Bướm.jpg",
+        },
+        {
+          id: 32,
+          name: "Vườn Nhật",
+          time: "9:00-18:00",
+          desc: "Cùng đắm mình trong không gian văn hóa Nhật Bản truyền thống với các biểu tượng cầu đỏ, cổng Tori, hồ cá Koi, nhà thiên đặc trưng, nghệ thuật trà đạo. Đây cũng là địa điểm tuyệt vời đế lưu giữ những bức ảnh tuyệt đẹp cùng người thân và bạn bè trong chuyến ghé thăm VinWonders Nha Trang.",
+          img: "game-image/Vườn Nhật.jpg",
+        },
+        {
+          id: 33,
+          name: "Hoang mạc châu Phi",
+          time: "9:00-18:00",
+          desc: "Nơi để du khách thỏa sức check in và khám phá hàng trăm loài xương rông giữa không gian được mô phỏng tựa một hoang mạc.",
+          img: "game-image/Hoang mạc châu Phi.jpg",
+        },
+        {
+          id: 34,
+          name: "Sắc màu mùa đông",
+          time: "9:00-18:00",
+          desc: "Chiêm ngưỡng những loài hoa thân thuộc như cúc Đà Lạt, Thược dược, Đồng tiền, Ngọc thảo... khoe sắc. Địa điểm tuyệt vời để check in và selfie những bức ảnh sống ảo 'triệu like' cùng những dòng suối hoa khống lô chảy dài.",
+          img: "game-image/Sắc màu mùa đông.png",
+        },
+        // --- END AUTO-GENERATED ---
+      ];
+
+      const gameList = document.getElementById("gameList");
+      const bookingModal = document.getElementById("bookingModal");
+      const invoiceModal = document.getElementById("invoiceModal");
+      const closeBooking = document.getElementById("closeBooking");
+      const closeInvoice = document.getElementById("closeInvoice");
+      const modalImg = document.getElementById("modalImg");
+      const modalTitle = document.getElementById("modalTitle");
+      const modalDesc = document.getElementById("modalDesc");
+      const minusBtn = document.getElementById("minusBtn");
+      const plusBtn = document.getElementById("plusBtn");
+      const playerCount = document.getElementById("playerCount");
+      const totalPrice = document.getElementById("totalPrice");
+      const confirmBooking = document.getElementById("confirmBooking");
+      const invoiceName = document.getElementById("invoiceName");
+      const invoiceTime = document.getElementById("invoiceTime");
+      const invoiceCount = document.getElementById("invoiceCount");
+      const invoiceOrder = document.getElementById("invoiceOrder");
+      const invoiceTotal = document.getElementById("invoiceTotal");
+      const playerNames = document.getElementById("playerNames");
+      const playerList = document.getElementById("playerList");
+
+      gameList.innerHTML = games
+        .map(
+          (g) => `
+      <div class="game-card">
+        <img src="${g.img}" alt="${g.name}" />
+        <div class="game-info">
+          <h3>${g.name}</h3>
+            <p>${g.desc}</p>
+            <p class="time"><i class="fa-regular fa-clock time-icon"></i>${g.time}</p>
+          <button class="join-btn" data-id="${g.id}">Tham gia hàng ảo</button>
+        </div>
+      </div>
+    `,
+        )
+        .join("");
+
+      let currentGame = null;
+      let selectedTime = "9:30";
+      let count = 1;
+
+      const renderPlayerInputs = () => {
+        playerNames.innerHTML = "";
+        for (let i = 1; i <= count; i++) {
+          playerNames.innerHTML += `
+          <div class="player-input">
+            <label>Tên người chơi ${i}:</label>
+            <input type="text" id="playerName${i}" placeholder="Nhập tên người chơi ${i}">
+          </div>
+        `;
+        }
+      };
+
+      document.querySelectorAll(".join-btn").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          const id = e.target.dataset.id;
+          currentGame = games.find((g) => g.id == id);
+          modalImg.src = currentGame.img;
+          modalTitle.textContent = currentGame.name;
+          modalDesc.textContent = currentGame.desc;
+          count = 1;
+          playerCount.textContent = count;
+          // totalPrice.textContent = PRICE_PER_PLAYER.toLocaleString();
+          renderPlayerInputs();
+          bookingModal.style.display = "flex";
+        });
+      });
+
+      document.querySelectorAll(".time-btn").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          document
+            .querySelectorAll(".time-btn")
+            .forEach((b) => b.classList.remove("active"));
+          e.target.classList.add("active");
+          selectedTime = e.target.dataset.time;
+        });
+      });
+
+      plusBtn.onclick = () => {
+        if (count < MAX_PLAYERS) {
+          count++;
+          playerCount.textContent = count;
+          // totalPrice.textContent = (count * PRICE_PER_PLAYER).toLocaleString();
+          renderPlayerInputs();
+        } else {
+          alert("Giới hạn tối đa là 7 người chơi!");
+        }
+      };
+
+      minusBtn.onclick = () => {
+        if (count > 1) {
+          count--;
+          playerCount.textContent = count;
+          // totalPrice.textContent = (count * PRICE_PER_PLAYER).toLocaleString();
+          renderPlayerInputs();
+        }
+      };
+
+      confirmBooking.onclick = () => {
+        const order = Math.floor(Math.random() * 3) + 50;
+        invoiceName.textContent = currentGame.name;
+        invoiceTime.textContent = selectedTime;
+        invoiceCount.textContent = count;
+        // invoiceTotal.textContent = (count * PRICE_PER_PLAYER).toLocaleString();
+        invoiceOrder.textContent = order;
+
+        // Lấy danh sách tên người chơi
+        let playersHTML = "<b>Danh sách người chơi:</b><ol>";
+        for (let i = 1; i <= count; i++) {
+          const name =
+            document.getElementById(`playerName${i}`).value.trim() ||
+            `Người chơi ${i}`;
+          playersHTML += `<p>${name}</p>`;
+        }
+        playersHTML += "</ol>";
+        playerList.innerHTML = playersHTML;
+
+        bookingModal.style.display = "none";
+        invoiceModal.style.display = "flex";
+      };
+
+      closeBooking.onclick = () => (bookingModal.style.display = "none");
+      closeInvoice.onclick = () => (invoiceModal.style.display = "none");
+    </script>
+  </body>
+</html>

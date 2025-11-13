@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VinWonders</title>
+      <link rel="icon" type="image/png" href="/assets/iconlogo.png" />
+    <link rel="stylesheet" href="./chatbot/chatbot.css" />
+    <link rel="stylesheet" href="./style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer" />
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <div class="header">
+        <div class ="headerContent">
+          <h2 class="headerLeft">
+            <p>Chào mừng bạn đến</p>
+            <p class="headerLeftt">VinWonders Nha Trang</p>
+            <p><i class="fa-solid fa-clock headericon"></i> 09:00 - 20:00</p>
+          </h2>
+        </div>
+
+        <div class="headerRight"> 
+          <div class="wrapperIcon1">
+            <i class="fa-solid fa-bell headerRightIcon"></i>
+          </div>
+
+          <div class="notificationBox">
+            <div class="notificationItem">
+              <div class="notificationHeader">
+                <h4>Lượt chơi của bạn sắp bắt đầu</h4>
+                <span>2h</span>
+              </div>
+              <p>
+                Trò chơi bạn đã đăng ký – <b>Cuộc phiêu lưu hầm mỏ</b> sẽ bắt
+                đầu trong 30 phút nữa. Hãy chuẩn bị sẵn sàng để không bỏ lỡ hành
+                trình đầy kịch tính nhé!
+              </p>
+            </div>
+
+            <div class="notificationItem">
+              <div class="notificationHeader">
+                <h4>Thông báo bảo trì</h4>
+                <span>1d</span>
+              </div>
+              <p>
+                Trò chơi <b>Đường đua nghẹt thở</b> hiện đang bảo trì để đảm bảo
+                chất lượng trải nghiệm. Chúng tôi sẽ thông báo ngay khi hoạt
+                động trở lại – cảm ơn bạn đã thông cảm!
+              </p>
+            </div>
+
+            <div class="notificationItem">
+              <div class="notificationHeader">
+                <h4>Thông báo tạm dừng</h4>
+                <span>3d</span>
+              </div>
+              <p>
+                Do thời tiết không thuận lợi, trò chơi
+                <b>Đường lượn nhớ đời</b> tạm ngừng hoạt động để đảm bảo an toàn
+                cho du khách. Cảm ơn bạn đã thông cảm!
+              </p>
+            </div>
+
+            <div class="notificationItem">
+              <div class="notificationHeader">
+                <h4>Thay đổi lịch biểu diễn</h4>
+                <span>10d</span>
+              </div>
+              <p>
+                Sự kiện <b>Tata show</b> sẽ bắt đầu trễ 30 phút so với dự kiến
+                vì lý do kỹ thuật. Cảm ơn bạn đã kiên nhẫn chờ đợi!
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="body">
+        <div class="live-container">
+          <div class="random-number-widget">
+            <h1> <i class="fa-solid fa-users"></i> Lượt khách hiện tại</h1>
+            <p id="random-number">—</p>
+          </div>
+          <div class ="live-calendar">
+            <p id="datetime-line">—</p>
+            <a href="./ticket.html"> Khám phá ngay <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </div>
+        <div class="bodyTitle">
+          <P>KHÁM PHÁ VINWONDERS</P>
+        </div>
+
+        <div class="bodyContainer">
+          <a href="./playgame/play-game.html">
+            <div class="card">
+              <img src="./assets/Tro choi.png" alt="" class="cardImage"/>
+              <div class="card-content">
+                <i class="fa-solid fa-place-of-worship cardIcon"></i>
+                <div class="card-details">
+                  <p class="cardTitle">Điểm vui chơi</p>
+                  <p class="cardDescription">Đi chơi thôi!</p>
+                </div>
+              </div>
+            </div>
+          </a>
+          <a href="./calender/calendar.html">
+            <div class="card">
+              <img src="./assets/Lich bieu dien.png" alt="" class="cardImage"/>
+              <div class="card-content">
+                <i class="fa-solid fa-calendar-days cardIcon"></i>
+                <div class="card-details">
+                  <p class="cardTitle">Lịch biểu diễn</p>
+                  <p class="cardDescription">Khám phá thôi!</p>
+                </div>
+              </div>
+            </div>
+          </a>
+          <a href="./food/food.html">
+            <div class="card">
+              <img src="./assets/Do an.png" alt="" class="cardImage"/>
+              <div class="card-content">
+                <i class="fa-solid fa-utensils cardIcon"></i>
+                <div class="card-details">
+                  <p class="cardTitle">Ẩm thực</p>
+                  <p class="cardDescription">Đi chơi thôi!</p>
+                </div>
+              </div>
+            </div>
+          </a>
+          <a href="./ship/ship.html">
+            <div class="card">
+              <img src="./assets/Gian hang.png" alt="" class="cardImage"/>
+              <div class="card-content">
+                <i class="fa-solid fa-store cardIcon"></i>
+                <div class="card-details">
+                  <p class="cardTitle">Gian hàng</p>
+                  <p class="cardDescription">Đi chơi thôi!</p>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="bodyTitle">
+          <P>TRẢI NGHIỆM KHÔNG THỂ BỎ LỠ</P>
+        </div>
+        <div class="bodySlider-wrapper">
+          <button class="slider-nav slider-nav-left" aria-label="Previous"><i class="fa-solid fa-chevron-left"></i></button>
+          <div class="bodySlider">
+            <a href="./ticket.html">
+              <div class="sliderItem">
+                <img src="./assets/slider1.jpg" alt="" class="sliderImage" />
+                <p class="sliderContent">Tham quan công viên VinWonders</p>
+                <p class="sliderLocation">
+                  <i class="fa-solid fa-location-dot"></i>
+                  Fairy Land
+                </p>
+              </div>
+            </a>
+            <a href="./ticket.html">
+              <div class="sliderItem">
+                <img src="./assets/slider2.jpg" alt="" class="sliderImage" />
+                <p class="sliderContent">Đu quay dây văng</p>
+                <p class="sliderLocation">
+                  <i class="fa-solid fa-location-dot"></i>
+                  Đồi thử thách
+                </p>
+              </div>
+            </a>
+            <a href="./ticket.html">
+              <div class="sliderItem">
+                <img src="./assets/hammo.webp" alt="" class="sliderImage" />
+                <p class="sliderContent">Cuộc phiêu lưu hầm mỏ</p>
+                <p class="sliderLocation">
+                  <i class="fa-solid fa-location-dot"></i>
+                  Đồi thử thách
+                </p>
+              </div>
+            </a>
+            <a href="./ticket.html">
+              <div class="sliderItem">
+                <img src="./assets/slider3.jpg" alt="" class="sliderImage" />
+                <p class="sliderContent">Vui chơi thủy cung VinWonders</p>
+                <p class="sliderLocation">
+                  <i class="fa-solid fa-location-dot"></i>
+                  Công viên nước
+                </p>
+              </div>
+            </a>
+            <a href="./ticket.html">
+              <div class="sliderItem">
+                <img src="./assets/slider5.webp" alt="" class="sliderImage" />
+                <p class="sliderContent">Mãng xà giao chiến</p>
+                <p class="sliderLocation">
+                  <i class="fa-solid fa-location-dot"></i>
+                  Fairy Land
+                </p>
+              </div>
+            </a>
+            <a href="./ticket.html">
+              <div class="sliderItem">
+                <img src="./assets/slider6.webp" alt="" class="sliderImage" />
+                <p class="sliderContent">Cơn cuồng nộ của Hải Vương</p>
+                <p class="sliderLocation">
+                  <i class="fa-solid fa-location-dot"></i>
+                  Công viên nước
+                </p>
+              </div>
+            </a>
+            <a href="./ticket.html">
+              <div class="sliderItem">
+                <img src="./assets/slider7.jpg" alt="" class="sliderImage" />
+                <p class="sliderContent">Vương quốc kẹo ngọt</p>
+                <p class="sliderLocation">
+                  <i class="fa-solid fa-location-dot"></i>
+                  Fairy Land
+                </p>
+              </div>
+            </a>
+            <a href="./ticket.html">
+              <div class="sliderItem">
+                <img src="./assets/slider8.jpg" alt="" class="sliderImage" />
+                <p class="sliderContent">Đường lượn nhớ đời</p>
+                <p class="sliderLocation">
+                  <i class="fa-solid fa-location-dot"></i>
+                  Fairy Land
+                </p>
+              </div>
+            </a>
+          </div>
+          <button class="slider-nav slider-nav-right" aria-label="Next"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+        
+        <div class="bodyTitle">
+          <P>BẮT ĐẦU CHUYẾN PHIÊU LƯU</P>
+        </div>
+        <div class="journey-section">
+          <div class="journey-content">
+            <p>Xây dựng hành trình trải nghiệm cho riêng bạn cùng VinWonders</p>
+            <a href="./ticket.html">
+              <button class="journey-btn">Tạo hành trình</button>
+            </a>
+          </div>
+        </div>
+
+        <div class="queue-card">
+          <div class="queue-content">
+            <p class="queue-text">Tiết kiệm thời gian xếp hàng chờ các trò chơi hấp dẫn</p>
+            <button class="queue-btn" id="joinQueueBtnFirst">
+              Tham gia ngay
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="menu">
+        <div class="menuItem">
+          <a href="" class="menuItemLink">
+            <i class="fa-solid fa-house menuItemIcon"></i>
+            <p class="menuItemContent">Trang chủ</p>
+          </a>
+        </div>
+        <div class="menuItem">
+          <a href="./ticket.html" class="menuItemLink">
+            <i class="fa-solid fa-ticket menuItemIcon"></i>
+            <p class="menuItemContent">Mua vé</p>
+          </a>
+        </div>
+        <div class="menuMap">
+          <a href="./map-game.html" class="menuItemLink">
+            <i class="fa-solid fa-location-dot menuMapIcon"></i>
+          </a>
+        </div>
+        <div class="menuItem">
+          <a href="./shopping.html" class="menuItemLink">
+            <i class="fa-solid fa-bag-shopping menuItemIcon"></i>
+            <p class="menuItemContent">Mua sắm</p>
+          </a>
+        </div>
+        <div class="menuItem">
+          <a href="./user.html" class="menuItemLink">
+            <i class="fa-solid fa-circle-user menuItemIcon"></i>
+            <p class="menuItemContent">Tài khoản</p>
+          </a>
+        </div>
+      </div>
+    </div>
+    <script>
+      const bell = document.querySelector(".wrapperIcon1");
+      const box = document.querySelector(".notificationBox");
+
+      bell.addEventListener("click", () => {
+        box.classList.toggle("active");
+      });
+
+      // Click ngoài để đóng
+      document.addEventListener("click", (e) => {
+        if (!bell.contains(e.target) && !box.contains(e.target)) {
+          box.classList.remove("active");
+        }
+      });
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const joinQueueBtnFirst = document.getElementById("joinQueueBtnFirst");
+
+        if (joinQueueBtnFirst) {
+          joinQueueBtnFirst.addEventListener("click", (e) => {
+            e.preventDefault();
+            console.log("Đã bấm nút tham gia");
+            window.location.href = "./game.html";
+          });
+        } else {
+          console.log("Không tìm thấy joinQueueBtnFirst");
+        }
+      });
+
+      
+      document.addEventListener("DOMContentLoaded", () => {
+        const MIN = 10852;
+        const MAX = 10927;
+        const INTERVAL_MS = 2000; // 2 seconds
+
+        const el = document.getElementById('random-number');
+        if (!el) return;
+        
+        function update(){
+          el.textContent = (Math.floor(Math.random() * (MAX - MIN)) + MIN).toLocaleString();
+        }
+
+        // initial value immediately
+        update();
+
+        // update every INTERVAL_MS
+        setInterval(update, INTERVAL_MS);
+      });
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const el = document.getElementById('datetime-line');
+        if (!el) return;
+
+        function pad(n) { return n < 10 ? '0' + n : n; }
+        function formatNow() {
+          const now = new Date();
+          const hh = pad(now.getHours());
+          const mm = pad(now.getMinutes());
+          const dd = pad(now.getDate());
+          const mo = pad(now.getMonth() + 1);
+          const yyyy = now.getFullYear();
+          el.textContent =  `${hh}:${mm}, ${dd}/${mo}/${yyyy}`;
+        }
+
+        // initial render
+        formatNow();
+
+        // update every second
+        setInterval(formatNow, 1000);
+      });
+
+      // Auto-scroll carousel - jump one card at a time (infinite loop)
+      function autoScrollSlider() {
+        const slider = document.querySelector('.bodySlider');
+        const wrapper = document.querySelector('.bodySlider-wrapper');
+        const leftBtn = document.querySelector('.slider-nav-left');
+        const rightBtn = document.querySelector('.slider-nav-right');
+        if (!slider || !wrapper || !leftBtn || !rightBtn) return;
+
+        const originalItems = Array.from(slider.querySelectorAll('.sliderItem'));
+        let currentIndex = 0;
+        let autoScrollInterval;
+
+        // Clone all items and append to create seamless loop
+        originalItems.forEach(item => {
+          const clone = item.cloneNode(true);
+          slider.appendChild(clone);
+        });
+
+        // Get item width including gap
+        const sliderStyle = getComputedStyle(slider);
+        const gap = parseInt(sliderStyle.gap || 0);
+        const itemWidth = originalItems[0].offsetWidth + gap;
+
+        function scrollToCard(index, instant = false) {
+          slider.scrollTo({ 
+            left: index * itemWidth, 
+            behavior: instant ? 'instant' : 'smooth' 
+          });
+        }
+
+        function moveToNextCard() {
+          currentIndex++;
+
+          // Scroll to the next card
+          scrollToCard(currentIndex);
+
+          // When we reach the end of original items, reset to beginning
+          if (currentIndex >= originalItems.length) {
+            setTimeout(() => {
+              currentIndex = 0;
+              scrollToCard(0, true);
+            }, 500);
+          }
+        }
+
+        function moveToPrevCard() {
+          currentIndex--;
+
+          // If going before the first card, jump to the end
+          if (currentIndex < 0) {
+            currentIndex = originalItems.length - 1;
+            scrollToCard(originalItems.length, true); // Jump to cloned end
+            setTimeout(() => {
+              scrollToCard(currentIndex);
+            }, 500);
+          } else {
+            scrollToCard(currentIndex);
+          }
+        }
+
+        function startAutoScroll() {
+          autoScrollInterval = setInterval(moveToNextCard, 1500);
+        }
+
+        function stopAutoScroll() {
+          if (autoScrollInterval) {
+            clearInterval(autoScrollInterval);
+          }
+        }
+
+        // Right button - next card
+        rightBtn.onclick = () => {
+          stopAutoScroll();
+          moveToNextCard();
+          startAutoScroll();
+        };
+
+        // Left button - previous card
+        leftBtn.onclick = () => {
+          stopAutoScroll();
+          moveToPrevCard();
+          startAutoScroll();
+        };
+
+        // Start the auto-scroll
+        startAutoScroll();
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+          clearInterval(autoScrollInterval);
+        });
+      }
+
+      // Start auto-scroll carousel
+      document.addEventListener('DOMContentLoaded', autoScrollSlider);  
+    </script>
+    <script src="./config.js"></script>
+    <script src="./main.js"></script>
+    <!-- ========== CHATBOT BÉ VIN ========== -->
+    
+    <div id="chatbot-root"></div>
+    <script>
+      fetch("./chatbot/chatbot.html")
+        .then((res) => res.text())
+        .then((html) => {
+          document.getElementById("chatbot-root").innerHTML = html;
+          const script = document.createElement("script");
+          script.src = "./chatbot/chatbot.js";
+          document.body.appendChild(script);
+        });
+    </script>
+    <!-- ========== END CHATBOT ========== -->
+
+    <!-- ========== CONTACT ========== -->
+    <div id="contact-root"></div>
+    <script>
+      fetch("./contact/contact.html")
+        .then((res) => res.text())
+        .then((html) => {
+          document.getElementById("contact-root").innerHTML = html;
+          const script = document.createElement("script");
+          script.src = "./contact/contact.js";
+          document.body.appendChild(script);
+        });
+    </script>
+    <!-- ========== END CONTACT ========== -->
+  </body>
+</html>

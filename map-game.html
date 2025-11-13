@@ -1,0 +1,2339 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>VinWonders</title>
+    <link rel="icon" type="image/png" href="/assets/iconlogo.png" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <!-- LeafletJS CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+                  /* You can move these to style.css */
+                  body {
+                    margin: 0;
+                    font-family: "Montserrat";
+                    padding-top: env(safe-area-inset-top);
+                    padding-bottom: env(safe-area-inset-bottom);
+                  }
+
+                  .zoom-btn:active {
+                    background: linear-gradient(135deg, #d65c00 0%, #ff9447 100%);
+                    transform: scale(0.97);
+                    box-shadow: 0 2px 8px rgba(247, 113, 25, 0.18);
+                  }
+
+                  .zoom-btn i {
+                    pointer-events: none;
+                  }
+
+                  .map-container {
+                    display: flex;
+                    flex-direction: column;
+                    height: 100vh;
+                  }
+
+                  .map-head {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    background-color: #f77119;
+                    color: white;
+                    padding: 10px 16px;
+                    padding-top: max(10px, env(safe-area-inset-top));
+                    font-size: 18px;
+                  }
+
+                  .map-wrapper {
+                    position: relative;
+                    flex: 1;
+                    overflow: hidden;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background: #ffe2c5;
+                  }
+
+                  .map {
+                    max-height: 100%;
+                    width: auto;
+                    cursor: grab; /* show grab cursor when pannable */
+                    touch-action: none; /* allow pointer events for touch panning */
+                    will-change: transform;
+                    user-select: none; /* prevent text selection during drag */
+                  }
+
+                  .map.grabbing {
+                    cursor: grabbing;
+                  }
+
+                  /* Zoom buttons */
+                  .zoom-controls {
+                    position: absolute;
+                    bottom: max(20px, env(safe-area-inset-bottom));
+                    right: 20px;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                    z-index: 1000;
+                    align-items: flex-end;
+                  }
+
+                  .zoom-btn {
+                    background: linear-gradient(135deg, #f77119 0%, #ff9447 100%);
+                    color: white;
+                    border: none;
+                    border-radius: 50%;
+                    width: 48px;
+                    height: 48px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 22px;
+                    cursor: pointer;
+                    box-shadow: 0 4px 16px rgba(247, 113, 25, 0.18), 0 1.5px 4px rgba(0,0,0,0.08);
+                    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+                    outline: none;
+                    border: 2px solid #fff7f0;
+                  }
+
+                  .zoom-btn:hover {
+                    background: linear-gradient(135deg, #ec6003 0%, #ff9447 100%);
+                    transform: scale(1.08);
+                    box-shadow: 0 8px 24px rgba(247, 113, 25, 0.25);
+                  }
+
+                  /* Search and filter controls */
+
+
+            .search-toggle {
+              position: absolute;
+              top: max(20px, env(safe-area-inset-top));
+              left: 20px;
+              background: #f77119;
+              color: white;
+              border: none;
+              border-radius: 8px;
+              padding: 10px 14px;
+              font-size: 18px;
+              cursor: pointer;
+              box-shadow: 0 2px 10px rgba(247, 113, 25, 0.3);
+              transition: all 0.3s;
+              z-index: 1000;
+              display: none;
+            }
+            .search-toggle:hover {
+              background: #ec6003;
+              transform: scale(1.05);
+            }
+            .search-toggle:active {
+              background: #d65c00;
+            }
+            .search-toggle i {
+              pointer-events: none;
+            }
+
+            /* Show/hide animation for search/filter panel */
+            .search-filter-panel {
+                    position: absolute;
+                    top: max(20px, env(safe-area-inset-top));
+                    left: 20px;
+                    background: white;
+                    border-radius: 12px;
+                    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+                    padding: 12px;
+                    z-index: 1001;
+                    max-width: 300px;
+                    width: calc(100vw - 40px);
+
+              transition: opacity 0.25s, visibility 0.25s, transform 0.25s;
+              opacity: 1;
+              visibility: visible;
+              transform: translateY(0);
+            }
+            .search-filter-panel.hide {
+              opacity: 0;
+              visibility: hidden;
+              pointer-events: none;
+              transform: translateY(-10px);
+            }
+
+                  .search-box {
+                    width: 100%;
+                    padding: 10px 12px;
+                    border: 2px solid #ffe2c5;
+                    border-radius: 8px;
+                    font-size: 14px;
+                    outline: none;
+                    transition: border-color 0.3s;
+                    margin-bottom: 10px;
+                  }
+
+                  .search-box:focus {
+                    border-color: #f77119;
+                  }
+
+                  .filter-buttons {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 6px;
+                  }
+
+                  .filter-btn {
+                    padding: 6px 12px;
+                    border: 2px solid #ffe2c5;
+                    background: white;
+                    border-radius: 20px;
+                    font-size: 12px;
+                    cursor: pointer;
+                    transition: all 0.3s;
+                    display: flex;
+                    align-items: center;
+                    gap: 4px;
+                  }
+
+                  .filter-btn:hover {
+                    border-color: #f77119;
+                    background: #fff7f0;
+                  }
+
+                  .filter-btn.active {
+                    background: #f77119;
+                    color: white;
+                    border-color: #f77119;
+                  }
+
+                  .legend-toggle {
+                    position: absolute;
+                    top: max(20px, env(safe-area-inset-top));
+                    right: 20px;
+                    background: #f77119;
+                    color: white;
+                    border: none;
+                    border-radius: 8px;
+                    padding: 10px 14px;
+                    font-size: 16px;
+                    cursor: pointer;
+                    box-shadow: 0 2px 10px rgba(247, 113, 25, 0.3);
+                    transition: all 0.3s;
+                    z-index: 1000;
+                  }
+
+                  .legend-toggle:hover {
+                    background: #ec6003;
+                    transform: scale(1.05);
+                  }
+
+                  .cart-toggle {
+                    position: absolute;
+                    top: max(20px, env(safe-area-inset-top));
+                    right: 80px;
+                    background: #f77119;
+                    color: white;
+                    border: none;
+                    border-radius: 8px;
+                    padding: 10px 14px;
+                    font-size: 16px;
+                    cursor: pointer;
+                    box-shadow: 0 2px 10px rgba(247, 113, 25, 0.3);
+                    transition: all 0.3s;
+                    z-index: 1000;
+                  }
+
+                  .cart-toggle:hover {
+                    background: #ec6003;
+                    transform: scale(1.05);
+                  }
+
+                  .legend-panel {
+                    position: absolute;
+                    top: 70px;
+                    right: 20px;
+                    background: white;
+                    border-radius: 12px;
+                    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+                    padding: 16px;
+                    z-index: 1000;
+                    max-width: 250px;
+                    display: none;
+                  }
+
+                  .legend-panel.show {
+                    display: block;
+                    animation: fadeInRight 0.3s ease-out;
+                  }
+
+                  @keyframes fadeInRight {
+                    from {
+                      opacity: 0;
+                      transform: translateX(20px);
+                    }
+                    to {
+                      opacity: 1;
+                      transform: translateX(0);
+                    }
+                  }
+
+                  .legend-item {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    margin-bottom: 10px;
+                    font-size: 13px;
+                  }
+
+                  .legend-color {
+                    width: 20px;
+                    height: 20px;
+                    border-radius: 50%;
+                    border: 2px solid white;
+                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+                  }
+
+                  /* Leaflet popup customization */
+                  .leaflet-popup-content-wrapper {
+                    padding: 0;
+                    border-radius: 12px;
+                    box-shadow: 0 8px 30px rgba(247, 113, 25, 0.4);
+                    max-height: none;
+                  }
+
+                  .leaflet-popup-content {
+                    margin: 0;
+                    line-height: 1.4;
+                    max-height: none;
+                    width: 320px;
+                  }
+
+                  /* Scrollable popup inner container */
+                  .popup-scroll-container {
+                    max-height: 70vh;
+                    overflow-y: auto;
+                    overflow-x: hidden;
+                  }
+
+                  .popup-scroll-container::-webkit-scrollbar {
+                    width: 6px;
+                  }
+
+                  .popup-scroll-container::-webkit-scrollbar-track {
+                    background: #ffe2c5;
+                    border-radius: 3px;
+                  }
+
+                  .popup-scroll-container::-webkit-scrollbar-thumb {
+                    background: #f77119;
+                    border-radius: 3px;
+                  }
+
+                  .popup-scroll-container::-webkit-scrollbar-thumb:hover {
+                    background: #ec6003;
+                  }
+
+                  .leaflet-popup-tip {
+                    background: #fff7f0;
+                    box-shadow: 0 2px 10px rgba(247, 113, 25, 0.2);
+                  }
+
+                  .custom-popup .leaflet-popup-close-button {
+                    color: #f77119 !important;
+                    font-size: 24px !important;
+                    font-weight: bold !important;
+                    padding: 8px 12px !important;
+                    transition: all 0.3s ease;
+                  }
+
+                  .custom-popup .leaflet-popup-close-button:hover {
+                    color: #ec6003 !important;
+                    transform: scale(1.2);
+                  }
+
+                  .leaflet-container a.leaflet-popup-close-button {
+                    right: 15px;
+                  }
+
+                  /* Pulse animation for markers */
+                  @keyframes pulse {
+                    0%,
+                    100% {
+                      opacity: 0.6;
+                      transform: translate(-50%, -50%) scale(1);
+                    }
+                    50% {
+                      opacity: 0;
+                      transform: translate(-50%, -50%) scale(1.8);
+                    }
+                  }
+
+                  /* Fade in animation for popup */
+                  .leaflet-popup {
+                    animation: fadeInUp 0.3s ease-out;
+                  }
+
+                  @keyframes fadeInUp {
+                    from {
+                      opacity: 0;
+                      transform: translateY(20px);
+                    }
+                    to {
+                      opacity: 1;
+                      transform: translateY(0);
+                    }
+                  }
+
+                  /* Suggestion cards styling */
+                  .suggestions-section {
+                    margin-top: 16px;
+                    padding-top: 16px;
+                    border-top: 2px solid #ffe2c5;
+                  }
+
+                  .suggestions-title {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    margin-bottom: 12px;
+                    font-size: 14px;
+                    font-weight: bold;
+                    color: #f77119;
+                  }
+
+                  .suggestions-title i {
+                    font-size: 16px;
+                  }
+
+                  .suggestion-cards {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 8px;
+                  }
+
+                  .suggestion-card {
+                    background: linear-gradient(135deg, #ffffff 0%, #fff7f0 100%);
+                    border: 2px solid #ffe2c5;
+                    border-radius: 10px;
+                    padding: 10px;
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    position: relative;
+                    overflow: hidden;
+                  }
+
+                  .suggestion-card::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: -100%;
+                    width: 100%;
+                    height: 100%;
+                    background: linear-gradient(90deg, transparent, rgba(247, 113, 25, 0.1), transparent);
+                    transition: left 0.5s ease;
+                  }
+
+                  .suggestion-card:hover::before {
+                    left: 100%;
+                  }
+
+                  .suggestion-card:hover {
+                    transform: translateX(4px);
+                    border-color: #f77119;
+                    box-shadow: 0 4px 12px rgba(247, 113, 25, 0.2);
+                    background: linear-gradient(135deg, #fff7f0 0%, #ffe8d1 100%);
+                  }
+
+                  .suggestion-icon {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 18px;
+                    flex-shrink: 0;
+                    border: 2px solid white;
+                    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+                  }
+
+                  .suggestion-content {
+                    flex: 1;
+                    min-width: 0;
+                  }
+
+                  .suggestion-name {
+                    font-size: 13px;
+                    font-weight: bold;
+                    color: #333;
+                    margin-bottom: 4px;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                  }
+
+                  .suggestion-info {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    font-size: 11px;
+                    color: #666;
+                  }
+
+                  .suggestion-badge {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 3px;
+                    background: rgba(247, 113, 25, 0.1);
+                    padding: 2px 6px;
+                    border-radius: 12px;
+                    font-weight: 600;
+                  }
+
+                  .suggestion-arrow {
+                    color: #f77119;
+                    font-size: 16px;
+                    transition: transform 0.3s ease;
+                  }
+
+                  .suggestion-card:hover .suggestion-arrow {
+                    transform: translateX(4px);
+                  }
+
+                  .no-suggestions {
+                    text-align: center;
+                    padding: 12px;
+                    color: #999;
+                    font-size: 12px;
+                    font-style: italic;
+                  }
+
+                  @media (max-width: 480px) {
+                    .zoom-controls {
+                      bottom: 100px;
+                    }
+}
+    </style>
+  </head>
+
+  <body>
+    <div class="map-container">
+      <div class="map-head">
+        <a href="./index.html">
+          <i class="fa-solid fa-arrow-left"></i>
+        </a>
+        <p>VinWonders Nha Trang</p>
+        <div></div>
+      </div>
+
+      <div class="map-wrapper">
+        <div id="map" style="width: 100%; height: 100%"></div>
+
+        <!-- Search/Filter Toggle Button -->
+        <button
+          class="search-toggle"
+          id="searchToggle"
+          title="Tìm kiếm địa điểm"
+        >
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+
+        <!-- Search and Filter Panel -->
+        <button
+          class="search-toggle"
+          id="searchToggle"
+          title="Tìm kiếm địa điểm"
+        >
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+
+        <div class="search-filter-panel" id="searchPanel">
+          <input
+            type="text"
+            id="searchBox"
+            class="search-box"
+            placeholder="🔍 Tìm kiếm địa điểm..."
+          />
+          <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">
+              🎯 Tất cả
+            </button>
+            <button class="filter-btn" data-filter="ride">🎢 Trò chơi</button>
+            <button class="filter-btn" data-filter="restaurant">
+              🍽️ Nhà hàng
+            </button>
+            <button class="filter-btn" data-filter="shop">🛍️ Cửa hàng</button>
+            <button class="filter-btn" data-filter="toilet">🚻 WC</button>
+            <button class="filter-btn" data-filter="zoo">🦁 Vườn thú</button>
+            <button class="filter-btn" data-filter="medical">🚑 Y tế</button>
+          </div>
+        </div>
+
+        <!-- Legend Toggle Button -->
+        <button class="legend-toggle" id="legendToggle">
+          <i class="fa-solid fa-info-circle"></i>
+        </button>
+
+        <button
+          class="cart-toggle"
+          onclick="window.location.href='game-cart/game-cart.html'"
+        >
+          <i class="fa-solid fa-cart-plus"></i>
+        </button>
+
+        <!-- Legend Panel -->
+        <div class="legend-panel" id="legendPanel">
+          <h4 style="margin: 0 0 12px 0; color: #f77119; font-size: 14px">
+            📊 Chú thích
+          </h4>
+          <div class="legend-item">
+            <div class="legend-color" style="background: #4caf50"></div>
+            <span>✓ Thông thoáng (&lt;10 phút)</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-color" style="background: #ffc107"></div>
+            <span>○ Bình thường (10-20 phút)</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-color" style="background: #ff9800"></div>
+            <span>◐ Đông (20-40 phút)</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-color" style="background: #f44336"></div>
+            <span>● Rất đông (&gt;40 phút)</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-color" style="background: #999"></div>
+            <span>🔧 Đang bảo trì</span>
+          </div>
+        </div>
+
+        <div class="zoom-controls">
+          <button class="zoom-btn" id="zoomIn">
+            <i class="fa-solid fa-plus"></i>
+          </button>
+          <button class="zoom-btn" id="zoomOut">
+            <i class="fa-solid fa-minus"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // LeafletJS integration
+      // Add LeafletJS script
+      const leafletScript = document.createElement("script");
+      leafletScript.src = "https://unpkg.com/leaflet/dist/leaflet.js";
+      document.body.appendChild(leafletScript);
+
+      leafletScript.onload = function () {
+        // Attractions data
+        const attractions = [
+          // --- BEGIN EXTENDED ATTRACTIONS DATA ---
+          // Example: Each object includes all possible fields, null if not available
+          {
+            name: "Ngôi đền huyền thoại",
+            x: 1259,
+            y: 2887,
+            wait_time: 12,
+            type: "ride",
+            maintainance: false,
+            location: "Công viên nước Thiên đường nhiệt đới",
+            ages: ["Trẻ em", "Người lớn"],
+            level: "Hơi sợ một chút",
+            height: "Trên 130cm",
+            weather_stop: true,
+            weight: "Nhỏ hơn 100kg",
+            description:
+              "Hành trình khám phá trên đoạn đường ray dài 1.000m xuyên lòng núi, đưa khám phá các hầm mỏ bí ẩn và những khúc cua ngoạn mục với trải nghiệm cực độ.",
+            image: "game-image/Ngôi đền huyền thoại.JPG",
+          },
+          {
+            name: "Pháo đài kì bí",
+            x: 1148,
+            y: 2606,
+            wait_time: 18,
+            type: "ride",
+            maintainance: false,
+            location: "Công viên nước Thiên đường nhiệt đới",
+            ages: ["Trẻ em", "Người lớn"],
+            level: "Rớt tim",
+            height: "Trên 130cm",
+            weather_stop: true,
+            weight: "Nhỏ hơn 100kg",
+            description:
+              "Hoá thân thành chiến binh không kích, trải nghiệm cảm giác rơi tự do từ zipfall cao 20m. Thử thách được yêu thích bởi các du khách ưa thích trò chơi cảm giác mạnh.",
+            image: "game-image/Pháo đài kì bí.PNG",
+          },
+          {
+            name: "Vòi rồng hung hãn",
+            x: 979,
+            y: 2234,
+            wait_time: 15,
+            type: "ride",
+            maintainance: false,
+            location: "Công viên nước Thiên đường nhiệt đới",
+            ages: ["Trẻ em", "Người lớn"],
+            level: "Rớt tim",
+            height: "Trên 130cm",
+            weather_stop: true,
+            weight: "Nhỏ hơn 100kg",
+            description:
+              "Mang đến cho du khách những trải nghiệm khác biệt liên tiếp khi trượt quanh những vòng xoáy hình dạng chiếc đĩa, hoặc trải nghiệm hành trình rơi vào hộp đen đem đến cảm giác phấn khích cho du khách.",
+            image: "game-image/Vòi rồng hung hãn.JPG",
+          },
+          {
+            name: "Cú rơi thót tim",
+            x: 1001,
+            y: 1948,
+            wait_time: 23,
+            type: "ride",
+            maintainance: false,
+            location: "Công viên nước Thiên đường nhiệt đới",
+            ages: ["Trẻ em", "Người lớn"],
+            level: "Rớt tim",
+            height: "Trên 130cm",
+            weather_stop: true,
+            weight: "Nhỏ hơn 100kg",
+            description:
+              "Trải nghiệm cảm giác rơi tự do đầy gay cấn trên đường trượt nước được thiết kế với độ dốc ấn tượng.",
+            image: "game-image/Cú rơi thót tim.JPG",
+          },
+          {
+            name: "Đĩa bay vũ trụ",
+            x: 1145,
+            y: 2132,
+            wait_time: 10,
+            type: "ride",
+            maintainance: false,
+            location: "Công viên nước Thiên đường nhiệt đới",
+            ages: ["Trẻ em", "Người lớn"],
+            level: "Rớt tim",
+            height: "Trên 130cm",
+            weather_stop: true,
+            weight: "Nhỏ hơn 100kg",
+            description:
+              "Đường trượt lần đầu tiên có mặt tại Việt Nam, với giải thưởng 2015 IAAPA đường trượt nước tốt nhất.",
+            image: "game-image/Đĩa bay vũ trụ.JPG",
+          },
+          {
+            name: "Thác đôi thần bí",
+            x: 1515,
+            y: 2227,
+            wait_time: 8,
+            type: "ride",
+            maintainance: false,
+            location: "Công viên nước Thiên đường nhiệt đới",
+            ages: ["Trẻ em", "Người lớn"],
+            level: "Rớt tim",
+            height: "Trên 130cm",
+            weather_stop: true,
+            weight: "Nhỏ hơn 100kg",
+            description:
+              "Trò chơi dành cho những bạn trẻ liều lĩnh, gan dạ, trải nghiệm cảm giác như đang “bay” khỏi đường trượt có độ cao 21m, chạy đua cùng tốc độ tới 60km/h",
+            image: "game-image/Thác đôi thần bí.PNG",
+          },
+          {
+            name: "Cuộc đua báo Cheetah",
+            x: 1424,
+            y: 2313,
+            wait_time: 17,
+            type: "ride",
+            maintainance: false,
+            location: "Công viên nước Thiên đường nhiệt đới",
+            ages: ["Trẻ em", "Người lớn"],
+            level: "Rớt tim",
+            height: "Trên 130cm",
+            weather_stop: true,
+            weight: "Nhỏ hơn 100kg",
+            description:
+              "Cùng tạo nên những giây phút đáng nhớ cho gia đình qua những cuộc đua tại đường trượt nước rực rỡ sắc màu",
+            image: "game-image/Cuộc đua báo Cheetah.jpg",
+          },
+          {
+            name: "Tẩu thoát ngoạn mục",
+            x: 1410,
+            y: 2436,
+            wait_time: 20,
+            type: "ride",
+            maintainance: false,
+            location: "Công viên nước Thiên đường nhiệt đới",
+            ages: ["Trẻ em", "Người lớn"],
+            level: "Rớt tim",
+            height: "Trên 130cm",
+            weather_stop: true,
+            weight: "Nhỏ hơn 100kg",
+            description:
+              "Đường trượt cao 12m, gồm 4 máng trượt với các vòng cua và độ dốc uốn lượn riêng biệt, mỗi máng trượt hứa hẹn đem lại những trải nghiệm đầy bùng nổ.",
+            image: "game-image/Tẩu thoát ngoạn mục.jpg",
+          },
+          {
+            name: "Ngôi làng thủy tộc",
+            x: 1376,
+            y: 2677,
+            wait_time: 22,
+            type: "ride",
+            maintainance: false,
+            location: "Công viên nước Thiên đường nhiệt đới",
+            ages: ["Trẻ em"],
+            level: "Thích hợp cho trẻ em",
+            height: "Không giới hạn chiều cao",
+            weather_stop: true,
+            weight: null,
+            description:
+              "Bể bơi được thiết kế dành riêng cho các du khách nhí, với Ngôi nhà Hawaii, Súng bắn nước, Đường trượt thiên nga, Sứa phun mưa, Hành lang cầu vồng hay Ngôi nhà quả táo… hứa hẹn sẽ mang lại cảm giác bất ngờ và thú vị cho các bé.",
+            image: "game-image/Ngôi làng thuỷ tộc.jpg",
+          },
+          {
+            name: "Cuộc chiến cầu vồng",
+            x: 1077,
+            y: 1636,
+            wait_time: 30,
+            type: "ride",
+            maintainance: false,
+            location: "Sea World",
+            ages: ["Không giới hạn độ tuổi"],
+            level: "Thích hợp cho trẻ em",
+            height: "Từ 100cm trở lên",
+            weather_stop: false,
+            weight: null,
+            description:
+              "Những chiếc xe điện đụng tại đây được thiết kế với hình thù ngộ nghĩnh, bắt mắt và đặc biệt, hệ thống có tính an toàn cao. Đây là trò chơi hoàn hảo đem lại những phút giây vui vẻ cho bạn và gia đình.",
+            image: "game-image/Cuộc chiến cầu vồng.jpg",
+          },
+          {
+            name: "Vương quốc kẹo ngọt",
+            x: 948,
+            y: 1177,
+            wait_time: 12,
+            type: "ride",
+            maintainance: false,
+            location: "Fairy Land",
+            ages: ["Trẻ em"],
+            level: "Thích hợp cho trẻ em",
+            height: "Từ 140cm trở xuống",
+            weather_stop: false,
+            weight: "Nhỏ hơn 100kg",
+            description:
+              "Được xây dựng dựa trên câu chuyện Hansel & Gretel, Vương quốc kẹo ngọt gồm một tổ hợp các trò chơi trong nhà được trang trí theo chủ đề bánh kẹo.",
+            image: "game-image/Vương quốc kẹo ngọt.jpg",
+          },
+          {
+            name: "Cung điện ánh sáng",
+            x: 1176,
+            y: 1084,
+            wait_time: 13,
+            type: "ride",
+            maintainance: false,
+            location: "Fairy Land",
+            ages: ["Không giới hạn tuổi"],
+            level: "Thích hợp cho cả gia đình",
+            height: "Không giới hạn chiều cao",
+            weather_stop: false,
+            weight: null,
+            description: "Mở cửa vào thứ 6, 7 và Chủ Nhật vào lúc: 11:00-18:00",
+            image: "game-image/Cung điện án sáng.jpg",
+          },
+          {
+            name: "Đường lượn nhớ đời",
+            x: 1061,
+            y: 562,
+            wait_time: 32,
+            type: "ride",
+            maintainance: false,
+            location: "Fairy Land",
+            ages: ["Trẻ em", "Người lớn"],
+            level: "Không thể bỏ lỡ",
+            height: "Trên 100cm",
+            weather_stop: true,
+            weight: "Nhỏ hơn 100kg",
+            description:
+              "Thưởng ngoạn hành trình dài 1.865m khám phá bức tranh cảnh tráng lệ vòng quanh Đảo Hòn Tre trên hệ thống xe trượt quanh núi lớn nhất Đông Nam Á!",
+            image: "game-image/Đường lượn nhớ đời.jpg",
+          },
+          {
+            name: "Giải mã mê cung",
+            x: 803,
+            y: 813,
+            wait_time: 30,
+            type: "ride",
+            maintainance: false,
+            location: "Fairy Land",
+            ages: ["Không giới hạn độ tuổi"],
+            level: "Hơi sợ một chút",
+            height: "Từ 120cm trở lên",
+            weather_stop: false,
+            weight: null,
+            description:
+              "Trò chơi VR mang đến trải nghiệm tương tác độc đáo trong một mê cung ảo, hạ gục những con quái thú đang ẩn nấp giữa các tàn tích.",
+            image: "game-image/Giải mã mê cung.jpg",
+          },
+          {
+            name: "Đường đua nghẹt thở",
+            x: 968,
+            y: 789,
+            wait_time: null,
+            type: "ride",
+            maintainance: true,
+            location: "Fairy Land",
+            ages: ["Không giới hạn độ tuổi"],
+            level: "Hơi sợ một chút",
+            height: "Từ 130cm trở lên",
+            weather_stop: false,
+            weight: null,
+            description:
+              "Khách hàng sẽ được trải nghiệm hoá thân thành tay đua chính hiệu, vượt qua những chướng ngại vật để về đích.",
+            image: "game-image/Đường đua nghẹt thở.jpg",
+          },
+          {
+            name: "Tata Show",
+            x: 1030,
+            y: 985,
+            wait_time: 60,
+            type: "ride",
+            maintainance: false,
+            location: "Fairy Land",
+            ages: ["Không giới hạn độ tuổi"],
+            level: "Không thể bỏ lỡ",
+            height: "Không giới hạn chiều cao",
+            weather_stop: true,
+            weight: null,
+            description:
+              "Sự kết hợp giữa công nghệ 3D mapping hiện đại bậc nhất, trình diễn ánh sáng, khói lửa và đặc biệt phần biểu diễn của hơn 100 diễn viên trong nước và quốc tế đã tạo ra màn trình diễn hoành tráng và mãn nhãn người xem. Vở diễn là hành trình khám phá, phiêu lưu kỳ thú của công chúa Tata và những người bạn thân thiết trong thế giới cổ tích diệu kỳ. Tại đây, du khách sẽ được khám phá xứ sở Vạn Hoa rực rỡ, lặn xuống biển sâu muôn cảnh thần tiên của thế giới Đại Dương và chứng kiến tận cùng lãnh địa Bóng Tối qua màn trình diễn hoành tráng.",
+            image: "game-image/Tata show.jpg",
+          },
+          {
+            name: "Rạp phim bay",
+            x: 1404,
+            y: 1436,
+            wait_time: 45,
+            type: "ride",
+            maintainance: false,
+            location: "Sea World",
+            ages: ["Không giới hạn độ tuổi"],
+            level: "Thích hợp cho cả gia đình",
+            height: "Trên 100cm",
+            weather_stop: false,
+            weight: "Nhỏ hơn 100kg",
+            description:
+              'Rạp phim bay đầu tiên của Việt Nam mang tới cho du khách trải nghiệm trạng thái "lơ lửng" giữa không trung và "bay" vun vút thông qua hiệu ứng "Flying Simulation" tối tân nhất thế giới. Chạm vào Châu Âu trong từng phân cảnh với hiệu ứng đặc biệt: gió, sương, muối, nước, mùi hương.',
+            image: "game-image/Rạp phim Bay.jpg",
+          },
+          {
+            name: "Bật nhảy bungee",
+            x: 1436,
+            y: 670,
+            wait_time: 17,
+            type: "ride",
+            maintainance: false,
+            location: "Adventure Land",
+            ages: ["Trẻ em", "Người lớn"],
+            level: "Rớt tim",
+            height: "Trên 140cm",
+            weather_stop: true,
+            weight: "Nhỏ hơn 100kg",
+            description:
+              'Trải nghiệm cảm giác rơi tự do nghẹt thở khi nhảy từ độ cao hàng chục mét xuống không trung! Với hệ thống dây đàn hồi chuyên dụng đạt tiêu chuẩn quốc tế, “Bật nhảy Bungee” mang đến thử thách cực đại cho những ai muốn chạm giới hạn của bản thân và tận hưởng cảm giác "thót tim" khó quên.',
+            image: "game-image/Bật nhảy bungee.jpg",
+          },
+          {
+            name: "Tháp rơi tự do",
+            x: 1573,
+            y: 663,
+            wait_time: 15,
+            type: "ride",
+            maintainance: false,
+            location: "Adventure Land",
+            ages: ["Trẻ em", "Người lớn"],
+            level: "Rớt tim",
+            height: "Trên 140cm",
+            weather_stop: true,
+            weight: "Nhỏ hơn 100kg",
+            description:
+              "Chinh phục độ cao và thả mình trong khoảnh khắc “tim rơi ra ngoài” khi Tháp rơi tự do đưa bạn lao vun vút xuống đất chỉ trong vài giây. Hiệu ứng lực G mạnh mẽ kết hợp với độ cao choáng ngợp chắc chắn sẽ khiến bạn hét không ngừng nghỉ.",
+            image: "game-image/Tháp rơi tự do.jpg",
+          },
+          {
+            name: "Đua xe trên không",
+            x: 1693,
+            y: 720,
+            wait_time: 27,
+            type: "ride",
+            maintainance: false,
+            location: "Adventure Land",
+            ages: ["Trẻ em", "Người lớn"],
+            level: "Hơi sợ một chút",
+            height: "Trên 120cm",
+            weather_stop: true,
+            weight: "Nhỏ hơn 100kg",
+            description:
+              "Hóa thân thành tay đua siêu tốc và lướt trên không trung qua những khúc cua ngoạn mục! “Đua xe trên không” mang đến cảm giác vừa phấn khích vừa an toàn, kết hợp hiệu ứng tốc độ, độ cao và gió khiến người chơi như đang thật sự “lái xe” giữa bầu trời Nha Trang.",
+            image: "game-image/Đưa xe trên không.jpg",
+          },
+          {
+            name: "Đu quay dây văng",
+            x: 1646,
+            y: 937,
+            wait_time: 10,
+            type: "ride",
+            maintainance: false,
+            location: "Adventure Land",
+            ages: ["Trẻ em", "Người lớn"],
+            level: "Hơi sợ một chút",
+            height: "Trên 120cm",
+            weather_stop: true,
+            weight: "Nhỏ hơn 100kg",
+            description:
+              "Ở tư thế xoay tròn hoặc xoay nghiêng với độ cao 3m, trò chơi đu quay dây văng sẽ tạo cho bạn cảm giác như đang rơi tự do hoặc bay lượn trong không trung.",
+            image: "game-image/Đu quay dây văng.jpg",
+          },
+          {
+            name: "Cuộc phiêu lưu hầm mỏ",
+            x: 1897,
+            y: 899,
+            wait_time: 13,
+            type: "ride",
+            maintainance: false,
+            location: "Adventure Land",
+            ages: ["Trẻ em", "Người lớn"],
+            level: "Rớt tim",
+            height: "Trên 110cm",
+            weather_stop: true,
+            weight: "Nhỏ hơn 100kg",
+            description:
+              "Hành trình khám phá trên đoạn đường ray dài 1.000m xuyên lòng núi, đưa khám phá các hầm mỏ bí ẩn và những khúc cua ngoạn mục với trải nghiệm cực độ.",
+            image: "game-image/Cuộc phiêu lưu hầm mỏ.webp",
+          },
+          {
+            name: "Zipline",
+            x: 2675,
+            y: 452,
+            wait_time: 28,
+            type: "ride",
+            maintainance: false,
+            location: "Fairy Land",
+            ages: ["Trẻ em", "Người lớn"],
+            level: "Không thể bỏ lỡ",
+            height: "Trên 130cm",
+            weather_stop: true,
+            weight: "Nhỏ hơn 100kg",
+            description:
+              'Ga xuất phát của đường trượt zipline 3 kỷ lục\nTrải nghiệm cảm giác "bay giữa không trung" và hòa mình vào cảnh sắc xanh ngát của biển, của trời tại Zipline 03 kỷ lục: đường trượt dài nhất, dốc nhất tại Việt Nam!\n30P / lượt / 10 khách\n16:50 lượt đón khách cuối cùng\nLƯU Ý : TRÒ CHƠI KHÔNG BAO GỒM TRONG GIÁ VÉ. GIÁ BÁN:\n300.000 VND/ LƯỢT/KHÁCH (Tặng kèm 01 voucher ẩm thực trị giá\n100.000 vnd hoặc 01 quà tặng Merchandise trị giá 100.000vnd)',
+            image: "game-image/Ziplinepng.png",
+          },
+          {
+            name: "Bánh xe bầu trời",
+            x: 1719,
+            y: 2681,
+            wait_time: 12,
+            type: "ride",
+            maintainance: false,
+            location: "The World Garden",
+            ages: ["Trẻ em", "Người lớn", "Người cao tuổi"],
+            level: "Không thể bỏ lỡ",
+            height: "Trên 80cm",
+            weather_stop: true,
+            weight: "Nhỏ hơn 100kg",
+            description:
+              "Cảm nhận được sự hồi hộp, phấn khích, xen lẫn choáng ngợp khi thu trọn toàn bộ cánh quan kỳ vĩ của vịnh biển quyến rũ ở độ cao 120m. Vòng xoay được xác nhận là vòng xoay lớn nhất Việt Nam và top 10 vòng xoay lớn nhất thế giới.",
+            image: "game-image/Bánh xe bầu trời.webp",
+          },
+          {
+            name: "Sky Garden",
+            x: 1973,
+            y: 2867,
+            wait_time: 15,
+            type: "ride",
+            maintainance: false,
+            location: "The World Garden",
+            ages: ["Không giới hạn độ tuổi"],
+            level: "Thích hợp cho cả gia đình",
+            height: "Không giới hạn chiều cao",
+            weather_stop: false,
+            weight: null,
+            description:
+              "Thưởng ngoạn khu vườn cây kỳ hoa dị thảo tái hiện khu rừng Nam\nMỹ huyền bí và sâu thắm, chinh phục mọi giác quan của du khách:\n• Lạc bước trong khung cảnh thiên nhiên tuyệt diệu với hàng nghìn cá thế kỳ\nhoa dị thảo và các loài cây quý hiếm.\n• Chiêm ngưỡng tuyệt tác được tạo nên từ các khối gỗ lũa hàng trăm tuổi\nnhư Sao Đen và các loại gỗ hóa thạch khác\n• Thưởng ngoạn và tận hưởng bầu không khí trong lành nơi rừng xanh\n• Check in cực chất với các góc ảnh mờ sương huyền ảo.",
+            image: "game-image/Sky Garden.jpg",
+          },
+          {
+            name: "Sắc màu Bromelias",
+            x: 2168,
+            y: 2849,
+            wait_time: 8,
+            type: "ride",
+            maintainance: false,
+            location: "The World Garden",
+            ages: ["Không giới hạn độ tuổi"],
+            level: "Thích hợp cho cả gia đình",
+            height: "Không giới hạn chiều cao",
+            weather_stop: false,
+            weight: null,
+            description:
+              'Năm bên Lầu Vọng Cảnh, nhà kính Sắc màu Bromeliads là một khu vườn cố tích đích thực, đưa bạn bước vào không gian thơ mộng của khúc "hoa ca" ngập tràn hương sắc 8 :\n• Bộ ba nhạc công tài ba biểu diễn bản hòa ca mùa xuân trên chiếc thuyền hoa lộng lẫy\n• Hơn 20 sắc màu bromeliad lộng lẫy kiêu sa "thánh thót" những nốt cao bay bổng, rực rỡ\n* Dàn cỏ mondo, lan lúa và ổ phụng... dịu dàng "ngân vang" những giai điệu trâm du dương, êm ả',
+            image: "game-image/Sắc màu Bromeliads.png",
+          },
+          {
+            name: "Lầu vọng cảnh",
+            x: 2305,
+            y: 2771,
+            wait_time: 8,
+            type: "ride",
+            maintainance: false,
+            location: "The World Garden",
+            ages: ["Không giới hạn độ tuổi"],
+            level: "Thích hợp cho cả gia đình",
+            height: "Không giới hạn chiều cao",
+            weather_stop: false,
+            weight: null,
+            description:
+              "Năm ở điểm cao nhất của The World Garden, lầu vọng cảnh với kiến trúc mang hơi thở Địa Trung Hải, là nơi để du khách ngắm trọn vẻ đẹp của đảo Hòn Tre.",
+            image: "game-image/Lầu vọng cảnh.jpg",
+          },
+          {
+            name: "Vườn bướm",
+            x: 2161,
+            y: 2667,
+            wait_time: 10,
+            type: "ride",
+            maintainance: false,
+            location: "The World Garden",
+            ages: ["Không giới hạn độ tuổi"],
+            level: "Thích hợp cho cả gia đình",
+            height: "Không giới hạn chiều cao",
+            weather_stop: false,
+            weight: null,
+            description:
+              "Lạc vào thế giới cổ tích giữa mê cung bướm bay\nTựa như một khung trời mộng mơ bước ra từ truyện cố tích, vườn\nBướm ngập tràn sắc hoa rực rỡ, hàng trăm cánh bướm bay lượn rập rờn, nhẹ nhàng, duyên dáng, kỳ ảo như tranh vẽ.",
+            image: "game-image/Vườn Bướm.jpg",
+          },
+          {
+            name: "Vườn Nhật",
+            x: 2403,
+            y: 2516,
+            wait_time: 16,
+            type: "ride",
+            maintainance: false,
+            location: "The World Garden",
+            ages: ["Không giới hạn độ tuổi"],
+            level: "Thích hợp cho cả gia đình",
+            height: "Không giới hạn chiều cao",
+            weather_stop: false,
+            weight: null,
+            description:
+              "Cùng đắm mình trong không gian văn hóa Nhật Bản truyền thống với các biểu tượng cầu đỏ, cổng Tori, hồ cá Koi, nhà thiên đặc trưng, nghệ thuật trà đạo. Đây cũng là địa điểm tuyệt vời đế lưu giữ những bức ảnh tuyệt đẹp cùng người thân và bạn bè trong chuyến ghé thăm VinWonders Nha Trang.",
+            image: "game-image/Vườn Nhật.jpg",
+          },
+          {
+            name: "Hoang mạc châu Phi",
+            x: 2092,
+            y: 2458,
+            wait_time: 9,
+            type: "ride",
+            maintainance: false,
+            location: "The World Garden",
+            ages: ["Không giới hạn độ tuổi"],
+            level: "Thích hợp cho cả gia đình",
+            height: "Không giới hạn chiều cao",
+            weather_stop: false,
+            weight: null,
+            description:
+              "Nơi để du khách thỏa sức check in và khám phá hàng trăm loài xương rông giữa không gian được mô phỏng tựa một hoang mạc.",
+            image: "game-image/Hoang mạc châu Phi.jpg",
+          },
+          {
+            name: "Sắc màu mùa đông",
+            x: 1911,
+            y: 2264,
+            wait_time: 7,
+            type: "ride",
+            maintainance: false,
+            location: "The World Garden",
+            ages: ["Không giới hạn độ tuổi"],
+            level: "Thích hợp cho cả gia đình",
+            height: "Không giới hạn chiều cao",
+            weather_stop: false,
+            weight: null,
+            description:
+              'Chiêm ngưỡng những loài hoa thân thuộc như cúc Đà Lạt, Thược dược, Đồng tiền, Ngọc thảo... khoe sắc. Địa điểm tuyệt vời để check in và selfie những bức ảnh sống ảo "triệu like" cùng những dòng suối hoa khống lô chảy dài.',
+            image: "game-image/Sắc màu mùa đông.png",
+          },
+
+          {
+            name: "Vườn thú",
+            x: 1868,
+            y: 1599,
+            wait_time: null,
+            type: "zoo",
+            maintainance: false,
+            location: "King’s Garden",
+            ages: ["Không giới hạn độ tuổi"],
+            level: "Thích hợp cho cả gia đình",
+            height: "Không giới hạn chiều cao",
+            weather_stop: false,
+            weight: null,
+            description:
+              "Khám phá hàng trăm loài thú hoang dã, tham gia các khu tương tác giáo dục và hòa mình vào không gian xanh mát.",
+            image: "useful-image/Vườn thú.png",
+          },
+          {
+            name: "Nhà hàng Sóng Biển",
+            x: 1305,
+            y: 1127,
+            wait_time: null,
+            type: "restaurant",
+            maintainance: false,
+            location: "Fairy Land",
+            restaurant_type: "A la carte",
+            cuisine: "Việt Nam",
+            ages: ["Không giới hạn độ tuổi"],
+            level: "Thích hợp cho cả gia đình",
+            height: "Không giới hạn chiều cao",
+            weather_stop: false,
+            weight: null,
+            description:
+              "Phục vụ các món Việt - Âu: Set cơm Việt Nam, Mỳ Ý, Phở, Soup…",
+            image: "useful-image/Nhà hàng Sóng Biển.png",
+          },
+          {
+            name: "Nhà hàng Coral",
+            x: 884,
+            y: 1314,
+            wait_time: null,
+            type: "restaurant",
+            maintainance: false,
+            location: "Fairy Land",
+            restaurant_type: "Buffet",
+            cuisine: "Việt Nam",
+            ages: ["Không giới hạn độ tuổi"],
+            level: "Thích hợp cho cả gia đình",
+            height: "Không giới hạn chiều cao",
+            weather_stop: false,
+            weight: null,
+            description:
+              "Thưởng thức thực đơn đa dạng với hơn 50 món ăn được lựa chọn theo mùa, kể cả phong vị ẩm thực của các dịp lễ Tết, cùng hải sản tươi ngon của Việt Nam và quốc tế tại Nhà hàng Buffet Coral với công suất 2,500 chỗ ngồi cùng chi phí hợp lý cực kì phù hợp cho du khách theo đoàn.",
+            image: "useful-image/Nhà hàng Coral.png",
+          },
+          {
+            name: "Nhà hàng Lotteria 1",
+            x: 1370,
+            y: 1571,
+            wait_time: null,
+            type: "restaurant",
+            maintainance: false,
+            location: "Sea World",
+            restaurant_type: "Fastfood",
+            cuisine: "Hàn Quốc",
+            ages: ["Không giới hạn độ tuổi"],
+            level: "Thích hợp cho cả gia đình",
+            height: "Không giới hạn chiều cao",
+            weather_stop: false,
+            weight: null,
+            description:
+              "Chuỗi nhà hàng fast food mà hầu hết các bạn nhỏ đều yêu thích, sẵn sàng phục vụ nhu cầu 'nạp năng lượng' của bé bất kỳ khi nào.",
+            image: "useful-image/Nhà hàng Lotteria 1.png",
+          },
+          {
+            name: "Yummy Water World",
+            x: 1159,
+            y: 1983,
+            wait_time: null,
+            type: "restaurant",
+            maintainance: false,
+            location: "Công viên nước Thiên đường nhiệt đới",
+            restaurant_type: "Fastfood",
+            cuisine: "Khác",
+            ages: ["Không giới hạn độ tuổi"],
+            level: "Thích hợp cho cả gia đình",
+            height: "Không giới hạn chiều cao",
+            weather_stop: false,
+            weight: null,
+            description:
+              "Trải nghiệm Ẩm Thực ăn nhanh kiểu Âu sau những giờ vui chơi hứng khởi tại Công viên nước với các món pizza tươi đa dạng, Burger và mì Ý. Hoặc relax trên bãi biển và trải nghiệm các món thịt nướng và bia, Mocktail/ Coktail nhiều màu sắc tạo quầy Splash Bay Bar với view toàn cảnh thành phố Nha Trang.",
+            image: "useful-image/Yummy Water World.png",
+          },
+          {
+            name: "Nhà hàng Cá Heo",
+            x: 1140,
+            y: 2768,
+            wait_time: null,
+            type: "restaurant",
+            maintainance: false,
+            location: "Công viên nước Thiên đường nhiệt đới",
+            restaurant_type: "A la carte",
+            cuisine: "Châu Âu",
+            ages: ["Không giới hạn độ tuổi"],
+            level: "Thích hợp cho cả gia đình",
+            height: "Không giới hạn chiều cao",
+            weather_stop: false,
+            weight: null,
+            description:
+              "Nhà hàng phục vụ những món ăn fastfood như pizza, mì Ý, burger... để Quý khách bổ sung năng lượng cho hành trình chinh phục VinWonders Nha Trang.",
+            image: "useful-image/Nhà hàng Cá Heo.png",
+          },
+          {
+            name: "Yummy World Garden",
+            x: 1771,
+            y: 2223,
+            wait_time: null,
+            type: "restaurant",
+            maintainance: false,
+            location: "The World Garden",
+            restaurant_type: "Snacks",
+            cuisine: "Việt Nam",
+            ages: ["Không giới hạn độ tuổi"],
+            level: "Thích hợp cho cả gia đình",
+            height: "Không giới hạn chiều cao",
+            weather_stop: false,
+            weight: null,
+            description:
+              "Quây quần bên Set cơm gia đình hoặc Combo kèm đồ uống và tráng miệng tiện lợi - Không gian nhà hàng đận chất mộc giữa Hồ sen súng tuyệt đẹp. Đặc biệt, nhà hàng còn phục vụ các Set menu cao cấp cho những khách hàng có nhu cầu mới mẻ về phong vị.",
+            image: "useful-image/Yummy World Garden.png",
+          },
+
+          // 🛍️ CỬA HÀNG
+          {
+            name: "See You Shop",
+            x: 1149,
+            y: 1216,
+            wait_time: null,
+            type: "shop",
+            maintainance: false,
+            location: "Fairy Land",
+            ages: ["Không giới hạn độ tuổi"],
+            height: "Không giới hạn chiều cao",
+            description: "Cửa hàng bán đồ lưu niệm quần áo.",
+            image: "useful-image/Sea You Shop.png",
+          },
+          {
+            name: "Shop Kid World",
+            x: 835,
+            y: 1045,
+            wait_time: null,
+            type: "shop",
+            maintainance: false,
+            location: "Fairy Land",
+            ages: ["Không giới hạn độ tuổi"],
+            level: "Thích hợp cho cả gia đình",
+            height: "Không giới hạn chiều cao",
+            weather_stop: false,
+            description: "Quà tặng và đồ chơi cho bé.",
+            image: "useful-image/Shop KID WORLD.png",
+          },
+          {
+            name: "Maria Shop",
+            x: 1318,
+            y: 1884,
+            wait_time: null,
+            type: "shop",
+            maintainance: false,
+            image: "useful-image/Marina.png",
+          },
+          {
+            name: "Wooden House (Shopping)",
+            x: 2021,
+            y: 1865,
+            wait_time: null,
+            type: "shop",
+            maintainance: false,
+            location: "The World Garden",
+            ages: ["Không giới hạn độ tuổi"],
+            level: "Thích hợp cho cả gia đình",
+            height: "Không giới hạn chiều cao",
+            weather_stop: false,
+            description:
+              "Cửa hàng là địa điểm lý tưởng để bạn món quà lưu niệm đặc trưng và ý nghĩa tặng cho người thân, bạn bè như quần áo thời trang, phụ kiện; các loại đồ chơi, quà lưu niệm.",
+            image: "useful-image/Wooden House.png",
+          },
+          {
+            name: "Sea Fashion",
+            x: 1899,
+            y: 1809,
+            wait_time: null,
+            type: "shop",
+            maintainance: false,
+            location: "King’s Garden",
+            ages: ["Không giới hạn độ tuổi"],
+            height: "Không giới hạn chiều cao",
+            description:
+              "Shop Sea Fashion chuyên các trang phục mùa hè, váy, mũ và đồ resort phong cách bnăng động, phù hợp cho các chuyến du lịch biển hoặc dạo phố.",
+            image: "useful-image/Sea Fashion.png",
+          },
+
+          // 🚻 NHÀ VỆ SINH
+          {
+            name: "Nhà vệ sinh",
+            x: 999,
+            y: 683,
+            wait_time: null,
+            type: "toilet",
+            maintainance: false,
+            image: "useful-image/Nhà vệ sinh.png",
+          },
+          {
+            name: "Nhà vệ sinh",
+            x: 1386,
+            y: 839,
+            wait_time: null,
+            type: "toilet",
+            maintainance: false,
+            image: "useful-image/Nhà vệ sinh.png",
+          },
+          {
+            name: "Nhà vệ sinh",
+            x: 1011,
+            y: 1345,
+            wait_time: null,
+            type: "toilet",
+            maintainance: false,
+            image: "useful-image/Nhà vệ sinh.png",
+          },
+          {
+            name: "Nhà vệ sinh",
+            x: 650,
+            y: 1673,
+            wait_time: null,
+            type: "toilet",
+            maintainance: false,
+            image: "useful-image/Nhà vệ sinh.png",
+          },
+          {
+            name: "Nhà vệ sinh Công viên nước",
+            x: 1187,
+            y: 1826,
+            wait_time: null,
+            type: "toilet",
+            maintainance: false,
+            image: "useful-image/Nhà vệ sinh công viên nước.png",
+          },
+          {
+            name: "Nhà vệ sinh",
+            x: 1520,
+            y: 2095,
+            wait_time: null,
+            type: "toilet",
+            maintainance: false,
+            image: "useful-image/Nhà vệ sinh.png",
+          },
+          {
+            name: "Nhà vệ sinh",
+            x: 1115,
+            y: 2304,
+            wait_time: null,
+            type: "toilet",
+            maintainance: false,
+            image: "useful-image/Nhà vệ sinh.png",
+          },
+          {
+            name: "Nhà vệ sinh",
+            x: 1762,
+            y: 2396,
+            wait_time: null,
+            type: "toilet",
+            maintainance: false,
+            image: "useful-image/Nhà vệ sinh.png",
+          },
+          {
+            name: "Nhà vệ sinh",
+            x: 1860,
+            y: 2834,
+            wait_time: null,
+            type: "toilet",
+            maintainance: false,
+            image: "useful-image/Nhà vệ sinh.png",
+          },
+          {
+            name: "Nhà vệ sinh",
+            x: 2275,
+            y: 2601,
+            wait_time: null,
+            type: "toilet",
+            maintainance: false,
+            image: "useful-image/Nhà vệ sinh.png",
+          },
+          {
+            name: "Nhà vệ sinh",
+            x: 2458,
+            y: 2009,
+            wait_time: null,
+            type: "toilet",
+            maintainance: false,
+            image: "useful-image/Nhà vệ sinh.png",
+          },
+          {
+            name: "Nhà vệ sinh",
+            x: 2152,
+            y: 1608,
+            wait_time: null,
+            type: "toilet",
+            maintainance: false,
+            image: "useful-image/Nhà vệ sinh.png",
+          },
+
+          // 🏥 TRẠM Y TẾ
+          {
+            name: "Trạm y tế",
+            x: 1805,
+            y: 752,
+            wait_time: null,
+            type: "medical",
+            maintainance: false,
+            image: "useful-image/Trạm y tế.png",
+          },
+          {
+            name: "Trạm y tế",
+            x: 819,
+            y: 1668,
+            wait_time: null,
+            type: "medical",
+            maintainance: false,
+            image: "useful-image/Trạm y tế.png",
+          },
+          // --- END EXTENDED ATTRACTIONS DATA ---
+        ];
+
+        function getCrowdStatus(waitTime, type) {
+          if (type === "toilet") {
+            return { status: "Nhà vệ sinh", color: "#2196F3", icon: "🚻" };
+          }
+          if (type === "zoo") {
+            return { status: "Vườn thú", color: "#4CAF50", icon: "🦁" };
+          }
+          if (type === "shop") {
+            return { status: "Mua sắm", color: "#9C27B0", icon: "🛍️" };
+          }
+          if (type === "medical") {
+            return { status: "Y tế", color: "#F44336", icon: "🚑" };
+          }
+          if (type === "restaurant") {
+            return { status: "Nhà hàng", color: "#FF9800", icon: "🍽️" };
+          }
+          if (waitTime === null) {
+            return { status: "Bảo trì", color: "#999", icon: "🔧" };
+          } else if (waitTime < 10) {
+            return { status: "Thông thoáng", color: "#4CAF50", icon: "✓" };
+          } else if (waitTime < 20) {
+            return { status: "Bình thường", color: "#FFC107", icon: "○" };
+          } else if (waitTime < 40) {
+            return { status: "Đông", color: "#FF9800", icon: "◐" };
+          } else {
+            return { status: "Rất đông", color: "#F44336", icon: "●" };
+          }
+        }
+
+        // Calculate distance between two points
+        function calculateDistance(x1, y1, x2, y2) {
+          return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+        }
+
+        // Get suggestions for an attraction
+        function getSuggestions(currentAttraction, allAttractions) {
+          const rides = [];
+          const utilities = [];
+
+          allAttractions.forEach((attraction) => {
+            // Skip current attraction and maintenance attractions
+            if (
+              attraction.name === currentAttraction.name ||
+              attraction.maintainance
+            ) {
+              return;
+            }
+
+            const distance = calculateDistance(
+              currentAttraction.x,
+              currentAttraction.y,
+              attraction.x,
+              attraction.y,
+            );
+
+            // Categorize by type
+            if (attraction.type === "ride" || attraction.type === "zoo") {
+              // For rides/zoo: score based on distance and wait time
+              const waitTime = attraction.wait_time || 0;
+              // Normalize scores (lower is better for both)
+              // Distance weight: 50%, Wait time weight: 50%
+              const distanceScore = distance;
+              const waitTimeScore = waitTime * 50; // Scale wait time to similar range as distance
+              const totalScore = distanceScore + waitTimeScore;
+
+              rides.push({
+                ...attraction,
+                distance: distance,
+                score: totalScore,
+              });
+            } else if (
+              ["restaurant", "toilet", "shop", "medical"].includes(
+                attraction.type,
+              )
+            ) {
+              // For utilities: score only based on distance
+              utilities.push({
+                ...attraction,
+                distance: distance,
+                score: distance,
+              });
+            }
+          });
+
+          // Sort by score (lower is better) and get top 3
+          rides.sort((a, b) => a.score - b.score);
+          utilities.sort((a, b) => a.score - b.score);
+
+          return {
+            rides: rides.slice(0, 3),
+            utilities: utilities.slice(0, 3),
+          };
+        }
+
+        // Format distance for display
+        function formatDistance(distance) {
+          if (distance < 100) {
+            return "Rất gần";
+          } else if (distance < 300) {
+            return "Gần";
+          } else {
+            return "Trung bình";
+          }
+        }
+
+        // Create suggestion HTML
+        function createSuggestionsHTML(suggestions, currentAttractionName) {
+          let html = "";
+
+          // Rides and zoo section
+          if (suggestions.rides.length > 0) {
+            html += `
+              <div class="suggestions-section">
+                <div class="suggestions-title">
+                  <i class="fa-solid fa-star"></i>
+                  <span>Điểm vui chơi gợi ý</span>
+                </div>
+                <div class="suggestion-cards">
+            `;
+
+            suggestions.rides.forEach((attraction) => {
+              const crowdInfo = getCrowdStatus(
+                attraction.wait_time,
+                attraction.type,
+              );
+              const distanceText = formatDistance(attraction.distance);
+
+              html += `
+                <div class="suggestion-card" data-attraction-name="${attraction.name}" data-attraction-x="${attraction.x}" data-attraction-y="${attraction.y}">
+                  <div class="suggestion-icon" style="background: ${crowdInfo.color};">
+                    ${crowdInfo.icon}
+                  </div>
+                  <div class="suggestion-content">
+                    <div class="suggestion-name">${attraction.name}</div>
+                    <div class="suggestion-info">
+                      <span class="suggestion-badge">
+                        📍 ${distanceText}
+                      </span>
+                      ${
+                        attraction.wait_time !== null
+                          ? `
+                        <span class="suggestion-badge" style="color: ${crowdInfo.color}">
+                          ⏱️ ${attraction.wait_time}p
+                        </span>
+                      `
+                          : ""
+                      }
+                    </div>
+                  </div>
+                  <i class="fa-solid fa-arrow-right suggestion-arrow"></i>
+                </div>
+              `;
+            });
+
+            html += `
+                </div>
+              </div>
+            `;
+          }
+
+          // Utilities section
+          if (suggestions.utilities.length > 0) {
+            html += `
+              <div class="suggestions-section">
+                <div class="suggestions-title">
+                  <i class="fa-solid fa-map-pin"></i>
+                  <span>Tiện ích gợi ý</span>
+                </div>
+                <div class="suggestion-cards">
+            `;
+
+            suggestions.utilities.forEach((attraction) => {
+              const crowdInfo = getCrowdStatus(
+                attraction.wait_time,
+                attraction.type,
+              );
+              const distanceText = formatDistance(attraction.distance);
+
+              html += `
+                <div class="suggestion-card" data-attraction-name="${attraction.name}" data-attraction-x="${attraction.x}" data-attraction-y="${attraction.y}">
+                  <div class="suggestion-icon" style="background: ${crowdInfo.color};">
+                    ${crowdInfo.icon}
+                  </div>
+                  <div class="suggestion-content">
+                    <div class="suggestion-name">${attraction.name}</div>
+                    <div class="suggestion-info">
+                      <span class="suggestion-badge">
+                        📍 ${distanceText}
+                      </span>
+                    </div>
+                  </div>
+                  <i class="fa-solid fa-arrow-right suggestion-arrow"></i>
+                </div>
+              `;
+            });
+
+            html += `
+                </div>
+              </div>
+            `;
+          }
+
+          // Show message if no suggestions
+          if (
+            suggestions.rides.length === 0 &&
+            suggestions.utilities.length === 0
+          ) {
+            html += `
+              <div class="suggestions-section">
+                <div class="no-suggestions">
+                  Không có gợi ý nào khả dụng
+                </div>
+              </div>
+            `;
+          }
+
+          return html;
+        }
+
+        // Use custom image as map base
+        // Set image dimensions (replace with your actual image size)
+        const imageWidth = 3000; // <-- set your map image width in pixels
+        const imageHeight = 3000; // <-- set your map image height in pixels
+
+        // Define image bounds: top-left [0,0], bottom-right [imageHeight, imageWidth]
+        const bounds = [
+          [0, 0],
+          [imageHeight, imageWidth],
+        ];
+
+        // Initialize Leaflet map with simple CRS and restrict view to image bounds
+        const map = L.map("map", {
+          crs: L.CRS.Simple,
+          minZoom: -2,
+          maxZoom: 4,
+          zoomControl: false,
+          maxBounds: bounds,
+          maxBoundsViscosity: 1.0,
+        });
+
+        // Add image overlay
+        L.imageOverlay("./assets/official.png", bounds).addTo(map);
+        map.fitBounds(bounds);
+
+        // Custom zoom controls
+        document.getElementById("zoomIn").onclick = () => map.zoomIn();
+        document.getElementById("zoomOut").onclick = () => map.zoomOut();
+
+        // Store all markers for filtering
+        const allMarkers = [];
+
+        // Ready for adding markers/points later
+        // To add a marker: L.marker([y, x]).addTo(map)
+        map.on("click", function (e) {
+          // Convert latlng to container point (pixel on map container)
+          const point = map.latLngToContainerPoint(e.latlng);
+          // Convert latlng to image pixel coordinates
+          const imagePoint = map.layerPointToLatLng(point);
+          // For CRS.Simple, latlng is [y, x] in image pixels
+          const x = e.latlng.lng;
+          const y = e.latlng.lat;
+          console.log(`Clicked pixel position: x=${x}, y=${y}`);
+        });
+
+        attractions.forEach((attraction, idx) => {
+          const crowdInfo = getCrowdStatus(
+            attraction.wait_time,
+            attraction.type,
+          );
+
+          // Animated pulse marker with emoji
+          const customIcon = L.divIcon({
+            className: "custom-marker",
+            html: `
+        <div style="position: relative; width: 32px; height: 32px;">
+          <div style="
+            position: absolute; left: 50%; top: 50%;
+            width: 32px; height: 32px;
+            background: ${crowdInfo.color}33;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: pulse 1.5s infinite;
+            z-index: 1;
+          "></div>
+          <div style="
+            position: absolute; left: 50%; top: 50%;
+            width: 20px; height: 20px;
+            background: ${crowdInfo.color};
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            transform: translate(-50%, -50%);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 14px; color: #fff;
+            z-index: 2;
+          ">${crowdInfo.icon}</div>
+        </div>
+      `,
+            iconSize: [32, 32],
+            iconAnchor: [16, 16],
+          });
+
+          const marker = L.marker([attraction.y, attraction.x], {
+            icon: customIcon,
+            title: attraction.name,
+          }).addTo(map);
+
+          // Build comprehensive popup content
+          let popupDirection = "top";
+          let popupOffset = [0, -10];
+
+          if (attraction.y > imageHeight * 0.6) {
+            // Bottom 40% of map - show popup below
+            popupDirection = "bottom";
+            popupOffset = [0, 25];
+          }
+
+          // Build comprehensive popup content
+          let popupContent = `
+            <div style="width: 320px; font-family: 'Montserrat'; background: linear-gradient(135deg, #fff7f0 0%, #ffe8d6 100%); border-radius: 12px; overflow: hidden;">
+              <div class="popup-scroll-container">
+          `;
+
+          // Image section
+          if (attraction.image) {
+            popupContent += `
+              <div style="position: relative; width: 100%; height: 180px; overflow: hidden;">
+                <img src="${attraction.image}" alt="${attraction.name}" style="width: 100%; height: 100%; object-fit: cover;">
+                <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.7) 100%);"></div>
+                <div style="position: absolute; bottom: 10px; left: 12px; right: 12px;">
+                  <h3 style="margin: 0; color: white; font-size: 18px; font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">${attraction.name}</h3>
+                </div>
+                <div style="position: absolute; top: 10px; left: 10px; background: ${crowdInfo.color}; color: white; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; box-shadow: 0 2px 8px rgba(0,0,0,0.3);">
+                  ${crowdInfo.icon} ${crowdInfo.status}
+                </div>
+              </div>
+            `;
+          } else {
+            // No image, show header with gradient
+            popupContent += `
+              <div style="background: linear-gradient(135deg, #f77119 0%, #ff9447 100%); padding: 16px; text-align: center;">
+                <div style="font-size: 32px; margin-bottom: 8px;">${crowdInfo.icon}</div>
+                <h3 style="margin: 0; color: white; font-size: 18px; font-weight: bold; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">${attraction.name}</h3>
+              </div>
+            `;
+          }
+
+          // Content section
+          popupContent += `<div style="padding: 14px;">`;
+
+          // Wait time and status (for rides)
+          if (attraction.type === "ride") {
+            const waitTimeText =
+              attraction.wait_time === null
+                ? '<span style="color: #999; font-weight: bold;">Đang bảo trì 🔧</span>'
+                : `<span style="color: ${crowdInfo.color}; font-weight: bold; font-size: 18px;">${attraction.wait_time} phút</span>`;
+
+            popupContent += `
+              <div style="background: white; padding: 10px; border-radius: 8px; margin-bottom: 12px; border-left: 4px solid #f77119;">
+                <div style="font-size: 12px; color: #666; margin-bottom: 4px;">⏱️ Thời gian chờ</div>
+                <div style="font-size: 16px;">${waitTimeText}</div>
+              </div>
+            `;
+          }
+
+          // Location
+          if (attraction.location) {
+            popupContent += `
+              <div style="margin-bottom: 10px; display: flex; align-items: start; gap: 8px;">
+                <span style="color: #f77119; font-size: 16px; margin-top: 2px;">📍</span>
+                <div>
+                  <div style="font-size: 11px; color: #999; text-transform: uppercase; letter-spacing: 0.5px;">Khu vực</div>
+                  <div style="font-size: 13px; color: #333; font-weight: 600;">${attraction.location}</div>
+                </div>
+              </div>
+            `;
+          }
+
+          // Description
+          if (attraction.description) {
+            const shortDesc =
+              attraction.description.length > 150
+                ? attraction.description.substring(0, 150) + "..."
+                : attraction.description;
+            popupContent += `
+              <div style="background: rgba(255, 255, 255, 0.7); padding: 10px; border-radius: 8px; margin-bottom: 12px; font-size: 13px; line-height: 1.5; color: #555; border: 1px solid #ffe2c5;">
+                ${shortDesc}
+              </div>
+            `;
+          }
+
+          // Details grid
+          popupContent += `<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px;">`;
+
+          // Ages
+          if (attraction.ages && attraction.ages.length > 0) {
+            popupContent += `
+              <div style="background: white; padding: 8px; border-radius: 6px; text-align: center; border: 1px solid #ffe2c5;">
+                <div style="font-size: 16px; margin-bottom: 4px;">👥</div>
+                <div style="font-size: 10px; color: #999; margin-bottom: 2px;">Độ tuổi</div>
+                <div style="font-size: 11px; color: #f77119; font-weight: bold;">${attraction.ages.join(", ")}</div>
+              </div>
+            `;
+          }
+
+          // Height requirement
+          if (attraction.height) {
+            popupContent += `
+              <div style="background: white; padding: 8px; border-radius: 6px; text-align: center; border: 1px solid #ffe2c5;">
+                <div style="font-size: 16px; margin-bottom: 4px;">📏</div>
+                <div style="font-size: 10px; color: #999; margin-bottom: 2px;">Chiều cao</div>
+                <div style="font-size: 11px; color: #f77119; font-weight: bold;">${attraction.height}</div>
+              </div>
+            `;
+          }
+
+          // Level/Intensity
+          if (attraction.level) {
+            popupContent += `
+              <div style="background: white; padding: 8px; border-radius: 6px; text-align: center; border: 1px solid #ffe2c5;">
+                <div style="font-size: 16px; margin-bottom: 4px;">⚡</div>
+                <div style="font-size: 10px; color: #999; margin-bottom: 2px;">Độ kích thích</div>
+                <div style="font-size: 11px; color: #f77119; font-weight: bold;">${attraction.level}</div>
+              </div>
+            `;
+          }
+
+          // Weight limit
+          if (attraction.weight) {
+            popupContent += `
+              <div style="background: white; padding: 8px; border-radius: 6px; text-align: center; border: 1px solid #ffe2c5;">
+                <div style="font-size: 16px; margin-bottom: 4px;">⚖️</div>
+                <div style="font-size: 10px; color: #999; margin-bottom: 2px;">Cân nặng</div>
+                <div style="font-size: 11px; color: #f77119; font-weight: bold;">${attraction.weight}</div>
+              </div>
+            `;
+          }
+
+          // Restaurant type
+          if (attraction.restaurant_type) {
+            popupContent += `
+              <div style="background: white; padding: 8px; border-radius: 6px; text-align: center; border: 1px solid #ffe2c5;">
+                <div style="font-size: 16px; margin-bottom: 4px;">🍽️</div>
+                <div style="font-size: 10px; color: #999; margin-bottom: 2px;">Loại hình</div>
+                <div style="font-size: 11px; color: #f77119; font-weight: bold;">${attraction.restaurant_type}</div>
+              </div>
+            `;
+          }
+
+          // Cuisine
+          if (attraction.cuisine) {
+            popupContent += `
+              <div style="background: white; padding: 8px; border-radius: 6px; text-align: center; border: 1px solid #ffe2c5;">
+                <div style="font-size: 16px; margin-bottom: 4px;">🌍</div>
+                <div style="font-size: 10px; color: #999; margin-bottom: 2px;">Ẩm thực</div>
+                <div style="font-size: 11px; color: #f77119; font-weight: bold;">${attraction.cuisine}</div>
+              </div>
+            `;
+          }
+
+          popupContent += `</div>`; // Close grid
+
+          // Weather warning
+          if (attraction.weather_stop) {
+            popupContent += `
+              <div style="background: #fff3cd; border: 1px solid #ffecb5; border-radius: 6px; padding: 8px; margin-top: 8px; display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 16px;">⛈️</span>
+                <span style="font-size: 11px; color: #856404;">Có thể tạm dừng khi thời tiết xấu</span>
+              </div>
+            `;
+          }
+
+          // Maintenance warning
+          if (attraction.maintainance) {
+            popupContent += `
+              <div style="background: #f8d7da; border: 1px solid #f5c2c7; border-radius: 6px; padding: 8px; margin-top: 8px; display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 16px;">🔧</span>
+                <span style="font-size: 11px; color: #842029; font-weight: bold;">Đang bảo trì</span>
+              </div>
+            `;
+          }
+
+          // Footer
+          popupContent += `
+            <div style="margin-top: 12px; padding-top: 10px; border-top: 1px solid #ffe2c5; display: flex; justify-content: space-between; align-items: center;">
+              <div style="font-size: 10px; color: #999;">Điểm #${idx + 1}</div>
+              <div style="font-size: 18px;">🎢</div>
+            </div>
+          `;
+
+          // Add booking buttons for rides only
+          if (attraction.type === "ride" && !attraction.maintainance) {
+            const showPriorityBtn = attraction.wait_time >= 20;
+
+            popupContent += `
+             <div style="display: flex; gap: 8px; margin-top: 16px;">
+               <button 
+                 class="popup-book-btn popup-book-virtual" 
+                 data-attraction-id="${idx}"
+                 style="flex: 1; padding: 10px 14px; border: none; border-radius: 10px; font-weight: 600; font-size: 13px; cursor: pointer; background: linear-gradient(135deg, #3498db 0%, #2980b9 100%); color: white; display: flex; align-items: center; justify-content: center; gap: 6px; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3);">
+                 <i class="fa-solid fa-clock"></i>
+                 Hàng ảo
+               </button>
+               <button 
+                 class="popup-book-btn popup-book-priority" 
+                 data-attraction-id="${idx}"
+                 ${!showPriorityBtn ? "disabled" : ""}
+                 style="flex: 1; padding: 10px 14px; border: none; border-radius: 10px; font-weight: 600; font-size: 13px; cursor: ${!showPriorityBtn ? "not-allowed" : "pointer"}; background: ${!showPriorityBtn ? "#bdc3c7" : "linear-gradient(135deg, #f77119 0%, #e55b00 100%)"}; color: white; display: flex; align-items: center; justify-content: center; gap: 6px; transition: all 0.3s ease; box-shadow: ${!showPriorityBtn ? "none" : "0 2px 8px rgba(247, 113, 25, 0.3)"}; opacity: ${!showPriorityBtn ? "0.6" : "1"};">
+                 <i class="fa-solid fa-star"></i>
+                 Vé ưu tiên
+               </button>
+             </div>
+           `;
+
+            // Add note about priority booking
+            if (showPriorityBtn) {
+              popupContent += `
+               <div style="display: flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #fff5eb 0%, #ffe8d1 100%); border-left: 4px solid #f77119; border-radius: 8px; padding: 10px 12px; margin-top: 10px; font-size: 12px; color: #a65b1a;">
+                 <i class="fa-solid fa-lightbulb" style="color: #f77119; font-size: 16px;"></i>
+                 <span>Nếu bạn không muốn chờ đợi, hãy mua <b>Vé ưu tiên</b> để vào chơi ngay.</span>
+               </div>
+             `;
+            }
+          }
+          // Add suggestions
+          const suggestions = getSuggestions(attraction, attractions);
+          popupContent += createSuggestionsHTML(suggestions, attraction.name);
+
+          popupContent += `</div>`; // Close content
+          popupContent += `</div>`; // Close scroll container
+          popupContent += `</div>`; // Close main wrapper
+
+          marker.bindPopup(popupContent, {
+            maxWidth: 340,
+            className: "custom-popup",
+            autoPan: true,
+            autoPanPaddingTopLeft: [20, 80],
+            autoPanPaddingBottomRight: [20, 20],
+            autoPanPadding: [70, 70],
+            keepInView: true,
+            closeButton: true,
+            autoClose: true,
+            closeOnClick: false,
+          });
+
+          // Smooth pan to marker when popup opens
+          marker.on("click", function (e) {
+            setTimeout(() => {
+              // Calculate smart offset based on marker position
+              const mapSize = map.getSize();
+              const markerPoint = map.latLngToContainerPoint(e.latlng);
+
+              // If marker is in bottom half of screen, pan it down to make room for popup
+              let offsetY = 0;
+              if (markerPoint.y > mapSize.y * 0.5) {
+                // Bottom half - offset downward (positive Y)
+                const distanceFromBottom = mapSize.y - markerPoint.y;
+                // Calculate offset: more offset if closer to bottom
+                offsetY = Math.min(
+                  200,
+                  Math.max(100, 250 - distanceFromBottom),
+                );
+              } else {
+                // Top half - small upward offset
+                offsetY = -50;
+              }
+
+              // Apply offset
+              const targetPoint = markerPoint.add([0, offsetY]);
+              const adjustedLatLng = map.containerPointToLatLng(targetPoint);
+
+              map.panTo(adjustedLatLng, {
+                animate: true,
+                duration: 0.5,
+                easeLinearity: 0.25,
+              });
+            }, 100);
+          });
+
+          // Add click handlers for suggestion cards after popup opens
+          marker.on("popupopen", function () {
+            const popup = marker.getPopup();
+            const popupElement = popup.getElement();
+
+            const suggestionCards =
+              popupElement.querySelectorAll(".suggestion-card");
+            suggestionCards.forEach((card) => {
+              card.addEventListener("click", function () {
+                const attractionName = this.getAttribute(
+                  "data-attraction-name",
+                );
+                const attractionX = parseInt(
+                  this.getAttribute("data-attraction-x"),
+                );
+                const attractionY = parseInt(
+                  this.getAttribute("data-attraction-y"),
+                );
+
+                // Find the marker for this attraction (match name and coordinates)
+                const targetMarker = allMarkers.find(
+                  (m) =>
+                    m.data.name === attractionName &&
+                    m.data.x === attractionX &&
+                    m.data.y === attractionY,
+                );
+                if (targetMarker) {
+                  // Close current popup
+                  map.closePopup();
+
+                  // Pan and zoom to the target marker
+                  map.setView(
+                    [targetMarker.data.y, targetMarker.data.x],
+                    map.getZoom(),
+                    {
+                      animate: true,
+                      duration: 0.8,
+                      easeLinearity: 0.25,
+                    },
+                  );
+
+                  // Open the target marker's popup after animation
+                  setTimeout(() => {
+                    targetMarker.marker.openPopup();
+                  }, 500);
+                }
+              });
+            });
+
+            // Add click handlers for booking buttons
+            const bookingButtons =
+              popupElement.querySelectorAll(".popup-book-btn");
+            bookingButtons.forEach((btn) => {
+              // Add hover effects
+              btn.addEventListener("mouseenter", function () {
+                if (!this.disabled) {
+                  this.style.transform = "translateY(-2px)";
+                  if (this.classList.contains("popup-book-virtual")) {
+                    this.style.boxShadow = "0 4px 12px rgba(52, 152, 219, 0.5)";
+                  } else {
+                    this.style.boxShadow = "0 4px 12px rgba(247, 113, 25, 0.5)";
+                  }
+                }
+              });
+
+              btn.addEventListener("mouseleave", function () {
+                if (!this.disabled) {
+                  this.style.transform = "translateY(0)";
+                  if (this.classList.contains("popup-book-virtual")) {
+                    this.style.boxShadow = "0 2px 8px rgba(52, 152, 219, 0.3)";
+                  } else {
+                    this.style.boxShadow = "0 2px 8px rgba(247, 113, 25, 0.3)";
+                  }
+                }
+              });
+
+              // Add click handler
+              btn.addEventListener("click", function () {
+                if (this.disabled) return;
+
+                const attractionId = parseInt(
+                  this.getAttribute("data-attraction-id"),
+                );
+                const bookingType = this.classList.contains(
+                  "popup-book-virtual",
+                )
+                  ? "virtual"
+                  : "priority";
+
+                // Navigate to game.html with parameters
+                const params = new URLSearchParams({
+                  attractionId: attractionId,
+                  bookingType: bookingType,
+                });
+
+                window.location.href = `./game.html?${params.toString()}`;
+              });
+            });
+          });
+
+          // Store marker with attraction data for filtering
+          allMarkers.push({
+            marker: marker,
+            data: attraction,
+          });
+        });
+        // attractions.forEach((attraction) => {
+        //   const crowdInfo = getCrowdStatus(attraction.wait_time);
+        //
+        //   // Create custom icon with color based on crowd status
+        //   const customIcon = L.divIcon({
+        //     className: "custom-marker",
+        //     html: `<div style="background-color: ${crowdInfo.color}; width: 20px; height: 20px; border-radius: 50%; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>`,
+        //     iconSize: [20, 20],
+        //     iconAnchor: [10, 10],
+        //   });
+        //
+        //   const marker = L.marker([attraction.y, attraction.x], {
+        //     icon: customIcon,
+        //   }).addTo(map);
+        //
+        //   const waitTimeText =
+        //     attraction.wait_time === null
+        //       ? '<span style="color: #999; font-weight: bold;">Đang bảo trì 🔧</span>'
+        //       : `<span style="color: ${crowdInfo.color}; font-weight: bold;">${attraction.wait_time} phút</span>`;
+        //
+        //   const popupContent = `
+        //           <div style="min-width: 150px; padding: 5px;">
+        //             <h4 style="margin: 0 0 8px 0; color: #333; font-size: 14px;">${attraction.name}</h4>
+        //             <p style="margin: 4px 0; font-size: 13px;">
+        //               <strong>Thời gian chờ:</strong> ${waitTimeText}
+        //             </p>
+        //             <p style="margin: 4px 0; font-size: 13px;">
+        //               <strong>Tình trạng:</strong>
+        //               <span style="color: ${crowdInfo.color}; font-weight: bold;">${crowdInfo.icon} ${crowdInfo.status}</span>
+        //             </p>
+        //           </div>
+        //         `;
+        //
+        //   marker.bindPopup(popupContent);
+        // });
+
+        // Search functionality
+        const searchBox = document.getElementById("searchBox");
+        searchBox.addEventListener("input", function (e) {
+          const searchTerm = e.target.value.toLowerCase().trim();
+          filterMarkers(searchTerm, currentFilter);
+        });
+
+        // Filter functionality
+        let currentFilter = "all";
+        const filterButtons = document.querySelectorAll(".filter-btn");
+
+        filterButtons.forEach((btn) => {
+          btn.addEventListener("click", function () {
+            // Update active button
+            filterButtons.forEach((b) => b.classList.remove("active"));
+            this.classList.add("active");
+
+            // Get filter type
+            currentFilter = this.getAttribute("data-filter");
+            const searchTerm = searchBox.value.toLowerCase().trim();
+            filterMarkers(searchTerm, currentFilter);
+          });
+        });
+
+        // Filter markers based on search and filter type
+        function filterMarkers(searchTerm, filterType) {
+          allMarkers.forEach(({ marker, data }) => {
+            let showMarker = true;
+
+            // Filter by type
+            if (filterType !== "all" && data.type !== filterType) {
+              showMarker = false;
+            }
+
+            // Filter by search term
+            if (searchTerm && !data.name.toLowerCase().includes(searchTerm)) {
+              if (
+                !data.location ||
+                !data.location.toLowerCase().includes(searchTerm)
+              ) {
+                if (
+                  !data.description ||
+                  !data.description.toLowerCase().includes(searchTerm)
+                ) {
+                  showMarker = false;
+                }
+              }
+            }
+
+            // Show or hide marker
+            if (showMarker) {
+              if (!map.hasLayer(marker)) {
+                marker.addTo(map);
+              }
+            } else {
+              if (map.hasLayer(marker)) {
+                map.removeLayer(marker);
+              }
+            }
+          });
+        }
+
+        // Legend toggle functionality
+        const searchToggle = document.getElementById("searchToggle");
+        const searchPanel = document.getElementById("searchPanel");
+
+        // Show toggle button when panel is hidden, hide when panel is shown
+        function updateSearchToggle() {
+          if (searchPanel.classList.contains("hide")) {
+            searchToggle.style.display = "block";
+          } else {
+            searchToggle.style.display = "none";
+          }
+        }
+
+        // Toggle panel on button click
+        searchToggle.addEventListener("click", function () {
+          searchPanel.classList.remove("hide");
+          updateSearchToggle();
+        });
+
+        // Hide panel and show toggle button when clicking outside panel
+        document.addEventListener("click", function (e) {
+          if (
+            !searchPanel.contains(e.target) &&
+            !searchToggle.contains(e.target) &&
+            !e.target.classList.contains("search-box") // allow typing in search
+          ) {
+            searchPanel.classList.add("hide");
+            updateSearchToggle();
+          }
+        });
+
+        const legendToggle = document.getElementById("legendToggle");
+        const legendPanel = document.getElementById("legendPanel");
+
+        legendToggle.addEventListener("click", function () {
+          legendPanel.classList.toggle("show");
+        });
+
+        // Close legend when clicking outside
+        document.addEventListener("click", function (e) {
+          if (
+            !legendPanel.contains(e.target) &&
+            !legendToggle.contains(e.target)
+          ) {
+            legendPanel.classList.remove("show");
+          }
+        });
+      };
+    </script>
+    <!-- LeafletJS JS -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  </body>
+</html>

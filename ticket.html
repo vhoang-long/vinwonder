@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VinWonders</title>
+      <link rel="icon" type="image/png" href="/assets/iconlogo.png" />
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./chatbot/chatbot.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+
+  <body>
+    <div class="wrapperTicket">
+      <div class="ticketImage">
+        <img src="./assets/Bia trang 1.png" alt="ticketImage" />
+        <img src="./assets/Bia trang 2.png" alt="ticketImage" />
+        <img src="./assets/Bia trang 3.png" alt="ticketImage" />
+        <img src="./assets/Bia trang 4.png" alt="ticketImage" />
+        <img src="./assets/Bia trang 5.png" alt="ticketImage" />
+      </div>
+      <div class="ticketContainer">
+        <div class="dropdown">
+          <div class="dropdown-header">
+            <i class="fa-solid fa-location-dot"></i>
+            <span>Chọn điểm đến</span>
+          </div>
+
+          <div class="dropdown-list">
+            <ul>
+              <li class="region">
+                <div>
+                  <h3>Nha Trang</h3>
+                </div>
+                <div class="region-header">
+                  <i class="fa-solid fa-location-dot"></i>
+                  <p>VinWonders Nha Trang</p>
+                </div>
+
+                <div class="region-header">
+                  <i class="fa-solid fa-location-dot"></i>
+                  <p>VinWonders Harbour Nha Trang</p>
+                </div>
+
+                <div class="region-header">
+                  <i class="fa-solid fa-location-dot"></i>
+                  <p>Aquafield Nha Trang</p>
+                </div>
+
+                <div class="region-header">
+                  <i class="fa-solid fa-location-dot"></i>
+                  <p>Tắm bùn Hòn Tằm</p>
+                </div>
+              </li>
+
+              <li class="region">
+                <div>
+                  <h3>Phú Quốc</h3>
+                </div>
+                <div class="region-header">
+                  <i class="fa-solid fa-location-dot"></i>
+                  <p>VinWonders Phú Quốc</p>
+                </div>
+
+                <div class="region-header">
+                  <i class="fa-solid fa-location-dot"></i>
+                  <p>Vinpearl Safari Phú Quốc</p>
+                </div>
+              </li>
+              <li class="region">
+                <div>
+                  <h3>Hạ Long</h3>
+                </div>
+                <div class="region-header">
+                  <i class="fa-solid fa-location-dot"></i>
+                  <p>VinWonders Hạ Long</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="calendar-container">
+          <label for="calendar-input" class="calendar-label"> </label>
+          <i class="fa-solid fa-calendar-days calendarIcon"></i>
+          <input
+            type="text"
+            id="calendar-input"
+            placeholder="Chọn thứ, ngày, tháng, năm"
+            readonly
+          />
+          <div id="calendar" class="calendar hidden"></div>
+        </div>
+        <div class = "btn-div">
+          <button class="btn-container">Tiếp tục</button>
+        </div>
+      </div>
+      <div class="menu">
+        <div class="menuItem">
+          <a href="./index.html" class="menuItemLink">
+            <i class="fa-solid fa-house menuItemIcon"></i>
+            <p class="menuItemContent">Trang chủ</p>
+          </a>
+        </div>
+        <div class="menuItem">
+          <a href="" class="menuItemLink">
+            <i class="fa-solid fa-ticket menuItemIcon"></i>
+            <p class="menuItemContent">Mua vé</p>
+          </a>
+        </div>
+        <div class="menuMap">
+          <a href="./map-game.html" class="menuItemLink">
+            <i class="fa-solid fa-location-dot menuMapIcon"></i>
+          </a>
+        </div>
+        <div class="menuItem">
+          <a href="./shopping.html" class="menuItemLink">
+            <i class="fa-solid fa-bag-shopping menuItemIcon"></i>
+            <p class="menuItemContent">Mua sắm</p>
+          </a>
+        </div>
+        <div class="menuItem">
+          <a href="./user.html" class="menuItemLink">
+            <i class="fa-solid fa-circle-user menuItemIcon"></i>
+            <p class="menuItemContent">Tài khoản</p>
+          </a>
+        </div>
+        <script src="./config.js"></script>        
+        <script src="./main.js"></script>
+      </div>
+    </div>
+
+    <script>
+      // Auto-scroll carousel - jump one card at a time (infinite loop)
+      function autoScrollSlider() {
+        const slider = document.querySelector('.ticketImage');
+        if (!slider) return;
+
+        const originalItems = Array.from(slider.querySelectorAll('.ticketImage img'));
+        let index = 0;
+        let autoScrollInterval;
+
+        // Clone all items and append to create seamless loop
+        originalItems.forEach(item => {
+          const clone = item.cloneNode(true);
+          slider.appendChild(clone);
+        });
+
+        // Get item width including gap
+        const itemWidth = window.visualViewport.width;
+
+        function moveToNextCard() {
+          index++;
+
+          // Scroll to the next card
+          slider.scrollTo({ 
+            left: index * itemWidth, 
+            behavior: 'instant' 
+          });
+
+          // When we reach the end of original items, reset to beginning
+          if (index >= originalItems.length) {
+            setTimeout(() => {
+              index = 0;
+              slider.scrollTo({ 
+                left: 0, 
+                behavior: 'instant' 
+              });
+            }, 1000);
+          }
+        }
+
+
+        // Start the auto-scroll
+        autoScrollInterval = setInterval(moveToNextCard, 2000);
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+          clearInterval(autoScrollInterval);
+        });
+      }
+      
+      // Start auto-scroll carousel when DOM is fully loaded
+      if (document.readyState === 'complete') {
+        autoScrollSlider();
+      } else {
+        document.addEventListener('DOMContentLoaded', autoScrollSlider);
+      }
+    </script>
+
+    <!-- ========== CHATBOT BÉ VIN ========== -->
+    
+    <div id="chatbot-root"></div>
+    <script>
+      fetch("./chatbot/chatbot.html")
+        .then((res) => res.text())
+        .then((html) => {
+          document.getElementById("chatbot-root").innerHTML = html;
+          const script = document.createElement("script");
+          script.src = "./chatbot/chatbot.js";
+          document.body.appendChild(script);
+        });
+    </script>
+    <!-- ========== END CHATBOT ========== -->
+
+    <!-- ========== CONTACT ========== -->
+    <div id="contact-root"></div>
+    <script>
+      fetch("./contact/contact.html")
+        .then((res) => res.text())
+        .then((html) => {
+          document.getElementById("contact-root").innerHTML = html;
+          const script = document.createElement("script");
+          script.src = "./contact/contact.js";
+          document.body.appendChild(script);
+        });
+    </script>
+    <!-- ========== END CONTACT ========== -->
+  </body>
+</html>

@@ -1,0 +1,680 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VinWonders</title>
+      <link rel="icon" type="image/png" href="/assets/iconlogo.png" />
+    <link rel="stylesheet" href="./style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <div class="wrapperDetaiTicket">
+      <div class="ticket-detail">
+        <div class="banner">
+          <img
+            src="./assets/vinwonders-nha-trang.jpg"
+            alt="VinWonders Nha Trang"
+          />
+          <div class="back-btn">
+            <a href="./ticket.html"><i class="fa-solid fa-arrow-left"></i></a>
+          </div>
+          <div class="cart-btn"><i class="fa-regular fa-heart"></i></div>
+        </div>
+        <div class="info">
+          <h2>VinWonders Nha Trang</h2>
+          <p class="rating"><span>⭐ 4.2</span> (7529 lượt đánh giá)</p>
+
+          <div class="date-buttons">
+            <button>Hôm nay</button>
+            <button>Ngày mai</button>
+            <button class="active">
+              <i class="fa-regular fa-calendar"></i> 27/10/2025
+            </button>
+          </div>
+
+          <div class="filter-buttons">
+            <button class="active">Tất cả vé</button>
+            <button><i class="fa-solid fa-fire"></i> Bán chạy nhất</button>
+            <button>Gói VIP</button>
+          </div>
+        </div>
+
+        <div class="ticket-card-list" id="ticketCardList">
+          <div class="ticket-card">
+            <h3>
+              [VinWonders Nha Trang] - Combo Vé Vào Cửa VinWonders + Dịch vụ
+              Buffet
+            </h3>
+            <ul>
+              <li>Vé vào cửa khu vui chơi 01 lần trong ngày</li>
+              <li>Thưởng thức buffet trưa tại nhà hàng Wind & Sea</li>
+              <li>02 lượt VinBus miễn phí trong ngày</li>
+            </ul>
+            <a href="#">Xem chi tiết »</a>
+
+            <div class="price-box">
+              <p>Chỉ từ <span class="price">1.100.000 đ</span></p>
+              <button class="btn-choose">Chọn</button>
+            </div>
+          </div>
+          <div class="ticket-card">
+            <h3>
+              [VinWonders Nha Trang] - Vé Vào Cửa Tiêu Chuẩn | Tặng Voucher ẩm
+              thực
+            </h3>
+            <ul>
+              <li>Vé vào cửa khu vui chơi 01 lần trong ngày</li>
+              <li>
+                Di chuyển bằng cáp treo 02 chiều + 02 lượt VinBus miễn phí
+              </li>
+              <li>Tặng Voucher ẩm thực từ 15/08 - 30/11</li>
+            </ul>
+            <a href="#">Xem chi tiết »</a>
+
+            <div class="price-box">
+              <p>Chỉ từ <span class="price">950.000 đ</span></p>
+              <button class="btn-choose">Chọn</button>
+            </div>
+          </div>
+          <div class="ticket-card">
+            <h3>[VinWonders Nha Trang] - Vé vào cửa VinWonders sau 16h00</h3>
+            <ul>
+              <li>Vé vào cửa khu vui chơi 01 lần trong ngày</li>
+              <li>Di chuyển bằng cáp treo 02 chiều</li>
+              <li>02 lượt VinBus miễn phí trong ngày</li>
+            </ul>
+            <a href="#">Xem chi tiết »</a>
+
+            <div class="price-box">
+              <p>Chỉ từ <span class="price">660.000 đ</span></p>
+              <button class="btn-choose">Chọn</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- modal chi tiết vé -->
+      <div id="ticketModal" class="modal">
+        <div class="modal-content">
+          <span class="close-btn">&times;</span>
+          <h3 class="modal-title">Chi tiết vé</h3>
+          <p class="modal-description">
+            Đây là mô tả chi tiết của gói vé bạn chọn.
+          </p>
+        </div>
+      </div>
+      <!-- modal mua vé -->
+      <div id="buyModal" class="modalBuyTicket">
+        <div class="modal-content ticket-buy">
+          <span class="close-btn">&times;</span>
+          <h3 class="modal-title">Chọn loại vé</h3>
+          <p>[Vinpearl Harbour] - Vé xem Tata Show</p>
+
+          <!-- Chọn cơ sở -->
+          <div class="location-section">
+            <h4><i class="fa-solid fa-location-dot"></i> Chọn cơ sở</h4>
+            <div class="location-options">
+              <button class="active">ZooKeeper NT</button>
+            </div>
+          </div>
+
+          <!-- Chọn thời gian -->
+          <div class="time-section">
+            <h4><i class="fa-regular fa-clock"></i> Chọn thời gian</h4>
+            <div class="time-options">
+              <button class="time-btn active">9:30</button>
+              <button class="time-btn">14:00</button>
+            </div>
+          </div>
+
+          <div class="quantity-section">
+            <h4><i class="fa-solid fa-user-group"></i> Số lượng mua</h4>
+
+            <div class="ticket-type">
+              <div>
+                <p>Người lớn</p>
+                <small>Cao từ 140cm</small>
+              </div>
+              <div class="price">100,000 đ</div>
+              <div class="counter">
+                <button class="minus">−</button>
+                <span class="count">1</span>
+                <button class="plus">+</button>
+              </div>
+            </div>
+
+            <div class="ticket-type">
+              <div>
+                <p>Trẻ em</p>
+                <small
+                  >Cao từ <br />
+                  100cm–139cm</small
+                >
+              </div>
+              <div class="price">100,000 đ</div>
+              <div class="counter">
+                <button class="minus">−</button>
+                <span class="count">1</span>
+                <button class="plus">+</button>
+              </div>
+            </div>
+
+            <div class="ticket-type">
+              <div>
+                <p>Người cao tuổi</p>
+                <small>Từ 60 tuổi</small>
+              </div>
+              <div class="price">100,000 đ</div>
+              <div class="counter">
+                <button class="minus">−</button>
+                <span class="count">1</span>
+                <button class="plus">+</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="footer">
+            <span class="total">100,000 đ</span>
+            <button class="buy-btn">Mua ngay</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+
+      // Ticket detail constants
+      const TICKET_DETAILS = {
+        combo: {
+          title: '[VinWonders Nha Trang] - Combo Vé Vào Cửa VinWonders + Dịch vụ Buffet',
+          tickets: [
+            {
+              type: 'Người lớn',
+              description: 'Cao từ 140cm',
+              price_original: 1190000,
+              price_discount: 1100000,
+            },
+            {
+              type: 'Trẻ em',
+              description: 'Cao từ 100-139cm',
+              price_original: 820000,
+              price_discount: 760000,
+            },
+            {
+              type: 'Người cao tuổi',
+              description: 'Từ 60 tuổi',
+              price_original: 960000,
+              price_discount: 910000,
+            },
+          ],
+        },
+        standard: {
+          title: '[VinWonders Nha Trang] - Vé Vào Cửa Tiêu Chuẩn | Tặng Voucher ẩm thực',
+          tickets: [
+            {
+              type: 'Người lớn',
+              description: 'Cao từ 140cm',
+              price_original: null,
+              price_discount: 950000,
+            },
+            {
+              type: 'Trẻ em',
+              description: 'Cao từ 100-139cm',
+              price_original: null,
+              price_discount: 710000,
+            },
+            {
+              type: 'Người cao tuổi',
+              description: 'Từ 60 tuổi',
+              price_original: null,
+              price_discount: 710000,
+            },
+          ],
+        },
+        after16h: {
+          title: '[VinWonders Nha Trang] - Vé vào cửa VinWonders sau 16h00',
+          tickets: [
+            {
+              type: 'Người lớn',
+              description: 'Cao từ 140cm',
+              price_original: null,
+              price_discount: 660000,
+            },
+            {
+              type: 'Trẻ em',
+              description: 'Cao từ 100-139cm',
+              price_original: null,
+              price_discount: 500000,
+            },
+            {
+              type: 'Người cao tuổi',
+              description: 'Từ 60 tuổi',
+              price_original: null,
+              price_discount: 500000,
+            },
+          ],
+        },
+      };
+
+      const params = new URLSearchParams(window.location.search);
+      const selectedLocation = params.get("location");
+      const selectedDate = params.get("date");
+
+      // --- Cập nhật vào giao diện ---
+      // Gắn tên điểm đến vào thẻ h2
+      const titleElement = document.querySelector(".info h2");
+      if (selectedLocation) {
+        titleElement.textContent = selectedLocation;
+      } else {
+        titleElement.textContent = "Không có dữ liệu";
+      }
+
+      // Gắn ngày vào nút lịch
+      const dateButton = document.querySelector(".date-buttons button.active");
+      if (selectedDate) {
+        dateButton.innerHTML = `<i class="fa-regular fa-calendar"></i> ${selectedDate}`;
+      } else {
+        dateButton.innerHTML = `<i class="fa-regular fa-calendar"></i> Không có dữ liệu`;
+      }
+
+      const modal = document.getElementById("ticketModal");
+      const modalTitle = document.querySelector(".modal-title");
+      const modalDescription = document.querySelector(".modal-description");
+      const closeBtn = document.querySelector(".close-btn");
+
+      // Store images for each ticket
+      const ticketImages = {
+        "sau 16h00": [
+          "https://booking-static.vinpearl.com/tours/54f14485263b441cb85ea95944b3e72e_Hinh-anh-VinWonders-Nha-Trang-The-World-Garden-Lau-vong-canh-3x2-so-1_vinwonders-nha-trang-ve-vao-cua-sau-16h.jpg",
+          "https://booking-static.vinpearl.com/tours/6031fab8e33e406b9f15135a1ef23c7c_Hinh-anh-VinWonders-Nha-Trang-Adventure-Land-Du-quay-day-vang-3x2-so-3_vinwonders-nha-trang-ve-vao-cua-sau-16h.jpg",
+          "https://booking-static.vinpearl.com/tours/3feaf03ff50045a4981546b11a209c4a_vwnt%206_vinwonders-nha-trang-ve-vao-cua-sau-16h.jpg",
+          "https://booking-static.vinpearl.com/tours/0693361e457746caa7ccf1f541be6c73__KAH2448_vinwonders-nha-trang-ve-vao-cua-sau-16h.jpg",
+        ],
+        "Tiêu Chuẩn": [
+          "https://booking-static.vinpearl.com/tours/da291b91c381457e9c5a02999b54a314_6267d5a4a9564a438ce1ee3a66159651_vwnt%202_vinwonders-nha-trang-khong-gioi-han-1-ngay_vinwonders-nha-trang-ve-vao-cua-2-chieu.jpg",
+          "https://booking-static.vinpearl.com/tours/fd8d6df9fb4e457387f15b368f91d144_83a78d624f7340aaab5c6fa10d297e67_vwnt%205_vinwonders-nam-hoi-an-ve-vao-cua_vinwonders-nha-trang-ve-vao-cua-2-chieu.jpg",
+          "https://booking-static.vinpearl.com/tours/ff580ab05241434185a09c928c1b05e1_%E1%BA%A3nh_vinwonders-nha-trang-ve-vao-cua-2-chieu.jpg",
+          "https://booking-static.vinpearl.com/tours/3deddd0d25da4fd0a5604930ae46bf45_6d3dba25e48b48fda66aa328953577b7_Hinh-anh-VinWonders-Nha-Trang-King's-Garden-3x2-so-29_vinwonders-nha-trang-khong-gioi-han-1-ngay_vinwonders-nha-trang-ve-vao-cua-2-chieu.jpg",
+          "https://booking-static.vinpearl.com/tours/31aab7c16a144b9f9a9da16e2ca7f11a_41ba94f9b3c44de9add5969c8669857c__KAH2448_vinwonders-nha-trang-khong-gioi-han-1-ngay_vinwonders-nha-trang-ve-vao-cua-2-chieu.jpg",
+          "https://booking-static.vinpearl.com/tours/2b86912038fb4f818f0af8ba68efd9bd_2b0eda2e986e4735a9a2ae4779ef8a6c_VWNT_Tropical%20Paradise7_vinwonders-nha-trang-khong-gioi-han-1-ngay_vinwonders-nha-trang-ve-vao-cua-2-chieu.jpg",
+        ],
+        Combo: [
+          "https://booking-static.vinpearl.com/tours/99ede30869d345dd8d7674b86f9283e5__KAH2209_vinwonders-nha-trang-ve-vao-cua-2-chieu.jpg",
+          "https://booking-static.vinpearl.com/tours/cd9ddcdcaf454d3c9b3365f29509bba2_vwnt 5_vinwonders-nha-trang-ve-vao-cua-2-chieu.jpg",
+          "https://booking-static.vinpearl.com/tours/139de0aace854b8f80b3e6a9c27faff1_tro-choi-mao-hiem-o-vinpearl-nha-trang-thumb-1_vinwonders-nha-trang-ve-vao-cua-2-chieu.jpg",
+          "https://booking-static.vinpearl.com/tours/b16ae40ca10541bd9538650b4496bfc3_vwnt 2_vinwonders-nha-trang-ve-vao-cua-2-chieu.jpg",
+          "https://booking-static.vinpearl.com/tours/b52243e18059465db856e4fa04260237_VWNT_Tropical Paradise19_vinwonders-nha-trang-ve-vao-cua-2-chieu.jpg",
+          "https://booking-static.vinpearl.com/tours/a556178630a44692bb5dd0ea416d3532_vwnt 6_vinwonders-nha-trang-ve-vao-cua-2-chieu.jpg",
+        ],
+      };
+
+      let currentImageIndex = 0;
+      let currentImages = [];
+
+      // Lắng nghe click vào các nút "Xem chi tiết"
+      // Helper function to create image slider HTML
+      function createImageSlider(images, title) {
+        if (images.length === 0) return "";
+
+        return `
+                     <div class="modal-image-slider">
+                       <button class="slider-btn prev-btn">
+                         <i class="fa-solid fa-chevron-left"></i>
+                       </button>
+                       <img id="modalImage" src="${images[0]}" alt="${title}" />
+                       <button class="slider-btn next-btn">
+                         <i class="fa-solid fa-chevron-right"></i>
+                       </button>
+                       <div class="image-counter">
+                         <span id="currentImageNum">1</span> / ${images.length}
+                       </div>
+                     </div>
+                   `;
+      }
+
+      // Helper function to attach slider event listeners
+      function attachSliderListeners() {
+        setTimeout(() => {
+          const prevBtn = modal.querySelector(".prev-btn");
+          const nextBtn = modal.querySelector(".next-btn");
+
+          if (prevBtn) {
+            prevBtn.onclick = () => changeImage(-1);
+          }
+          if (nextBtn) {
+            nextBtn.onclick = () => changeImage(1);
+          }
+        }, 100);
+      }
+
+      // Function for "Vé vào cửa VinWonders sau 16h00"
+      function showTicketAfter16hDetail() {
+        const title =
+          "[VinWonders Nha Trang] - Vé vào cửa VinWonders sau 16h00";
+        currentImages = ticketImages["sau 16h00"];
+        currentImageIndex = 0;
+
+        modalTitle.textContent = title;
+
+        let details = createImageSlider(currentImages, title);
+
+        details += `
+                     <h4>BAO GỒM</h4>
+                     <ul>
+                       <li>- Vé vào cửa trực tiếp VinWonders Nha Trang sau 16:00</li>
+                       <li>- Di chuyển bằng cáp treo 2 chiều</li>
+                       <li>- Miễn phí 02 lượt sử dụng dịch vụ xe buýt VinBus trong ngày</li>
+                     </ul>
+                     <h4>ĐIỀU KHOẢN</h4>
+                     <ul>
+                       <li>- Trong trường hợp thời tiết không thuận lợi, cáp treo buộc phải dừng hoạt động để đảm bảo an toàn, VinWonders sẽ sắp xếp phương tiện di chuyển thay thế bằng tàu cao tốc</li>
+                       <li>- Zipline không bao gồm trong vé vào cửa VinWonders</li>
+                       <li>- Thuỷ cung tạm thời đóng cửa để nâng cấp từ ngày 31/3/2025 đến tháng 2/2026</li>
+                       <li>- Để đảm bảo an toàn, người tham gia các trò chơi trượt nước mạo hiểm tại Công Viên Nước yêu cầu phải có chiều cao trên 130cm, cân nặng dưới 100kg và dưới 50 tuổi</li>
+                     </ul>
+                   `;
+
+        modalDescription.innerHTML = details;
+        modal.style.display = "flex";
+        attachSliderListeners();
+      }
+
+      // Function for "Vé Vào Cửa Tiêu Chuẩn"
+      function showTicketStandardDetail() {
+        const title =
+          "[VinWonders Nha Trang] - Vé Vào Cửa Tiêu Chuẩn | Tặng Voucher ẩm thực";
+        currentImages = ticketImages["Tiêu Chuẩn"];
+        currentImageIndex = 0;
+
+        modalTitle.textContent = title;
+
+        let details = createImageSlider(currentImages, title);
+
+        details += `
+                     <h4>BAO GỒM</h4>
+                     <ul>
+                       <li>- Vé vào cửa trực tiếp VinWonders Nha Trang</li>
+                       <li>- Di chuyển bằng cáp treo 2 chiều</li>
+                       <li>- TẶNG: Voucher ẩm thực trị giá 150k/Người lớn; 100k/Trẻ em, Người cao tuổi (áp dụng từ 15/08 - 30/11, loại trừ 30/08 - 02/09)</li>
+                       <li>- Áp dụng tại các nhà hàng: Wind & Sea (11.1), Coral (11.2), Yummy WaterWorld (76), Yummy World Garden (35), Kiosk Monta (25), Wonder Ice cream & Bakery (15), Streetfood</li>
+                       <li>- Miễn phí 02 lượt sử dụng VinBus trong ngày</li>
+                     </ul>
+                     <h4>ĐIỀU KHOẢN</h4>
+                     <ul>
+                       <li>- Trong trường hợp thời tiết không thuận lợi, cáp treo buộc phải dừng hoạt động để đảm bảo an toàn, VinWonders sẽ sắp xếp phương tiện di chuyển thay thế bằng tàu cao tốc</li>
+                       <li>- Zipline không bao gồm trong vé vào cửa VinWonders</li>
+                       <li>- Thuỷ cung tạm thời đóng cửa để nâng cấp từ ngày 31/3/2025 đến tháng 2/2026</li>
+                       <li>- Để đảm bảo an toàn, người tham gia các trò chơi trượt nước mạo hiểm tại Công Viên Nước yêu cầu phải có chiều cao trên 130cm, cân nặng dưới 100kg và dưới 50 tuổi</li>
+                     </ul>
+                   `;
+
+        modalDescription.innerHTML = details;
+        modal.style.display = "flex";
+        attachSliderListeners();
+      }
+
+      // Function for "Combo Vé Vào Cửa VinWonders"
+      function showTicketComboDetail() {
+        const title =
+          "[VinWonders Nha Trang] - Combo Vé Vào Cửa VinWonders + Dịch vụ Buffet";
+        currentImages = ticketImages["Combo"];
+        currentImageIndex = 0;
+
+        modalTitle.textContent = title;
+
+        let details = createImageSlider(currentImages, title);
+
+        details += `
+                     <h4>BAO GỒM</h4>
+                     <ul>
+                       <li>- Vé vào cửa VinWonders Nha Trang</li>
+                       <li>- Di chuyển bằng cáp treo 2 chiều</li>
+                       <li>- Sử dụng dịch vụ Buffet trị giá 300.000 VNĐ/Người lớn hoặc Người cao tuổi; 150.000 VNĐ/Trẻ em tại nhà hàng Wind & Sea số 11.1 (khung giờ áp dụng 11:00 - 14:30)</li>
+                       <li>- Miễn phí 02 lượt sử dụng dịch vụ xe buýt VinBus trong ngày</li>
+                     </ul>
+                     <h4>ĐIỀU KHOẢN</h4>
+                     <ul>
+                       <li>- Trong trường hợp điều kiện thời tiết không thuận lợi, cáp treo buộc phải dừng hoạt động để đảm bảo an toàn, VinWonders sẽ sắp xếp phương tiện di chuyển thay thế bằng tàu cao tốc</li>
+                       <li>- Zipline không bao gồm trong vé vào cửa VinWonders</li>
+                       <li>- Thuỷ cung tạm thời đóng cửa để nâng cấp từ ngày 31/3/2025 đến tháng 2/2026</li>
+                       <li>- Để đảm bảo an toàn, người tham gia các trò chơi trượt nước mạo hiểm tại Công Viên Nước yêu cầu phải có chiều cao trên 130cm, cân nặng dưới 100kg và dưới 50 tuổi</li>
+                     </ul>
+                   `;
+
+        modalDescription.innerHTML = details;
+        modal.style.display = "flex";
+        attachSliderListeners();
+      }
+
+      // Lắng nghe click vào các nút "Xem chi tiết"
+      document.querySelectorAll(".ticket-card a").forEach((link, index) => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+
+          // Call the appropriate function based on the ticket index
+          if (index === 0) {
+            showTicketComboDetail();
+          } else if (index === 1) {
+            showTicketStandardDetail();
+          } else if (index === 2) {
+            showTicketAfter16hDetail();
+          }
+        });
+      });
+
+      // Đóng modal khi bấm nút X
+      closeBtn.addEventListener("click", () => (modal.style.display = "none"));
+
+      // Đóng khi click ra ngoài
+      window.addEventListener("click", (e) => {
+        if (e.target === modal) modal.style.display = "none";
+      });
+
+      // Function to change image in modal
+      window.changeImage = function (direction) {
+        currentImageIndex += direction;
+
+        if (currentImageIndex < 0) {
+          currentImageIndex = currentImages.length - 1;
+        } else if (currentImageIndex >= currentImages.length) {
+          currentImageIndex = 0;
+        }
+
+        document.getElementById("modalImage").src =
+          currentImages[currentImageIndex];
+        document.getElementById("currentImageNum").textContent =
+          currentImageIndex + 1;
+      };
+
+      const buyModal = document.getElementById("buyModal");
+      const buyCloseBtn = buyModal.querySelector(".close-btn");
+      const totalElement = buyModal.querySelector(".total");
+      let selectedChooseBtn = null;
+      let selectedTicketData = null;
+      // Hardcoded ticket data for each ticket type
+
+      // Ticket data getter functions using constants
+      function getComboTicketData() {
+        return TICKET_DETAILS.combo;
+      }
+
+      function getStandardTicketData() {
+        return TICKET_DETAILS.standard;
+      }
+
+      function getAfter16hTicketData() {
+        return TICKET_DETAILS.after16h;
+      }
+
+      function updateBuyModalWithTicketData(ticketData) {
+        const ticketTypes = buyModal.querySelectorAll(".ticket-type");
+
+        ticketTypes.forEach((typeEl, index) => {
+          if (ticketData.tickets[index]) {
+            const ticket = ticketData.tickets[index];
+            const priceEl = typeEl.querySelector(".price");
+            const countEl = typeEl.querySelector(".count");
+
+            priceEl.textContent =
+              ticket.price_discount.toLocaleString("vi-VN") + " đ";
+            countEl.textContent = "0";
+          }
+        });
+
+        updateTotal();
+      }
+
+      document.querySelectorAll(".btn-choose").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          selectedChooseBtn = e.target;
+
+          // Determine which ticket was clicked
+          const ticketCard = e.target.closest(".ticket-card");
+          const ticketIndex = Array.from(
+            document.querySelectorAll(".ticket-card"),
+          ).indexOf(ticketCard);
+
+          if (ticketIndex === 0) {
+            selectedTicketData = getComboTicketData();
+          } else if (ticketIndex === 1) {
+            selectedTicketData = getStandardTicketData();
+          } else if (ticketIndex === 2) {
+            selectedTicketData = getAfter16hTicketData();
+          }
+
+          updateBuyModalWithTicketData(selectedTicketData);
+          buyModal.style.display = "flex";
+        });
+      });
+
+      buyCloseBtn.addEventListener("click", () => {
+        buyModal.style.display = "none";
+      });
+
+      window.addEventListener("click", (e) => {
+        if (e.target === buyModal) buyModal.style.display = "none";
+      });
+
+      // --- Cập nhật số lượng và tổng tiền ---
+      buyModal.querySelectorAll(".ticket-type").forEach((type) => {
+        const plus = type.querySelector(".plus");
+        const minus = type.querySelector(".minus");
+        const countEl = type.querySelector(".count");
+        const price = 100000;
+
+        plus.addEventListener("click", () => {
+          countEl.textContent = parseInt(countEl.textContent) + 1;
+          updateTotal();
+        });
+
+        minus.addEventListener("click", () => {
+          const current = parseInt(countEl.textContent);
+          if (current > 0) countEl.textContent = current - 1;
+          updateTotal();
+        });
+      });
+
+      function updateTotal() {
+        let total = 0;
+        buyModal.querySelectorAll(".ticket-type").forEach((type, index) => {
+          const count = parseInt(type.querySelector(".count").textContent);
+          if (selectedTicketData && selectedTicketData.tickets[index]) {
+            const price = selectedTicketData.tickets[index].price_discount;
+            total += count * price;
+          }
+        });
+        totalElement.textContent = total.toLocaleString("vi-VN") + " đ";
+
+        // Vô hiệu hóa nút mua nếu tổng tiền = 0
+        const buyBtn = buyModal.querySelector(".buy-btn");
+        if (total === 0) {
+          buyBtn.disabled = true;
+          buyBtn.style.opacity = "0.6";
+          buyBtn.style.cursor = "not-allowed";
+        } else {
+          buyBtn.disabled = false;
+          buyBtn.style.opacity = "1";
+          buyBtn.style.cursor = "pointer";
+        }
+      }
+
+      const timeButtons = document.querySelectorAll(".time-btn");
+
+      timeButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          // Xóa class active ở tất cả nút
+          timeButtons.forEach((b) => b.classList.remove("active"));
+          // Thêm class active cho nút được chọn
+          btn.classList.add("active");
+        });
+      });
+
+      const buyBtn = buyModal.querySelector(".buy-btn");
+      buyBtn.addEventListener("click", () => {
+        const selectedTime = buyModal.querySelector(".time-btn.active").textContent;
+        const selectedBranch = buyModal.querySelector(".location-options .active").textContent;
+        const locationName = document.querySelector(".info h2")?.textContent.trim() || "Không rõ địa điểm";
+        const selectedDate = document.querySelector(".date-buttons .active")?.textContent.trim() || "Không rõ ngày";
+        const imageSrc = document.querySelector(".banner img")?.src || "./assets/default.jpg";
+        const title = selectedTicketData ? selectedTicketData.title : "Không rõ vé";
+
+        // Get all ticket types and quantities
+        const ticketTypes = buyModal.querySelectorAll(".ticket-type");
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+        ticketTypes.forEach((typeEl, idx) => {
+          const count = parseInt(typeEl.querySelector(".count").textContent);
+          if (count > 0 && selectedTicketData && selectedTicketData.tickets[idx]) {
+            const ticketInfo = selectedTicketData.tickets[idx];
+            cart.push({
+              location: locationName,
+              title: title,
+              branch: selectedBranch,
+              time: selectedTime,
+              date: selectedDate,
+              person: `${count} ${ticketInfo.type}`,
+              price: count * ticketInfo.price_discount,
+              image: imageSrc,
+            });
+          }
+        });
+
+        localStorage.setItem("cart", JSON.stringify(cart));
+        buyModal.style.display = "none";
+        window.location.href = "./cart.html";
+      });
+
+      function resetBuyModal() {
+        buyModal.querySelectorAll(".ticket-type").forEach((type) => {
+          const countEl = type.querySelector(".count");
+          countEl.textContent = "0";
+        });
+        updateTotal();
+      }
+
+      // Đóng modal xác nhận
+      const confirmCloseBtn = document.querySelector(
+        "#confirmModal .close-btn",
+      );
+      const confirmModal = document.getElementById("confirmModal");
+
+      if (confirmCloseBtn) {
+        confirmCloseBtn.addEventListener("click", () => {
+          confirmModal.style.display = "none";
+        });
+      }
+
+      if (confirmModal) {
+        window.addEventListener("click", (e) => {
+          if (e.target === confirmModal) confirmModal.style.display = "none";
+        });
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/assets/iconlogo.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    />
+    <title>VinWonders</title>
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Montserrat";
+        background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+      }
+
+      .container {
+        width: 100%;
+          background: #fafafa;
+          box-shadow: 0 0 40px rgba(0, 0, 0, 0.08);
+          height: 100vh;
+      }
+
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 80px 0 20px;
+        height: 60px;
+        background: #f77119;
+        color: white;
+        box-shadow: 0 2px 10px rgba(255, 106, 0, 0.2);
+        position: relative;
+      }
+
+      header h2 {
+        font-size: 25px;
+        cursor: pointer;
+        color: #ffffff;
+        font-weight: 650;
+      }
+
+
+      header i {
+        font-size: 22px;
+        padding: 2px;
+        cursor: pointer;
+        color: #ffffff;
+      }
+
+      .content-wrapper {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 20px 0;
+      }
+
+      #reader {
+        width: 400px;
+        margin: 20px auto;
+        border: 2px solid #ddd;
+        border-radius: 10px;
+        overflow: hidden;
+        background: #000;
+      }
+
+      #result {
+        margin-top: 10px;
+        font-size: 16px;
+        color: green;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <a href="/shopping.html">
+          <i class="fa-solid fa-arrow-left"></i>
+        </a>
+        <h2>Quét mã QR - Sử dụng ưu đãi</h2>
+        <div></div>
+      </header>
+      <div class="content-wrapper">
+        <div id="reader"></div>
+        <p id="result"></p>
+      </div>
+    </div>
+
+    <script>
+      const qrReader = new Html5Qrcode("reader");
+      let isScanning = false;
+
+      Html5Qrcode.getCameras()
+        .then((devices) => {
+          if (devices && devices.length) {
+            const camId = devices.length > 1 ? devices[1].id : devices[0].id;
+            qrReader
+              .start(
+                camId,
+                { fps: 10, qrbox: 250 },
+                (qrCodeMessage) => {
+                  document.getElementById("result").innerText =
+                    "Mã quét được: " + qrCodeMessage;
+
+                  if (qrCodeMessage.startsWith("http")) {
+                    setTimeout(
+                      () => (window.location.href = qrCodeMessage),
+                      1000,
+                    );
+                  }
+                },
+                (errorMessage) => {},
+              )
+              .then(() => (isScanning = true))
+              .catch((err) => console.error("Lỗi khi khởi tạo camera:", err));
+          } else {
+            alert("Không tìm thấy camera nào!");
+          }
+        })
+        .catch((err) => console.error("Lỗi khi truy cập camera:", err));
+    </script>
+  </body>
+</html>

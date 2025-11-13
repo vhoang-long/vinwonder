@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VinWonders</title>
+      <link rel="icon" type="image/png" href="/assets/iconlogo.png" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="./chatbot/chatbot.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="welcome-card-shopping"></div>
+    <div class="container-shopping">
+      <div class="discountHeader">
+        <P>ƯU ĐÃI NỔI BẬT</P>
+      </div>
+
+      <div class="discount">
+        <div class="discount-item">
+          <img src="./assets/Anh uu dai 1.png" alt="" class="discountImage"/>
+          <div class="discount-content">
+            <p class="discountTitle">Khám phá Nha Trang một cách trọn vẹn nhất với Nha Trang Passport</p>
+            <p class="discountDescription">Hạn áp dụng: 15/08 - 31/12/2025</p>
+          </div>
+        </div>
+
+        <div class="discount-item">
+          <img src="./assets/Anh uu dai 3.png" alt="" class="discountImage"/>
+          <div class="discount-content">
+            <p class="discountTitle">Đặc quyền thẻ MasterCard: Giảm ngay 15% khi đặt vé VinWonders</p>
+            <p class="discountDescription">Hạn áp dụng: 04/11 - 30/11/2025</p>
+          </div>
+        </div>
+
+        <div class="discount-item">
+          <img src="./assets/Anh uu dai 4.png" alt="" class="discountImage"/>
+          <div class="discount-content">
+            <p class="discountTitle">Top vé được yêu thích nhất tại VinWonders Nha Trang</p>
+            <p class="discountDescription">Hạn áp dụng: 01/07 - 31/12/2025</p>
+          </div>
+        </div>
+
+        <div class="discount-item">
+          <img src="./assets/Anh uu dai 2.png" alt="" class="discountImage"/>
+          <div class="discount-content">
+            <p class="discountTitle">Tải App VinWonders: Trải nghiệm thông minh – Ưu đãi hết mình!</p>
+            <p class="discountDescription">Hạn áp dụng: 05/04 - 31/12/2025</p>
+          </div>
+        </div>
+
+        <div class="discount-item">
+          <img src="./assets/Anh uu dai 5.png" alt="" class="discountImage"/>
+          <div class="discount-content">
+            <p class="discountTitle">Đặc Quyền Hội Viên VinClub: Ưu Đãi Lên Tới 15% Khi Mua Vé VinWonders</p>
+            <p class="discountDescription">Hạn áp dụng: 01/04 - 31/12/2025</p>
+          </div>
+        </div>
+
+        <div class="discount-item">
+          <img src="./assets/Anh uu dai 6.png" alt="" class="discountImage"/>
+          <div class="discount-content">
+            <p class="discountTitle">Vui chơi bất tận tại VinWonders Nha Trang với vé vào cửa không giới hạn</p>
+            <p class="discountDescription">Hạn áp dụng: 01/01 - 31/12/2025</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-shopping">
+        <div class="menu-item-shopping">
+          <div class="menuHeader">
+            <P>SỬ DỤNG ƯU ĐÃI</P>
+          </div>
+
+          <div class = "menu-item" id="exchangeVoucher">
+            <i class="fa-solid fa-right-left"></i>
+            <span>Đổi ưu đãi voucher</span>
+            <i class="fa-solid fa-chevron-right arrow"></i>
+          </div>
+
+          <div class = "menu-item">
+            <i class="fa-regular fa-clock"></i>
+            <span>Lịch sử sử dụng voucher</span>
+            <i class="fa-solid fa-chevron-right arrow"></i>
+          </div>
+          
+          <button class="scan-btn" id="scanBtn">Quét mã QR - Sử dụng ưu đãi</button>
+        </div>
+      </div>
+
+
+      <script>
+        document
+          .getElementById("exchangeVoucher")
+          .addEventListener("click", () => {
+            window.location.href = "./voucher/voucher.html";
+          });
+      </script>
+      <script>
+        document.getElementById("scanBtn").addEventListener("click", () => {
+          window.location.href = "scanner.html";
+        });
+      </script>
+    </div>
+    <div class="menu">
+      <div class="menuItem">
+        <a href="./index.html" class="menuItemLink">
+          <i class="fa-solid fa-house menuItemIcon"></i>
+          <p class="menuItemContent">Trang chủ</p>
+        </a>
+      </div>
+      <div class="menuItem">
+        <a href="./ticket.html" class="menuItemLink">
+          <i class="fa-solid fa-ticket menuItemIcon"></i>
+          <p class="menuItemContent">Mua vé</p>
+        </a>
+      </div>
+      <div class="menuMap">
+        <a href="./map-game.html" class="menuItemLink">
+          <i class="fa-solid fa-location-dot menuMapIcon"></i>
+        </a>
+      </div>
+      <div class="menuItem">
+        <a href="" class="menuItemLink">
+          <i class="fa-solid fa-bag-shopping menuItemIcon"></i>
+          <p class="menuItemContent">Mua sắm</p>
+        </a>
+      </div>
+      <div class="menuItem">
+        <a href="./user.html" class="menuItemLink">
+          <i class="fa-solid fa-circle-user menuItemIcon"></i>
+          <p class="menuItemContent">Tài khoản</p>
+        </a>
+      </div>
+      <script src="./config.js"></script>
+      <script src="./main.js"></script>
+    </div>
+
+    <!-- ========== CHATBOT BÉ VIN ========== -->
+    
+    <div id="chatbot-root"></div>
+    <script>
+      fetch("./chatbot/chatbot.html")
+        .then((res) => res.text())
+        .then((html) => {
+          document.getElementById("chatbot-root").innerHTML = html;
+          const script = document.createElement("script");
+          script.src = "./chatbot/chatbot.js";
+          document.body.appendChild(script);
+        });
+    </script>
+    <!-- ========== END CHATBOT ========== -->
+
+    <!-- ========== CONTACT ========== -->
+    <div id="contact-root"></div>
+    <script>
+      fetch("./contact/contact.html")
+        .then((res) => res.text())
+        .then((html) => {
+          document.getElementById("contact-root").innerHTML = html;
+          const script = document.createElement("script");
+          script.src = "./contact/contact.js";
+          document.body.appendChild(script);
+        });
+    </script>
+    <!-- ========== END CONTACT ========== -->
+  </body>
+</html>

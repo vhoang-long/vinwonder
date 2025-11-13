@@ -1,0 +1,307 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300..800;1,300..800&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Montserrat";
+}
+
+body {
+  background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  gap: 10px;
+  padding: 0px;
+}
+
+.wrapperTicket {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  min-height: 100vh;
+}
+
+
+header {
+  width: 100%;
+  height: 72px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 22.5px 0 20px;
+  background-color: #f77119;
+  margin-bottom: 30px;
+}
+
+header h2 {
+  font-size: 25px;
+  cursor: pointer;
+  color: #ffffff;
+  font-weight: 650;
+}
+
+
+header a {
+  font-size: 22px;
+  cursor: pointer;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 50%;
+  padding: 5px 6.25px;
+}
+
+.ticket {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 1000px;
+  padding: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #f0f0f0;
+  transition: all 0.3s ease;
+  margin-bottom: 20px;
+}
+
+.ticket:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.ticket-left {
+  text-align: center;
+  margin-right: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.logo {
+  width: 140px;
+  height: auto;
+}
+
+.qr-box img {
+  width: 130px;
+  height: 130px;
+  border-radius: 8px;
+  display: block;
+}
+
+.divider {
+  width: 1px;
+  height: 200px;
+  background: linear-gradient(to bottom, transparent, #e0e0e0, transparent);
+  margin: 0 30px;
+}
+
+.ticket-right {
+  flex: 1;
+}
+
+.ticket-right h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: #1a1a1a;
+  line-height: 1.4;
+}
+
+.ticket-right h2 span {
+  font-weight: 500;
+  font-size: 16px;
+  color: #666;
+}
+
+.ticket-right h3 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #f77119;
+}
+
+.ticket-right p {
+  margin: 4px 0;
+  color: #555;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.ticket-right .en {
+  font-style: italic;
+  font-size: 14px;
+  color: #666;
+}
+
+.expire-box {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 15px 20px;
+  display: inline-flex;
+  align-items: center;
+  margin-top: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  border: 2px solid #e9ecef;
+  transition: all 0.3s ease;
+}
+
+.expire-box:hover {
+  background: white;
+  border-color: #ffe5d1;
+  box-shadow: 0 2px 8px rgba(255, 106, 0, 0.1);
+}
+
+.expire-date {
+  margin-left: 10px;
+  color: #f77119;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+/* --- Responsive --- */
+
+/* Tablet (≤ 992px) */
+@media (max-width: 992px) {
+  .ticket {
+    width: 100%;
+    padding: 25px;
+  }
+
+  .logo {
+    width: 120px;
+  }
+
+  .qr-box img {
+    width: 110px;
+    height: 110px;
+  }
+
+  .ticket-right h2 {
+    font-size: 22px;
+  }
+
+  .ticket-right h3 {
+    font-size: 18px;
+  }
+
+  .expire-box {
+    font-size: 14px;
+    padding: 12px 18px;
+  }
+}
+
+/* Mobile (≤ 768px) */
+@media (max-width: 768px) {
+  body {
+    flex-direction: column;
+    align-items: stretch;
+    height: auto;
+  }
+
+  .ticket {
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 20px;
+    align-items: center;
+  }
+
+  .ticket-left {
+    margin: 0 0 15px 0;
+  }
+
+  .divider {
+    width: 80%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #e0e0e0, transparent);
+    margin: 20px 0;
+  }
+
+  .ticket-right {
+    text-align: center;
+  }
+
+  .ticket-right h2 {
+    font-size: 20px;
+  }
+
+  .ticket-right h2 span {
+    font-size: 14px;
+  }
+
+  .ticket-right h3 {
+    font-size: 18px;
+  }
+
+  .ticket-right p {
+    font-size: 14px;
+  }
+
+  .expire-box {
+    font-size: 13px;
+    margin-top: 15px;
+    padding: 12px 16px;
+  }
+
+  .expire-date {
+    font-size: 13px;
+  }
+}
+
+/* Rất nhỏ (≤ 480px) */
+@media (max-width: 480px) {
+  header h2 {
+    font-size: 20px;
+  }
+
+  .logo {
+    width: 100px;
+  }
+
+  .qr-box img {
+    width: 90px;
+    height: 90px;
+  }
+
+  .qr-box {
+    padding: 12px;
+  }
+
+  .ticket {
+    padding: 15px;
+  }
+
+  .ticket-right h2 {
+    font-size: 18px;
+  }
+
+  .ticket-right h3 {
+    font-size: 16px;
+  }
+
+  .ticket-right p {
+    font-size: 13px;
+  }
+
+  .myTicket {
+    padding: 20px;
+  }
+
+  .myTicket h4 {
+    font-size: 20px;
+  }
+}

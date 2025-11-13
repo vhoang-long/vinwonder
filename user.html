@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VinWonders</title>
+      <link rel="icon" type="image/png" href="/assets/iconlogo.png" />
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./chatbot/chatbot.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <div class="userImage"></div>
+    <div class="profile-grid">
+      <a href="./profile/profile.html">
+        <div class="profile-card">
+          <i class="fa-solid fa-user icon"></i>
+          <p>Hồ sơ của tôi</p>
+        </div>
+      </a>
+
+      <a href="./myticket/myticket.html">
+        <div class="profile-card">
+          <i class="fa-solid fa-ticket icon"></i>
+          <p>Vé của tôi</p>
+        </div>
+      </a>
+
+      <a href="./myorder/myorder.html">
+        <div class="profile-card">
+          <i class="fa-solid fa-file-lines icon"></i>
+          <p>Đơn hàng của tôi</p>
+        </div>
+      </a>
+
+      <a href="./voucher/voucher.html">
+        <div class="profile-card">
+          <i class="fa-solid fa-percent icon"></i>
+          <p>Ưu đãi</p>
+        </div>
+      </a>
+
+      <a href="./cart.html">
+        <div class="profile-card">
+          <i class="fa-solid fa-cart-shopping icon"></i>
+          <p>Giỏ hàng</p>
+        </div>
+      </a>
+
+      <a href="./game-cart/game-cart.html">
+        <div class="profile-card">
+          <i class="fa-solid fa-gamepad icon"></i>
+          <p>Vé trò chơi</p>
+        </div>
+      </a>
+    </div>
+    
+    <div class="sysinfo">
+      <p class="sysinfoText"><i class="fa-solid fa-info"></i> Thông tin chung VinWonders</p>
+      <p class="sysinfoText"><i class="fa-solid fa-info"></i> Thông tin chung VinClub</p>
+    </div>
+
+    <div class="menu">
+      <div class="menuItem">
+        <a href="./index.html" class="menuItemLink">
+          <i class="fa-solid fa-house menuItemIcon"></i>
+          <p class="menuItemContent">Trang chủ</p>
+        </a>
+      </div>
+      <div class="menuItem">
+        <a href="./ticket.html" class="menuItemLink">
+          <i class="fa-solid fa-ticket menuItemIcon"></i>
+          <p class="menuItemContent">Mua vé</p>
+        </a>
+      </div>
+      <div class="menuMap">
+        <a href="./map-game.html" class="menuItemLink">
+          <i class="fa-solid fa-location-dot menuMapIcon"></i>
+        </a>
+      </div>
+      <div class="menuItem">
+        <a href="./shopping.html" class="menuItemLink">
+          <i class="fa-solid fa-bag-shopping menuItemIcon"></i>
+          <p class="menuItemContent">Mua sắm</p>
+        </a>
+      </div>
+      <div class="menuItem">
+        <a href="./user.html" class="menuItemLink">
+          <i class="fa-solid fa-circle-user menuItemIcon"></i>
+          <p class="menuItemContent">Tài khoản</p>
+        </a>
+      </div>
+      <script src="./config.js"></script>
+      <script src="./main.js"></script>
+    </div>
+
+    <!-- ========== CHATBOT BÉ VIN ========== -->
+    
+    <div id="chatbot-root"></div>
+    <script>
+      fetch("./chatbot/chatbot.html")
+        .then((res) => res.text())
+        .then((html) => {
+          document.getElementById("chatbot-root").innerHTML = html;
+          const script = document.createElement("script");
+          script.src = "./chatbot/chatbot.js";
+          document.body.appendChild(script);
+        });
+    </script>
+    <!-- ========== END CHATBOT ========== -->
+
+    <!-- ========== CONTACT ========== -->
+    <div id="contact-root"></div>
+    <script>
+      fetch("./contact/contact.html")
+        .then((res) => res.text())
+        .then((html) => {
+          document.getElementById("contact-root").innerHTML = html;
+          const script = document.createElement("script");
+          script.src = "./contact/contact.js";
+          document.body.appendChild(script);
+        });
+    </script>
+    <!-- ========== END CONTACT ========== -->
+  </body>
+</html>
