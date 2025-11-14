@@ -122,7 +122,7 @@ function initChatbot() {
     msg.className = `message ${isUser ? "user-message" : "bot-message"}`;
     if (!isUser) {
       const avatar = document.createElement("img");
-      avatar.src = "./assets/Mascot VinWonders Nha Trang.png";
+      avatar.src = "../assets/avartar2.png";
       avatar.alt = "Bé Vin";
       avatar.className = "message-avatar";
       avatar.onerror = function () {
